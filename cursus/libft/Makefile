@@ -23,6 +23,7 @@ FILES = ft_atoi \
 				ft_strncmp \
 				ft_strnstr \
 				ft_strrchr \
+				ft_strtrim \
 				ft_substr \
 				ft_tolower \
 				ft_toupper

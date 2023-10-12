@@ -6,13 +6,13 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 10:04:30 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/11 10:11:03 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:26:18 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char	*p;
 	size_t	size1;

@@ -6,13 +6,21 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 10:07:41 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/11 10:19:46 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:26:18 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+	DESCRIPTION	The  substr() function extracts a substring from the string 's'.
+	The substring begins at position 'start' and is of maximum size 'len'.
+
+	RETURN VALUES	If the allocation fails, the function returns NULL.
+	Otherwise, it returns a pointer to the substring.
+*/
+
 #include <stdlib.h>
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
 	char	*p;
 	size_t	i;
