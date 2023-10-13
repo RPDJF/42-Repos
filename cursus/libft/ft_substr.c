@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 10:07:41 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/12 13:26:18 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/13 00:19:42 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,18 @@
 	Otherwise, it returns a pointer to the substring.
 */
 
-#include <stdlib.h>
+#include "libft.h"
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
 	char	*p;
 	size_t	i;
 
-	p = (char *)malloc(sizeof(char) * (len + 1));
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	if (!s)
+		return (0);
+	p = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!p)
 		return (0);
 	i = 0;
@@ -34,7 +38,6 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 		p[i] = s[i + start];
 		i++;
 	}
-	p[i] = 0;
 	return (p);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:39:25 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/12 11:26:32 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/13 00:21:34 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	void	*p;
 
-	p = malloc(count * size);
-	if(!p)
+	if (count * size > __INTMAX_MAX__)
 		return (0);
-	ft_bzero(p, count);
+	p = malloc(count * size);
+	if (!p)
+		return (0);
+	ft_bzero(p, count * size);
 	return (p);
 }
 

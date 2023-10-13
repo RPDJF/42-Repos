@@ -3,31 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:37:35 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/11 10:10:52 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/13 00:10:50 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+/*
+** Allocates sufficient memory for a copy of the string s1, does the copy,
+** and returns a pointer to it. The pointer may subsequently be used as an
+** argument to the function free(3). If insufficient memory is available,
+** NULL is returned and errno is set to ENOMEM.
+*/
+
+#include "libft.h"
 
 char	*ft_strdup(const char *src)
 {
 	char	*p_malloc;
 	int		i;
 
+	p_malloc = (char *)ft_calloc(ft_strlen(src) + 1, sizeof(char));
+	if (!p_malloc)
+		return (0);
 	i = 0;
-	while (src[i])
-		i++;
-	p_malloc = (char *)malloc((i + 1) * sizeof(char));
-	i = 0;
-	while (src[i])
-	{
-		p_malloc[i] = src[i];
-		i++;
-	}
-	p_malloc[i] = 0;
+	while (src[i++])
+		p_malloc[i - 1] = src[i - 1];
 	return (p_malloc);
 }
 
