@@ -3,12 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 09:49:04 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/11 14:43:03 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:52:30 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+** Converts the initial portion of the string pointed to by str to int
+** representation.
+*/
 
 #include "libft.h"
 

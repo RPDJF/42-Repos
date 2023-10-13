@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 09:21:28 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/13 00:03:04 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/13 10:48:14 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,8 @@
 int	checkcharset(char const c, char const *set)
 {
 	while (*set)
-	{
-		if (*set == c)
+		if (*(set++) == c)
 			return (1);
-		set++;
-	}
 	return (0);
 }
 
@@ -29,7 +26,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	end;
 
 	if (!s1 || !set)
-		return (NULL);
+		return (0);
 	start = 0;
 	end = ft_strlen(s1) - 1;
 	while (s1[start] && checkcharset(s1[start], set))

@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 07:42:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/13 18:31:10 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/13 11:40:44 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/13 11:40:44 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	if (!(unsigned char)c)
-		return ((char *)s + ft_strlen(s));
-	while (*s && *s != (unsigned char)c)
-		s++;
-	if (*s)
-		return ((char *)s);
-	return (0);
+	size_t	i;
+
+	if (size == 0)
+		return (ft_strlen(src));
+	i = 0;
+	while (i < size - 1 && src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = 0;
+	return (ft_strlen(src));
 }
-
-// check if same as strchr
-/*#include <stdio.h>
-#include <string.h>
-
-int	main(void)
-{
-	char	str[] = "123456789";
-
-	printf("FT:\t%s\n", ft_strchr(str, '\0'));
-	printf("Real:\t%s\n", strchr(str, '\0'));
-	return (0);
-}
-*/
