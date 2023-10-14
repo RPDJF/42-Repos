@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 07:42:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/11 15:35:22 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/13 20:39:22 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strrchr(const char *s, int c)
 	unsigned int	i;
 	unsigned int	last;
 
-	if (!c || c == 1024)
+	if (!(unsigned char)c)
 		return ((char *)s + ft_strlen(s));
 	i = 1;
 	last = 0;

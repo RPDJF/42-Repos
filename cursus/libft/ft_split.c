@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:10:58 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/13 12:10:58 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/14 02:14:24 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ void	free2dmalloc(void **m, size_t size)
 	i = 0;
 	while (i < size)
 		free(m[i++]);
+	free(m);
 }
 
-#include <stdio.h>
-
-int	splitentriescount(char const *s, char c)
+size_t	splitentriescount(char const *s, char c)
 {
 	size_t	entries;
 	int		trigger;
@@ -43,71 +42,193 @@ int	splitentriescount(char const *s, char c)
 	return (entries);
 }
 
-char	**ft_split(char const *s, char c)
+void	pushwords(char **dst, char const *src, char c)
 {
-	char		**p;
-	const char	*sreader;
-	size_t		entries;
-	size_t		i;
-	size_t		j;
+	size_t	i;
+	size_t	j;
+	size_t	entries;
 
-	if (!s)
-		return (0);
-	else if (!ft_strlen(s) || !c)
-	{
-		p = (char **)malloc(sizeof(char *));
-		p[0] = 0;
-		return(p);
-	}
-	if (!ft_strlen(s))
-		return (0);
-	entries = splitentriescount(s, c);
-	p = (char **)malloc((entries + 1) * sizeof(char *));
-	if (!p)
-		return (0);
+	if (!dst)
+		return ;
+	entries = splitentriescount(src, c);
 	i = 0;
-	sreader = s;
 	while (i < entries)
 	{
 		j = 0;
-		while (*(sreader++) && *(sreader - 1) != c)
+		while (*(src++) && *(src - 1) != c)
 			j++;
 		if (j == 0)
-			continue;
-		p[i] = (char *)ft_calloc(j + 1, sizeof(char));
-		if (!p[i])
-		{
-			free2dmalloc((void **)p, i);
-			return (0);
-		}
-		ft_memmove(p[i], sreader - 1 - j, j);
+			continue ;
+		dst[i] = (char *)ft_calloc(j + 1, sizeof(char));
+		if (!dst[i])
+			free2dmalloc((void **)dst, i);
+		ft_memmove(dst[i], src - 1 - j, j);
 		i++;
 	}
-	p[i] = 0;
+}
+
+//#include <stdio.h>
+char	**checkparams(char const *s, char c)
+{
+	char **p;
+
+	if (!s || !*s)
+	{
+		p = (char **)ft_calloc(1, sizeof(char *));
+		return (p);
+	}
+	if (!c)
+	{
+		p = (char **)ft_calloc(2, sizeof(char *));
+		if (!p)
+			return (0);
+		*p = ft_strdup(s);
+		if(!*p)
+			return (0);
+		return (p);
+	}
+	return (0);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char		**p;
+	size_t		entries;
+
+	if(!s || !c || !*s)
+		return (checkparams(s, c));
+	entries = splitentriescount(s, c);
+	if (!entries)
+	{
+		p = (char **)ft_calloc(1, sizeof(char *));
+		return (p);
+	}
+	p = (char **)malloc((entries + 1) * sizeof(char *));
+	pushwords(p, s, c);
+	if (!p)
+		return (0);
+	p[entries] = 0;
 	return (p);
 }
 
 // test ft_split function with multiple parameters
-//#include <stdio.h>
-/*#include <stdlib.h>
+/*
+#include <stdlib.h>
 #include <string.h>
 
 int main(void)
 {
-	// do code
-	char	**p;
-	char	*s;
-	char	c;
+	char **p;
+	int	i;
 
-	s = "split  ||this|for|me|||||!|";
-	c = '|';
-	p = ft_split(s, c);
-	printf("%s\n", p[0]);
-	printf("%s\n", p[1]);
-	printf("%s\n", p[2]);
-	printf("%s\n", p[3]);
-	printf("%s\n", p[4]);
-	free2dmalloc((void **)p, 5);
-	free(p);
+	printf("test 1\nft_split(\"Bonjour\", 0)\n");
+	p = ft_split("Bonjour", '\0');
+	i = 0;
+	while (p[i])
+	{
+		printf("[%d]\t%s\n", i,  p[i]);
+		i++;
+	}
+	free2dmalloc((void **)p, i);
+	printf("\n");
+
+	printf("test 1\nft_split(\"Bonjour\", 0)\n");
+	p = ft_split("Bonjour", 0);
+	i = 0;
+	while (p[i])
+	{
+		printf("[%d]\t%s\n", i,  p[i]);
+		i++;
+	}
+	free2dmalloc((void **)p, i);
+	printf("\n");
+	
+	printf("test 2\nft_split(\"Bonjour\", 'o')\n");
+	p = ft_split("Bonjour", 'o');
+	i = 0;
+	while (p[i])
+	{
+		printf("[%d]\t%s\n", i,  p[i]);
+		i++;
+	}
+	free2dmalloc((void **)p, i);
+	printf("\n");
+
+	printf("test 3\nft_split(\"Bonjour\", 'B')\n");
+	p = ft_split("Bonjour", 'B');
+	i = 0;
+	while (p[i])
+	{
+		printf("[%d]\t%s\n", i,  p[i]);
+		i++;
+	}
+	free2dmalloc((void **)p, i);
+	printf("\n");
+
+	printf("test 4\nft_split(\"Bonjour\", 'r')\n");
+	p = ft_split("Bonjour", 'r');
+	i = 0;
+	while (p[i])
+	{
+		printf("[%d]\t%s\n", i,  p[i]);
+		i++;
+	}
+	free2dmalloc((void **)p, i);
+	printf("\n");
+
+	printf("test 5\nft_split(\"\", 'B')\n");
+	p = ft_split("", 'B');
+	i = 0;
+	while (p[i])
+	{
+		printf("[%d]\t%s\n", i,  p[i]);
+		i++;
+	}
+	free2dmalloc((void **)p, i);
+	printf("\n");
+
+	printf("test 6\nft_split(\"\", 0)\n");
+	p = ft_split("", 0);
+	i = 0;
+	while (p[i])
+	{
+		printf("[%d]\t%s\n", i,  p[i]);
+		i++;
+	}
+	free2dmalloc((void **)p, i);
+	printf("\n");
+
+	// do tests that may break the function
+	printf("test 7\nft_split(0, 0)\n");
+	p = ft_split(0, 0);
+	i = 0;
+	while (p && p[i])
+	{
+		printf("[%d]\t%s\n", i,  p[i]);
+		i++;
+	}
+	free2dmalloc((void **)p, i);
+	printf("\n");
+
+	printf("test 8\nft_split(0, 'B')\n");
+	p = ft_split(0, 'B');
+	i = 0;
+	while (p[i])
+	{
+		printf("[%d]\t%s\n", i,  p[i]);
+		i++;
+	}
+	free2dmalloc((void **)p, i);
+	printf("\n");
+
+	printf("test 9\nft_split(0, 0)\n");
+	p = ft_split(0, 0);
+	i = 0;
+	while (p[i])
+	{
+		printf("[%d]\t%s\n", i,  p[i]);
+		i++;
+	}
+	free2dmalloc((void **)p, i);
 }
 */
