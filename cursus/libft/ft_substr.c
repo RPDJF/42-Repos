@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 10:07:41 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/13 11:38:33 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/14 22:01:06 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,15 @@
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
 	char	*p;
-	size_t	i;
 
-	if (start > ft_strlen(s))
-		return (ft_strdup(""));
-	if (!s)
-		return (0);
+	if (start >= ft_strlen(s))
+		return ((char *)ft_calloc(1, sizeof(char)));
+	if (len > ft_strlen(s))
+		len = ft_strlen(s);
 	p = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!p)
 		return (0);
-	i = 0;
-	while (i < len && s[i + start])
-	{
-		p[i] = s[i + start];
-		i++;
-	}
+	ft_memcpy(p, s + start, len);
 	return (p);
 }
 

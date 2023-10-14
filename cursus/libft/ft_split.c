@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:10:58 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/14 02:14:24 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/14 22:02:11 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	pushwords(char **dst, char const *src, char c)
 //#include <stdio.h>
 char	**checkparams(char const *s, char c)
 {
-	char **p;
+	char	**p;
 
 	if (!s || !*s)
 	{
@@ -83,7 +83,7 @@ char	**checkparams(char const *s, char c)
 		if (!p)
 			return (0);
 		*p = ft_strdup(s);
-		if(!*p)
+		if (!*p)
 			return (0);
 		return (p);
 	}
@@ -95,7 +95,7 @@ char	**ft_split(char const *s, char c)
 	char		**p;
 	size_t		entries;
 
-	if(!s || !c || !*s)
+	if (!s || !c || !*s)
 		return (checkparams(s, c));
 	entries = splitentriescount(s, c);
 	if (!entries)
