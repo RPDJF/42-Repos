@@ -9,6 +9,7 @@ FILES = ft_atoi \
 				ft_isascii \
 				ft_isdigit \
 				ft_isprint \
+				ft_itoa \
 				ft_memchr \
 				ft_memcmp \
 				ft_memcpy \
