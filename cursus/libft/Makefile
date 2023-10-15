@@ -15,9 +15,14 @@ FILES = ft_atoi \
 				ft_memcpy \
 				ft_memmove \
 				ft_memset \
+				ft_putchar_fd \
+				ft_putendl_fd \
+				ft_putnbr_fd \
+				ft_putstr_fd \
 				ft_split \
 				ft_strchr \
 				ft_strdup \
+				ft_striteri \
 				ft_strjoin \
 				ft_strlcat \
 				ft_strlcpy \
