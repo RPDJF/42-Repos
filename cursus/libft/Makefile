@@ -1,4 +1,4 @@
-.PHONY = all clean fclean re
+.PHONY = all clean fclean re bonus
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 FILES = ft_atoi \
@@ -36,8 +36,12 @@ FILES = ft_atoi \
 				ft_tolower \
 				ft_toupper
 
+BONUS_FILES = ft_lstnew \
+
 CFILES = $(FILES:%=%.c)
 OFILES = $(FILES:%=%.o)
+BONUS_CFILES = $(BONUS_FILES:%=%.c)
+BONUS_OFILES = $(BONUS_FILES:%=%.o)
 NAME = libft.a
 
 $(NAME): $(OFILES)
@@ -45,8 +49,11 @@ $(NAME): $(OFILES)
 
 all: $(NAME)
 
+bonus: $(BONUS_OFILES) $(OFILES)
+	ar -rc $(NAME) $(BONUS_OFILES) $(OFILES)
+
 clean:
-	rm -f $(OFILES)
+	rm -f $(OFILES) $(BONUS_OFILES)
 
 fclean: clean
 	rm -f $(NAME)
