@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 07:27:54 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/11 15:15:47 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/15 13:36:08 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,13 @@
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	size_t	i;
+	unsigned char	*dstwriter;
 
 	if (!dest && !src)
-		return (NULL);
-	i = 0;
-	while (i < n)
-	{
-		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
-		i++;
-	}
+		return (0);
+	dstwriter = dest;
+	while (src++, dstwriter++, (size_t)dstwriter - 1 - (size_t)dest < n)
+		*(dstwriter - 1) = *(unsigned char *)(src - 1);
 	return (dest);
 }
 

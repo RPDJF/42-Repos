@@ -36,7 +36,15 @@ FILES = ft_atoi \
 				ft_tolower \
 				ft_toupper
 
-BONUS_FILES = ft_lstnew \
+BONUS_FILES =	ft_lstadd_back \
+				ft_lstadd_front \
+				ft_lstclear \
+				ft_lstdelone \
+				ft_lstiter \
+				ft_lstlast \
+				ft_lstmap \
+				ft_lstnew \
+				ft_lstsize \
 
 CFILES = $(FILES:%=%.c)
 OFILES = $(FILES:%=%.o)

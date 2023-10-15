@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:10:58 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/14 22:02:11 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:43:04 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,12 @@ size_t	splitentriescount(char const *s, char c)
 	return (entries);
 }
 
-void	pushwords(char **dst, char const *src, char c)
+int	pushwords(char **dst, char const *src, char c)
 {
 	size_t	i;
 	size_t	j;
 	size_t	entries;
 
-	if (!dst)
-		return ;
 	entries = splitentriescount(src, c);
 	i = 0;
 	while (i < entries)
@@ -61,51 +59,34 @@ void	pushwords(char **dst, char const *src, char c)
 			continue ;
 		dst[i] = (char *)ft_calloc(j + 1, sizeof(char));
 		if (!dst[i])
-			free2dmalloc((void **)dst, i);
+		{
+			free2dmalloc((void **)dst, i + 1);
+			return (1);
+		}
 		ft_memmove(dst[i], src - 1 - j, j);
 		i++;
-	}
-}
-
-//#include <stdio.h>
-char	**checkparams(char const *s, char c)
-{
-	char	**p;
-
-	if (!s || !*s)
-	{
-		p = (char **)ft_calloc(1, sizeof(char *));
-		return (p);
-	}
-	if (!c)
-	{
-		p = (char **)ft_calloc(2, sizeof(char *));
-		if (!p)
-			return (0);
-		*p = ft_strdup(s);
-		if (!*p)
-			return (0);
-		return (p);
 	}
 	return (0);
 }
 
+//#include <stdio.h>
 char	**ft_split(char const *s, char c)
 {
 	char		**p;
 	size_t		entries;
 
-	if (!s || !c || !*s)
-		return (checkparams(s, c));
+	if (!s || !*s)
+		return ((char **)ft_calloc(1, sizeof(char *)));
 	entries = splitentriescount(s, c);
 	if (!entries)
 	{
 		p = (char **)ft_calloc(1, sizeof(char *));
 		return (p);
 	}
-	p = (char **)malloc((entries + 1) * sizeof(char *));
-	pushwords(p, s, c);
+	p = (char **)ft_calloc(entries + 1, sizeof(char *));
 	if (!p)
+		return (0);
+	if (pushwords(p, s, c))
 		return (0);
 	p[entries] = 0;
 	return (p);
