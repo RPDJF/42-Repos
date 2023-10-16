@@ -1,4 +1,4 @@
-.PONY = all clean fclean re
+.PHONY = all clean fclean re
 CC = gcc
 #CFLAGS = -Wall -Wextra -Werror
 
@@ -19,9 +19,9 @@ $(NAME): $(OFILES)
 all: $(NAME)
 
 clean:
-	rm $(OFILES)
+	rm -f $(OFILES)
 
 fclean: clean
-	rm $(NAME) $(LIBNAME)
+	rm -f $(NAME) $(LIBNAME)
 
 re: fclean all

@@ -3,36 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:41:46 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/16 17:52:57 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/16 22:12:03 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*
-** Returns a pointer to an extend malloc
-** Copies bytes from ptr to the returned malloc
-** ft_exallocf frees the ptr's pointed malloc
-**
-** Size inputs represents the size of the malloc in bytes
-** Returns 0 if allocation failed
+* Returns a pointer to an extend malloc
+* Copies bytes from ptr to the returned malloc
+* ft_exallocf frees the ptr's pointed malloc
+*
+* Size inputs represents the size of the malloc in bytes
+* If ptr is null, returns a new 'calloc' with newsize
+* Returns 0 if allocation failed
 */
 void	*ft_exallocf(void *ptr, size_t size, size_t newsize)
 {
 	void	*p;
 	void	*pwriter;
-	int		i;
 
 	p = malloc(newsize);
-	if (p != 0)
+	if (!p)
 		return (0);
 	pwriter = p;
-	i = 0;
-	while (i++, newsize > 0)
-		((unsigned char *)p)[size - i] = ((unsigned char *)ptr)[size - i];
+	if (!ptr)
+	{
+		while (pwriter++ - p < newsize)
+			*((unsigned char *)(pwriter - 1)) = 0;
+		return (p);
+	}
+	while (pwriter++ - p < size)
+	{
+		*((unsigned char *)(pwriter - 1)) = *((unsigned char *)ptr);
+		pwriter++;
+	}
 	free(ptr);
 	return (p);
 }
