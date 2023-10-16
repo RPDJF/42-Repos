@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 10:07:41 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/15 14:08:49 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:48:22 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 */
 
 #include "libft.h"
-#include <string.h>
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
