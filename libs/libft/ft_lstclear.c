@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 15:39:05 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/17 18:13:00 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/15 16:12:18 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/15 17:32:25 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*lstreader;
 
-char	*get_next_line(int fd);
-void	*ft_exallocf(void *ptr, size_t size, size_t newsize);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-size_t	ft_strlen(const char *str);
-char	*ft_strncat(char *dest, const char *src, size_t nb);
-
-#endif
+	lstreader = *lst;
+	while (*lst)
+	{
+		lstreader = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = lstreader;
+	}
+	*lst = 0;
+}

@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 15:39:05 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/17 18:13:00 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/15 14:51:44 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/15 14:58:41 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
+int	ft_lstsize(t_list *lst)
+{
+	int	i;
 
-char	*get_next_line(int fd);
-void	*ft_exallocf(void *ptr, size_t size, size_t newsize);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-size_t	ft_strlen(const char *str);
-char	*ft_strncat(char *dest, const char *src, size_t nb);
-
-#endif
+	i = -1;
+	while (i++, lst)
+		lst = (*lst).next;
+	return (i);
+}

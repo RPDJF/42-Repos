@@ -1,6 +1,6 @@
 .PHONY = all clean fclean re
 CC = gcc
-#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 FILES =	get_next_line
 LIBFILES = get_next_line_utils
