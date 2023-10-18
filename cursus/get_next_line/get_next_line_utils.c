@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:41:46 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/17 18:13:02 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/18 11:34:16 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	*ft_exallocf(void *ptr, size_t size, size_t newsize)
 		*((unsigned char *)(pwriter)) = *((unsigned char *)(ptr + (pwriter - p)));
 		pwriter++;
 	}
+	while ((size_t)pwriter - (size_t)p < newsize)
+		*((unsigned char *)(pwriter++)) = 0;
 	free(ptr);
 	return (p);
 }
@@ -64,26 +66,26 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 /*
 *	Different from LIBFT > do not use ft_calloc
 *	It frees the source pointer (*s)
+*	Modified* return NULL if pinter (*s) is NULL
+*	Source is not const, linux unauthorizes freeing const pointers
 */
-char	*ft_substrf(const char *s, unsigned int start, size_t len)
+void	*ft_submemf(void *s, size_t tabsize, unsigned int start, size_t len)
 {
 	char	*p;
-	size_t	i;
 
-	if (start >= ft_strlen(s))
+	if (!s)
+		return (0);
+	if (start >= tabsize)
 	{
 		p = (char *)malloc(sizeof(char));
 		*p = 0;
 		return (p);
 	}
-	if (len + start > ft_strlen(s))
-		len = ft_strlen(s) - start;
-	p = (char *)malloc((len + 1) * sizeof(char));
+	if (start + len > tabsize)
+		len = tabsize - start;
+	p = (char *)malloc(len * sizeof(char));
 	if (!p)
 		return (0);
-	i = 0;
-	while (i++ < len + 1)
-		p[i - 1] = 0;
 	ft_memcpy(p, s + start, len);
 	free(s);
 	return (p);

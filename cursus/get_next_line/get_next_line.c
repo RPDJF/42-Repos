@@ -3,76 +3,134 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:38:17 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/17 18:12:58 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/18 12:58:07 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 
 /*
-*	Search for unsigned char c
-*	Returns a pointer to the first occurence of c
-*	If c is null, returns a pointer to the end of s
-*	If c is not found, return null
+*	Search for specific byte inside *s memory pointer
+*	Return a pointer to the first occurence
 */
-char	*ft_strchr(const char *s, int c)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	if (!(unsigned char)c)
-		return ((char *)s + ft_strlen(s));
-	while (*s && *s != (unsigned char)c)
-		s++;
-	if (*s)
-		return ((char *)s);
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		if (((unsigned char *)s)[i] == (unsigned char)c)
+			return ((void *)s + i);
+		i++;
+	}
 	return (0);
 }
 
+/*
+*	Concatenate src mem to dest mem
+*	Dest needs to have enough space
+*	Returns null if dest pointer is null
+*/
+void	*ft_memncat(void *dest, size_t start, void *src, size_t nb)
+{
+	int	i;
+
+	if (!dest)
+		return (0);
+	i = 0;
+	while ((unsigned int)i < nb)
+	{
+		((unsigned char *)dest)[start + i] = ((unsigned char *)src)[i];
+		i++;
+	}
+	return (dest);
+}
+
+/*
+*	Extend mem allocation to add the \0 char at the end
+*/
+char	*ft_memtostr(void *mem, size_t size)
+{
+	char	eos;
+
+	eos = '\0';
+	mem = ft_exallocf(mem, size, size + 1);
+	if (!mem)
+		return (0);
+	((unsigned char *)mem)[size] = eos;
+	return ((char *)mem);
+}
+
 const int	BUFFER_SIZE = 4;
+#include <stdio.h>
+
+size_t	fill_tab_with_nextline(void **tab, size_t size, int *fd)
+{
+	char	buffer[BUFFER_SIZE];
+	ssize_t	rbytes;
+
+	rbytes = 1;
+	while (rbytes > 0 && (!ft_memchr(*tab, '\n', size) || !*tab))
+	{
+		rbytes = read(*fd, buffer, BUFFER_SIZE);
+		if (rbytes < 0)
+			return (0);
+		if (rbytes == 0)
+			break ;
+		if (ft_memchr(buffer, '\n', rbytes))
+			rbytes = (char *)ft_memchr(buffer, '\n', rbytes) - buffer + 1;
+		*tab = ft_exallocf(*tab, size, size + rbytes);
+		size += rbytes;
+		ft_memncat(*tab, size - rbytes, buffer, rbytes);
+		if (!*tab)
+			return (0);
+	}
+	return (size);
+}
 
 char	*get_next_line(int fd)
 {
-	char	*str;
-	char	*tmp;
-	char	buffer[BUFFER_SIZE + 1];
-	ssize_t	rbytes;
-	size_t	length;
+	char		*output;
+	char		**p_output;
+	size_t		tabsize;
+	static int	s_fd;
 
-	if (!fd)
-		return (0);
-	str = 0;
-	rbytes = 1;
-	while (rbytes)
+	s_fd = fd;
+	output = 0;
+	p_output = &output;
+	tabsize = 0;
+	tabsize = fill_tab_with_nextline((void **)p_output, tabsize		, &s_fd);
+	if (!tabsize)
 	{
-		rbytes = read(fd, buffer, BUFFER_SIZE);
-		if (rbytes <= 0)
-			break ;
-		buffer[rbytes] = 0;
-		length = ft_strlen(str);
-		str = ft_exallocf((void **)str, length + 1, length + rbytes + 1);
-		if (!str)
-			return (0);
-		ft_strncat(str, buffer, rbytes);
-		if (ft_strchr(str, '\n'))
-			str = ft_substrf(str, 0, ft_strchr(str, '\n') - str + 1);
-		if (!str)
-			return (0);
-		if (ft_strchr(str, '\n'))
-			break ;
+		free(output);
+		return (0);
 	}
-	return (str);
+	output = ft_memtostr(output, tabsize);
+	if (!output)
+		return (0);
+	return (output);
 }
 
+#include <fcntl.h>
 #include <stdio.h>
+
 int	main(void)
 {
-	int	fd;
+	char	*line;
+	int		fd;
+	int		i;
 
+	i = -1;
 	fd = open("test.txt", O_RDONLY);
-	if (!fd)
-		return (1);
-	printf("Output:\t%s", get_next_line(fd));
+	while (i++ < 5)
+	{
+		line = get_next_line(fd);
+		printf("%s", line);
+		free(line);
+	}
+	return (0);
 }
