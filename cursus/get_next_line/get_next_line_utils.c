@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:41:46 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/18 11:34:16 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:48:22 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,65 +64,39 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 }
 
 /*
-*	Different from LIBFT > do not use ft_calloc
-*	It frees the source pointer (*s)
-*	Modified* return NULL if pinter (*s) is NULL
-*	Source is not const, linux unauthorizes freeing const pointers
+*	Search for specific byte inside *s memory pointer
+*	Return a pointer to the first occurence
 */
-void	*ft_submemf(void *s, size_t tabsize, unsigned int start, size_t len)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	*p;
-
-	if (!s)
-		return (0);
-	if (start >= tabsize)
-	{
-		p = (char *)malloc(sizeof(char));
-		*p = 0;
-		return (p);
-	}
-	if (start + len > tabsize)
-		len = tabsize - start;
-	p = (char *)malloc(len * sizeof(char));
-	if (!p)
-		return (0);
-	ft_memcpy(p, s + start, len);
-	free(s);
-	return (p);
-}
-
-/*
-*	Modified strlen which return null if str is null
-*/
-size_t	ft_strlen(const char *str)
-{
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str && str[i])
+	while (i < n)
+	{
+		if (((unsigned char *)s)[i] == (unsigned char)c)
+			return ((void *)s + i);
 		i++;
-	return (i);
+	}
+	return (0);
 }
 
 /*
-* The strncat() function appends not more than n characters from s2, and then
-* adds a terminating `\0'.
-* The source and destination strings should not overlap, as the behavior is
-* undefined.
-* The strncat() function returns the pointer s1.
+*	Concatenate src mem to dest mem
+*	Dest needs to have enough space
+*	Returns null if dest pointer is null
 */
-char	*ft_strncat(char *dest, const char *src, size_t nb)
+void	*ft_memncat(void *dest, size_t start, void *src, size_t nb)
 {
 	int	i;
-	int	j;
 
-	i = ft_strlen(dest);
-	j = 0;
-	while ((unsigned int)j < nb && src[j] != '\0')
+	if (!dest)
+		return (0);
+	i = 0;
+	while ((unsigned int)i < nb)
 	{
-		dest[i + j] = src[j];
-		j++;
+		((unsigned char *)dest)[start + i] = ((unsigned char *)src)[i];
+		i++;
 	}
-	dest[i + j] = '\0';
 	return (dest);
 }

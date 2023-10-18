@@ -6,49 +6,14 @@
 /*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:38:17 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/18 12:58:07 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:48:15 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-/*
-*	Search for specific byte inside *s memory pointer
-*	Return a pointer to the first occurence
-*/
-void	*ft_memchr(const void *s, int c, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		if (((unsigned char *)s)[i] == (unsigned char)c)
-			return ((void *)s + i);
-		i++;
-	}
-	return (0);
-}
-
-/*
-*	Concatenate src mem to dest mem
-*	Dest needs to have enough space
-*	Returns null if dest pointer is null
-*/
-void	*ft_memncat(void *dest, size_t start, void *src, size_t nb)
-{
-	int	i;
-
-	if (!dest)
-		return (0);
-	i = 0;
-	while ((unsigned int)i < nb)
-	{
-		((unsigned char *)dest)[start + i] = ((unsigned char *)src)[i];
-		i++;
-	}
-	return (dest);
-}
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 4
+#endif
 
 /*
 *	Extend mem allocation to add the \0 char at the end
@@ -65,13 +30,12 @@ char	*ft_memtostr(void *mem, size_t size)
 	return ((char *)mem);
 }
 
-const int	BUFFER_SIZE = 4;
 #include <stdio.h>
 
 size_t	fill_tab_with_nextline(void **tab, size_t size, int *fd)
 {
-	char	buffer[BUFFER_SIZE];
-	ssize_t	rbytes;
+	static char		buffer[BUFFER_SIZE];
+	static ssize_t	rbytes;
 
 	rbytes = 1;
 	while (rbytes > 0 && (!ft_memchr(*tab, '\n', size) || !*tab))
