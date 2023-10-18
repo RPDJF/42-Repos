@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:41:46 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/18 13:48:22 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:50:29 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,19 @@ void	*ft_memncat(void *dest, size_t start, void *src, size_t nb)
 		i++;
 	}
 	return (dest);
+}
+
+/*
+*	Extend mem allocation to add the \0 char at the end
+*/
+char	*ft_memtostr(void *mem, size_t size)
+{
+	char	eos;
+
+	eos = '\0';
+	mem = ft_exallocf(mem, size, size + 1);
+	if (!mem)
+		return (0);
+	((unsigned char *)mem)[size] = eos;
+	return ((char *)mem);
 }

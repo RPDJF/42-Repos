@@ -1,5 +1,3 @@
-Bonjour, ceci: 1
-Bonjour, ceci: 2
-Salut, ceci: 3
-Salut, ceci: 4
-slt, ceci: 5
+bonjour
+hello
+bah
