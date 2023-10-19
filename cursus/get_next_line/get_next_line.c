@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:38:17 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/19 16:07:59 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:06:07 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ size_t	fill_tab_nextline(void **tab, ssize_t size, int *fd)
 	static char		buffer[BUFFER_SIZE];
 	static ssize_t	rbytes;
 
+	if (read(*fd, 0, 0))
+	{
+		rbytes = 0;
+		return (0);
+	}
 	if (rbytes)
 		size = fill_frombuffer(tab, size, buffer, &rbytes);
 	if (ft_memchr(*tab, '\n', size))
@@ -71,8 +76,10 @@ size_t	fill_tab_nextline(void **tab, ssize_t size, int *fd)
 	rbytes = read(*fd, buffer, BUFFER_SIZE);
 	if (!rbytes)
 		return (size);
-	else
+	else if (rbytes > 0)
 		size = fill_tab_nextline(tab, size, fd);
+	else
+		return (0);
 	return (size);
 }
 
@@ -84,19 +91,16 @@ size_t	fill_tab_nextline(void **tab, ssize_t size, int *fd)
 char	*get_next_line(int fd)
 {
 	char		*output;
-	char		**p_output;
 	ssize_t		tabsize;
 	static int	s_fd;
 
-	if (!fd)
-		return (0);
 	s_fd = fd;
 	output = 0;
-	p_output = &output;
 	tabsize = 0;
-	tabsize = fill_tab_nextline((void **)p_output, tabsize, &s_fd);
+	tabsize = fill_tab_nextline((void **)&output, tabsize, &s_fd);
 	if (!tabsize)
 	{
+		s_fd = 0;
 		free(output);
 		return (0);
 	}
@@ -106,7 +110,8 @@ char	*get_next_line(int fd)
 	return (output);
 }
 
-/*#include <fcntl.h>
+/*
+#include <fcntl.h>
 #include <stdio.h>
 
 int main(void)
