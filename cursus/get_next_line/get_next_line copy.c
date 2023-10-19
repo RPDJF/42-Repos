@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:38:17 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/18 19:15:00 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:40:07 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,20 @@ void	*ft_exallocf(void *ptr, size_t size, size_t newsize)
 	return (p);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char	*dstwriter;
+	size_t	i;
 
 	if (!dest && !src)
 		return (0);
-	dstwriter = dest;
-	while (src++, dstwriter++, (size_t)dstwriter - 1 - (size_t)dest < n)
-		*(dstwriter - 1) = *(unsigned char *)(src - 1);
+	i = 0;
+	if (dest > src)
+		while (i < n--)
+			((unsigned char *)dest)[n] = ((unsigned char *)src)[n];
+	else
+		while (i++ < n)
+			((unsigned char *)dest)[i - 1] = ((unsigned char *)src)[i - 1];
 	return (dest);
 }
 
@@ -153,6 +158,45 @@ ssize_t	fill_tab_with_lastbuffer(void **tab, ssize_t tabize, char *buffer, ssize
 	return (size + tabize);
 }
 
+void	*ft_submemf(void *s, size_t start, size_t len)
+{
+	void	*p;
+
+	p = malloc(len);
+	if (!p)
+		return (0);
+	ft_memmove(p, s + start, len);
+	return (p);
+}
+
+size_t	fill_tab(void **tab, ssize_t tabsize, char *buffer, ssize_t *bsize)
+{
+
+	// trouvé \n dans buffer
+	// si \n
+	// 		aggrandir tab et concat buffer jusqu'à \n
+	//		décaler buffer avec memmove
+	//		changer valeur de bsize
+	// sinon
+	//		aggrandir tab et concat tout buffer
+
+	size_t	new_tabsize;
+	char	*p_buffer_nl;
+
+	new_tabsize = tabsize;
+	p_buffer_nl = ft_memchr(buffer, '\n', *bsize);
+	if (p_buffer_nl)
+	{
+		new_tabsize += p_buffer_nl - buffer + 1;
+		ft_exallocf(*tab, tabsize, new_tabsize);
+		if (!*tab)
+			return (0);
+		ft_memncat(*tab, tabsize, buffer, new_tabsize - tabsize);
+		ft_memmove(buffer, p_buffer_nl + 1, new_tabsize - tabsize);
+		*bsize -= p_buffer_nl - buffer; // à corriger
+	}
+}
+
 /*
 *	Fill tab pointer with the next line
 *	Some buffersize don't work, need fix
@@ -161,27 +205,11 @@ size_t	fill_tab_nextline(void **tab, ssize_t size, int *fd)
 {
 	static char		buffer[BUFFER_SIZE];
 	static ssize_t	rbytes;
-	ssize_t			swap_rbytes;
 
-	size = fill_tab_with_lastbuffer(tab, size, buffer, rbytes);
-	if (size == -1)
-		return (0);
-	rbytes = 1;
-	while (rbytes > 0 && (!ft_memchr(*tab, '\n', size) || !*tab))
+	while (rbytes >= 0 && !ft_memchr(buffer, '\n', rbytes))
 	{
-		rbytes = read(*fd, buffer, BUFFER_SIZE);
-		swap_rbytes = rbytes;
-		if (rbytes < 0)
-			return (0);
-		if (rbytes == 0)
-			break ;
-		if (ft_memchr(buffer, '\n', rbytes))
-			swap_rbytes = (char *)ft_memchr(buffer, '\n', rbytes) - buffer + 1;
-		*tab = ft_exallocf(*tab, size, size + swap_rbytes);
-		size += swap_rbytes;
-		ft_memncat(*tab, size - swap_rbytes, buffer, swap_rbytes);
-		if (!*tab)
-			return (0);
+		rbytes = read(fd, buffer, BUFFER_SIZE);
+		size = fill_tab(tab, size, buffer, rbytes);
 	}
 	return (size);
 }
