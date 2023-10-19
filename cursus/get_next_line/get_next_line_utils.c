@@ -3,29 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:41:46 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/18 13:50:29 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:58:09 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*
-* Returns a pointer to an extend malloc
-* Copies bytes from ptr to the returned malloc
-* ft_exallocf frees the ptr's pointed malloc
-*
-* Size inputs represents the size of the malloc in bytes
-* If ptr is null, returns a new 'calloc' with newsize
-* Returns 0 if allocation failed and free ptr
-*/
-#include <stdio.h>
+ *	Returns a pointer to an extend malloc
+ *	Copies bytes from ptr to the returned malloc
+ *	ft_exallocf frees the ptr's pointed malloc
+ *
+ *	Size inputs represents the size of the malloc in bytes
+ *	If ptr is null, returns a new 'calloc' with newsize
+ *	Returns 0 if allocation failed and free ptr
+ */
 void	*ft_exallocf(void *ptr, size_t size, size_t newsize)
 {
 	void	*p;
-	void	*pwriter;
+	void	*p_p;
 
 	p = malloc(newsize);
 	if (!p)
@@ -33,40 +32,49 @@ void	*ft_exallocf(void *ptr, size_t size, size_t newsize)
 		free(ptr);
 		return (0);
 	}
-	pwriter = p;
+	p_p = p;
 	if (!ptr)
 	{
-		while ((size_t)pwriter++ - (size_t)p < newsize)
-			*((unsigned char *)(pwriter - 1)) = 0;
+		while ((size_t)p_p++ - (size_t)p < newsize)
+			*((unsigned char *)(p_p - 1)) = 0;
 		return (p);
 	}
-	while ((size_t)pwriter - (size_t)p < size)
+	while ((size_t)p_p - (size_t)p < size)
 	{
-		*((unsigned char *)(pwriter)) = *((unsigned char *)(ptr + (pwriter - p)));
-		pwriter++;
+		*((unsigned char *)(p_p)) = *((unsigned char *)(ptr + (p_p - p)));
+		p_p++;
 	}
-	while ((size_t)pwriter - (size_t)p < newsize)
-		*((unsigned char *)(pwriter++)) = 0;
+	while ((size_t)p_p - (size_t)p < newsize)
+		*((unsigned char *)(p_p++)) = 0;
 	free(ptr);
 	return (p);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+/*
+*	ft_memmove copies n bytes from src to dest
+*	It does protect the memory from overlapping
+*	Returns dest
+*/
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char	*dstwriter;
+	size_t	i;
 
 	if (!dest && !src)
 		return (0);
-	dstwriter = dest;
-	while (src++, dstwriter++, (size_t)dstwriter - 1 - (size_t)dest < n)
-		*(dstwriter - 1) = *(unsigned char *)(src - 1);
+	i = 0;
+	if (dest > src)
+		while (i < n--)
+			((unsigned char *)dest)[n] = ((unsigned char *)src)[n];
+	else
+		while (i++ < n)
+			((unsigned char *)dest)[i - 1] = ((unsigned char *)src)[i - 1];
 	return (dest);
 }
 
 /*
-*	Search for specific byte inside *s memory pointer
-*	Return a pointer to the first occurence
-*/
+ *	Search for specific byte inside *s memory pointer
+ *	Return a pointer to the first occurence
+ */
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	size_t	i;
@@ -82,10 +90,10 @@ void	*ft_memchr(const void *s, int c, size_t n)
 }
 
 /*
-*	Concatenate src mem to dest mem
-*	Dest needs to have enough space
-*	Returns null if dest pointer is null
-*/
+ *	Concatenate src mem to dest mem
+ *	Dest needs to have enough space
+ *	Returns null if dest pointer is null
+ */
 void	*ft_memncat(void *dest, size_t start, void *src, size_t nb)
 {
 	int	i;
@@ -102,8 +110,8 @@ void	*ft_memncat(void *dest, size_t start, void *src, size_t nb)
 }
 
 /*
-*	Extend mem allocation to add the \0 char at the end
-*/
+ *	Extend mem allocation to add the \0 char at the end
+ */
 char	*ft_memtostr(void *mem, size_t size)
 {
 	char	eos;

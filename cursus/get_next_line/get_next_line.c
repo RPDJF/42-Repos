@@ -3,86 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:38:17 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/18 18:29:48 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:07:59 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 3
+# define BUFFER_SIZE 4
 #endif
 
-#include <stdio.h>
-
 /*
-*	When get_next_line is called a second time, the
-*	last buffer may contain unused bytes. This func
-*	should be called in this case to fill tab with
-*	unused bytes.
-*
-*	Returns tab size
-*	Returns 0/NULL if tabsize is 0
-*	Returns -1 if error
+*	trouver \n dans buffer
+*	 si \n est prsent
+*	 		aggrandir tab et concat buffer jusqu'à \n
+*			décaler buffer avec memmove
+*			changer valeur de bsize
+*	 sinon
+*			aggrandir tab et concat tout buffer
+			bsize = 0
+*	 Retourne la taille du nouveau tableau & met a jour la taille de bsize
 */
-ssize_t	fill_tab_with_lastbuffer(void **tab, ssize_t tabize, char *buffer, ssize_t buffersize)
+size_t	fill_frombuffer(void **tab, ssize_t size, char *buff, ssize_t *bsize)
 {
-	ssize_t	size;
-	ssize_t	usedbytes_size;
+	size_t	new_size;
+	char	*p_buff_nl;
 
-	if (!buffersize)
-		return (0);
-	usedbytes_size = (char *)ft_memchr(buffer, '\n', buffersize) - buffer + 1;
-	if (buffersize == usedbytes_size)
-		return (0);
-	size = buffersize - usedbytes_size;
-	*tab = malloc(size);
+	p_buff_nl = ft_memchr(buff, '\n', *bsize);
+	if (p_buff_nl)
+	{
+		new_size = size + p_buff_nl - buff + 1;
+		*tab = ft_exallocf(*tab, size, new_size);
+		if (!*tab)
+			return (0);
+		ft_memncat(*tab, size, buff, new_size - size);
+		if (buff == p_buff_nl)
+			ft_memmove(buff, p_buff_nl + 1, *bsize - 1);
+		else if (p_buff_nl < buff + *bsize - 1)
+			ft_memmove(buff, p_buff_nl + 1, *bsize - (p_buff_nl - buff) - 1);
+		*bsize -= (p_buff_nl - buff) + 1;
+		return (new_size);
+	}
+	new_size = size + *bsize;
+	*tab = ft_exallocf(*tab, size, new_size);
 	if (!*tab)
-		return (-1);
-	ft_memncat(*tab, 0, buffer + usedbytes_size, size);
-	return (size + tabize);
+		return (0);
+	ft_memncat(*tab, size, buff, new_size - size);
+	*bsize = 0;
+	return (new_size);
 }
 
 /*
-*	Fill tab pointer with the next line
-*	Some buffersize don't work, need fix
-*/
-size_t	fill_tab_with_nextline(void **tab, ssize_t size, int *fd)
+ *	Fill tab pointer with the next line
+ */
+size_t	fill_tab_nextline(void **tab, ssize_t size, int *fd)
 {
 	static char		buffer[BUFFER_SIZE];
 	static ssize_t	rbytes;
-	ssize_t			swap_rbytes;
 
-	size = fill_tab_with_lastbuffer(tab, size, buffer, rbytes);
-	if (size == -1)
-		return (0);
-	rbytes = 1;
-	while (rbytes > 0 && (!ft_memchr(*tab, '\n', size) || !*tab))
-	{
-		rbytes = read(*fd, buffer, BUFFER_SIZE);
-		swap_rbytes = rbytes;
-		if (rbytes < 0)
-			return (0);
-		if (rbytes == 0)
-			break ;
-		if (ft_memchr(buffer, '\n', rbytes))
-			swap_rbytes = (char *)ft_memchr(buffer, '\n', rbytes) - buffer + 1;
-		*tab = ft_exallocf(*tab, size, size + swap_rbytes);
-		size += swap_rbytes;
-		ft_memncat(*tab, size - swap_rbytes, buffer, swap_rbytes);
-		if (!*tab)
-			return (0);
-	}
+	if (rbytes)
+		size = fill_frombuffer(tab, size, buffer, &rbytes);
+	if (ft_memchr(*tab, '\n', size))
+		return (size);
+	rbytes = read(*fd, buffer, BUFFER_SIZE);
+	if (!rbytes)
+		return (size);
+	else
+		size = fill_tab_nextline(tab, size, fd);
 	return (size);
 }
 
 /*
-*	Returns the next line from a file as a string, containing \n.
-*	This functions use creates a static from fd, looping this
-*	functions sends each newline from last one, until EOF char.
-*/
+ *	Returns the next line from a file as a string, containing \n.
+ *	This functions use creates a static from fd, looping this
+ *	functions sends each newline from last one, until EOF char.
+ */
 char	*get_next_line(int fd)
 {
 	char		*output;
@@ -90,11 +88,13 @@ char	*get_next_line(int fd)
 	ssize_t		tabsize;
 	static int	s_fd;
 
+	if (!fd)
+		return (0);
 	s_fd = fd;
 	output = 0;
 	p_output = &output;
 	tabsize = 0;
-	tabsize = fill_tab_with_nextline((void **)p_output, tabsize, &s_fd);
+	tabsize = fill_tab_nextline((void **)p_output, tabsize, &s_fd);
 	if (!tabsize)
 	{
 		free(output);
@@ -106,18 +106,18 @@ char	*get_next_line(int fd)
 	return (output);
 }
 
-#include <fcntl.h>
+/*#include <fcntl.h>
 #include <stdio.h>
 
-int	main(void)
+int main(void)
 {
-	char	*line;
-	int		fd;
-	int		i;
+	char *line;
+	int fd;
+	int i;
 
 	i = -1;
 	fd = open("test.txt", O_RDONLY);
-	while (i++ < 15)
+	while (i++ < 18)
 	{
 		line = get_next_line(fd);
 		printf("> %s\n", line);
@@ -125,3 +125,4 @@ int	main(void)
 	}
 	return (0);
 }
+*/
