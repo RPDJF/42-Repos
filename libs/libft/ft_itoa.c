@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:04:38 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/14 14:04:20 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:55:15 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,3 @@ char	*ft_itoa(int n)
 		p[0] = '-';
 	return (p);
 }
-
-/*#include <stdio.h>
-int	main(void)
-{
-	char *itoa = ft_itoa(10);
-	printf("%s\n", itoa);
-	free(itoa);
-	itoa = ft_itoa(-10004);
-	printf("%s\n", itoa);
-	free(itoa);
-	itoa = ft_itoa(-9);
-	printf("%s\n", itoa);
-	free(itoa);
-	itoa = ft_itoa(-2147483648);
-	printf("%s\n", itoa);
-	free(itoa);
-	return (0);
-}
-*/

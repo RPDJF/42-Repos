@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 12:05:24 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/10 14:14:28 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:52:42 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,3 @@ int	ft_isascii(int c)
 		return (0);
 	return (1);
 }
-
-// do main function
-/*
-#include <stdio.h>\
-
-int	main(void)
-{
-	printf ("%d", ft_isascii(23));
-}
-*/

@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 14:59:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/10 14:15:05 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:51:58 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,3 @@ int	ft_isalnum(int c)
 				return (0);
 	return (1);
 }
-
-// do main function
-/*
-#include <stdio.h>
-
-int	main(void)
-{
-	printf ("%d", ft_isalnum('a'));
-}
-*/

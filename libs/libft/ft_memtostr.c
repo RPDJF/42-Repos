@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_memtostr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 09:49:04 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/20 12:50:11 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/20 13:19:05 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/20 13:19:16 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isspace(char c)
+char	*ft_memtostr(void *mem, size_t size)
 {
-	if (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r')
-		return (1);
-	return (0);
-}
+	char	eos;
 
-int	ft_atoi(const char *str)
-{
-	int	output;
-	int	sign;
-
-	output = 0;
-	sign = 1;
-	while (ft_isspace(*str))
-		str++;
-	if (*str == '+' || *str == '-')
-		if (*(str++) == '-')
-			sign = -sign;
-	while (ft_isdigit(*str))
-		output = output * 10 + *(str++) - '0';
-	return (sign * output);
+	eos = '\0';
+	mem = ft_exallocf(mem, size, size + 1);
+	if (!mem)
+		return (0);
+	((unsigned char *)mem)[size] = eos;
+	return ((char *)mem);
 }

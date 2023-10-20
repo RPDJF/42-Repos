@@ -1,4 +1,4 @@
-.PHONY = all clean fclean re bonus
+.PHONY = all clean fclean re bonus homemade
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 FILES = ft_atoi \
@@ -46,22 +46,32 @@ BONUS_FILES =	ft_lstadd_back \
 				ft_lstnew \
 				ft_lstsize \
 
+HOMEMADE_FILES = ft_exallocf \
+				ft_get_next_line \
+				ft_memncat \
+				ft_memtostr \
+
 CFILES = $(FILES:%=%.c)
 OFILES = $(FILES:%=%.o)
 BONUS_CFILES = $(BONUS_FILES:%=%.c)
 BONUS_OFILES = $(BONUS_FILES:%=%.o)
+HOMEMADE_CFILES = $(HOMEMADE_FILES:%=%.c)
+HOMEMADE_OFILES = $(HOMEMADE_FILES:%=%.o)
 NAME = libft.a
+
+all: homemade
 
 $(NAME): $(OFILES)
 	ar -rc $(NAME) $(OFILES)
 
-all: $(NAME)
-
 bonus: $(BONUS_OFILES) $(OFILES)
 	ar -rc $(NAME) $(BONUS_OFILES) $(OFILES)
 
+homemade:	$(HOMEMADE_OFILES) $(OFILES) $(BONUS_OFILES)
+	ar -rc $(NAME) $(BONUES_OFILES) $(OFILES) $(HOME_OFILES)
+
 clean:
-	rm -f $(OFILES) $(BONUS_OFILES)
+	rm -f $(OFILES) $(BONUS_OFILES) $(HOMEMADE_OFILES)
 
 fclean: clean
 	rm -f $(NAME)
