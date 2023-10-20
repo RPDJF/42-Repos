@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/20 17:55:59 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:25:20 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,19 @@ int	check_format(const char *format)
 
 static int	printarg(char c, va_list args)
 {
+	ssize_t	size;
+	char	*str;
+
 	if (c == 'c')
-		ft_putchar_fd(va_arg(args, char), 1);
+		ft_putchar_fd(va_arg(args, int), 1);
 	if (c == 'c')
 		return (1);
 	if (c == 'i')
-		ft_putnbr_fd(va_arg(args, char), 1);
-	if (c == 'i')
-		// return size
+		str = ft_itoa(va_arg(args, int));
+	ft_putstr_fd(str, 1);
+	size = ft_strlen(str);
+	free(str);
+	return (size);
 }
 
 #include <stdio.h>
@@ -94,5 +99,5 @@ int	ft_printf(const char *format, ...)
 int	main(int argc, char **argv)
 {
 	//printf("hello %%\n");
-	ft_printf(argv[1], 'x', 'z');
+	ft_printf(argv[1], 'x', 45);
 }
