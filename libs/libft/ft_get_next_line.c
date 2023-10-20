@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 13:20:51 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/20 13:24:36 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:14:25 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ size_t	fill_tab_nextline(void **tab, ssize_t size, int *fd)
 	return (size);
 }
 
-char	*get_next_line(int fd)
+char	*ft_get_next_line(int fd)
 {
 	char		*output;
 	ssize_t		tabsize;

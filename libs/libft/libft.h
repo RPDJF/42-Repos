@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/20 13:24:22 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:14:36 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	*ft_exallocf(void *ptr, size_t size, size_t newsize);
  *	This functions use creates a static from fd, looping this
  *	functions sends each newline from last one, until EOF char.
  */
-char	*get_next_line(int fd);
+char	*ft_get_next_line(int fd);
 /*
  *	Concatenate src mem to dest mem
  *	Dest needs to have enough space
