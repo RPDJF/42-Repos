@@ -46,7 +46,8 @@ BONUS_FILES =	ft_lstadd_back \
 				ft_lstnew \
 				ft_lstsize \
 
-HOMEMADE_FILES = ft_exallocf \
+HOMEMADE_FILES = ft_itoa_base \
+				ft_exallocf \
 				ft_get_next_line \
 				ft_memncat \
 				ft_memtostr \

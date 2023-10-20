@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/20 18:14:36 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/20 20:13:27 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int		ft_isascii(int c);
 int		ft_isdigit(int c);
 //	Check if is printable character
 int		ft_isprint(int c);
+//	Converts int number into a string with specific base
+char	*ft_itoa_base(int n, const char *base);
 //	Converts int number into a string
 char	*ft_itoa(int n);
 //	Returns a pointer to the first occurence of specific byte in memory s
