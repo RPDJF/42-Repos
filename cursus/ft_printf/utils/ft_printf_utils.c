@@ -6,13 +6,13 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 12:56:02 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 16:53:11 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:11:55 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // These utils are modified versions of my libft
 
-#include "../libs/libft.h"
+#include "../ft_printf.h"
 #include <unistd.h>
 
 char	*ft_inttohex(int n)
