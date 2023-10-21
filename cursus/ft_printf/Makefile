@@ -1,7 +1,7 @@
 .PHONY = all clean fclean re
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-LIBFT_SRC = ft_atoi \
+LIBFT_FILES = ft_atoi \
 				ft_bzero \
 				ft_calloc \
 				ft_isalnum \
@@ -52,24 +52,24 @@ LIBFT_SRC = ft_atoi \
 				ft_memsuperclear \
 				ft_memtostr \
 
+LIBFT_SRC = $(LIBFT_FILES:%=libs/%)
+SRC = ft_printf \
+		utils/ft_printf_utils
 LIBFT_OFILES = $(LIBFT_SRC:%=%.o)
+OFILES = $(SRC:%=%.o)
 LIBFT = libft.a
+NAME = ft_printf.a
 
-all: homemade
+all: $(NAME)
 
-$(NAME): $(OFILES)
-	ar -rc $(NAME) $(OFILES)
+$(NAME): $(LIBFT) $(OFILES)
+	ar -rc $(NAME) $(OFILES) $(LIBFT:%=libs/%)
 
 $(LIBFT): $(LIBFT_OFILES)
-
-bonus: $(BONUS_OFILES) $(OFILES)
-	ar -rc $(NAME) $(BONUS_OFILES) $(OFILES)
-
-homemade:	$(HOMEMADE_OFILES) $(OFILES) $(BONUS_OFILES)
-	ar -rc $(NAME) $(BONUES_OFILES) $(OFILES) $(HOMEMADE_OFILES)
+	ar -rc $(LIBFT:%=libs/%) $(LIBFT_OFILES)
 
 clean:
-	rm -f $(OFILES) $(BONUS_OFILES) $(HOMEMADE_OFILES)
+	rm -f $(OFILES) $(LIBFT_OFILES) $(LIBFT:%=libs/%)
 
 fclean: clean
 	rm -f $(NAME)
