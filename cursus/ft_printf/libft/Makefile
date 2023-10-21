@@ -60,13 +60,25 @@ NAME = libft.a
 
 all: $(NAME)
 
+%.o: %.c
+	@tput el
+	@printf "\t🤖 Compiling $<...\r"
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@tput el
+
 $(NAME): $(CFILES) $(OFILES)
-	ar -rc $(NAME) $(OFILES)
+	@tput el
+	@printf "\t🤖 Compiling $(NAME)...\r"
+	@ar -rc $(NAME) $(OFILES)
+	@tput el
+	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
 
 clean:
-	rm -f $(OFILES)
+	@rm -f $(OFILES)
+	@echo "\t[INFO] [$(NAME)]\t$(words $(OFILES)) object files deleted 🗑️"
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "\t[INFO] [$(NAME)]\t$(NAME) is fully deleted 🗑️"
 
 re: fclean all

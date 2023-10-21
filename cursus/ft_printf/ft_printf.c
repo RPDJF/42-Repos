@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 18:55:17 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 18:59:35 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,8 @@ int	check_format(const char *format)
 			while (valid_args[i++])
 			{
 				if (ft_memchr(format, valid_args[i - 1], 1))
-				{
 					format++;
-					break;
-				}
-				if (!valid_args[i])
+				if (!valid_args[i - 1])
 					return (-1);
 			}
 		}

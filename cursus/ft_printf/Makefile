@@ -87,31 +87,43 @@ UTILS_OFILES = $(UTILS_SRC:%=utils/%.o)
 
 SRC = ft_printf \
 
-CFILES = $(SRC:%=%.c) $(UTILS_CFILES)
-OFILES = $(SRC:%=%.o) $(UTILS_OFILES)
+CFILES = $(UTILS_CFILES) $(SRC:%=%.c) 
+OFILES = $(UTILS_OFILES) $(SRC:%=%.o)
 
 NAME = libftprintf.a
 
 all: $(NAME)
 
+%.o: %.c
+	@tput el
+	@printf "\t🤖 Compiling $<...\r"
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@tput el
+	@echo "\t[INFO] [$(NAME)]\t$< is compiled ✅"
+
 $(NAME): header $(CFILES) lib_header $(LIBFT_CFILES) buildlibft $(LIBFT_OFILES) $(OFILES)
 	@echo "$$APP_HEADER"
-	ar -rc $(NAME) $(LIBFT_OFILES) $(OFILES)
-	@echo
+	@tput el
+	@printf "\t🤖 Compiling $(NAME)...\r"
+	@ar -rc $(NAME) $(LIBFT_OFILES) $(OFILES)
+	@tput el
+	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅\n"
 
 buildlibft: $(LIBFT_PATH)Makefile
-	$(MAKE) -C $(LIBFT_PATH) all
+	@$(MAKE) -C $(LIBFT_PATH) all --no-print-directory
 
 lib_header:
 	@echo "$$LIB_HEADER"
 
 clean:
-	rm -f $(OFILES)
-	$(MAKE) -C $(LIBFT_PATH) clean
+	@rm -f $(OFILES)
+	@echo "\t[INFO] [$(NAME)]\t$(words $(OFILES)) object files deleted 🗑️"
+	@$(MAKE) -C $(LIBFT_PATH) clean --no-print-directory
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_PATH) fclean
+	@rm -f $(NAME)
+	@echo "\t[INFO] [$(NAME)]\t$(NAME) is fully deleted 🗑️"
+	@$(MAKE) -C $(LIBFT_PATH) fclean --no-print-directory
 
 re: fclean all
 
