@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 18:59:35 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:33:47 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	check_format(const char *format)
 	}
 	return (1);
 }
-
-#include <stdio.h>
 
 static void	printarg(char c, va_list args, int *size)
 {

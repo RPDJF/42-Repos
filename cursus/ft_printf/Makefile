@@ -118,12 +118,11 @@ lib_header:
 clean:
 	@rm -f $(OFILES)
 	@echo "\t[INFO] [$(NAME)]\t$(words $(OFILES)) object files deleted 🗑️"
-	@$(MAKE) -C $(LIBFT_PATH) clean --no-print-directory
+	@$(MAKE) -C $(LIBFT_PATH) fclean --no-print-directory
 
 fclean: clean
 	@rm -f $(NAME)
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is fully deleted 🗑️"
-	@$(MAKE) -C $(LIBFT_PATH) fclean --no-print-directory
 
 re: fclean all
 
