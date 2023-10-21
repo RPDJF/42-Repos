@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 13:14:26 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 16:15:03 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ static void	printarg(char c, va_list args, int *size)
 	else if (c == 'X')
 		str = ft_itoa_base(va_arg(args, int), "0123456789ABCDEF");
 	if (str)
+	{
 		ft_putstr_count(str, size);
-	if (str)
 		free(str);
+		*size += ft_strlen(str);
+	}
 }
-
-#include <stdio.h>
 
 static void	print(const char **str, va_list args, int *size)
 {
@@ -104,14 +104,3 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (size);
 }
-
-/*int	main(int argc, char **argv)
-{
-	char *p;
-	char a;
-
-	a = 'a';
-	p = &a;
-	ft_printf("%d\n", ft_printf("Bonjour %%s, comment allez %cous ? Tu as %d ans, %i ok ?\nSinon %p\n, %x %X\n", 'v', 45, 3, p, 12, 12));
-}
-*/

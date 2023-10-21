@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 12:56:02 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 13:11:14 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 14:35:58 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,3 @@ void	ft_putstr_count(char *s, int *size)
 	while (*(s++))
 		ft_putchar_count(*(s - 1), size);
 }
-

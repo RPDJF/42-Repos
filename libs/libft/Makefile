@@ -35,8 +35,7 @@ FILES = ft_atoi \
 				ft_substr \
 				ft_tolower \
 				ft_toupper
-
-BONUS_FILES =	ft_lstadd_back \
+				ft_lstadd_back \
 				ft_lstadd_front \
 				ft_lstclear \
 				ft_lstdelone \
@@ -45,8 +44,7 @@ BONUS_FILES =	ft_lstadd_back \
 				ft_lstmap \
 				ft_lstnew \
 				ft_lstsize \
-
-HOMEMADE_FILES = ft_itoa_base \
+				ft_itoa_base \
 				ft_itoa_unsigned \
 				ft_exallocf \
 				ft_get_next_line \
@@ -56,25 +54,15 @@ HOMEMADE_FILES = ft_itoa_base \
 
 CFILES = $(FILES:%=%.c)
 OFILES = $(FILES:%=%.o)
-BONUS_CFILES = $(BONUS_FILES:%=%.c)
-BONUS_OFILES = $(BONUS_FILES:%=%.o)
-HOMEMADE_CFILES = $(HOMEMADE_FILES:%=%.c)
-HOMEMADE_OFILES = $(HOMEMADE_FILES:%=%.o)
 NAME = libft.a
 
 all: homemade
 
-$(NAME): $(OFILES)
+$(NAME): $(CFILES) $(OFILES)
 	ar -rc $(NAME) $(OFILES)
 
-bonus: $(BONUS_OFILES) $(OFILES)
-	ar -rc $(NAME) $(BONUS_OFILES) $(OFILES)
-
-homemade:	$(HOMEMADE_OFILES) $(OFILES) $(BONUS_OFILES)
-	ar -rc $(NAME) $(BONUES_OFILES) $(OFILES) $(HOMEMADE_OFILES)
-
 clean:
-	rm -f $(OFILES) $(BONUS_OFILES) $(HOMEMADE_OFILES)
+	rm -f $(OFILES)
 
 fclean: clean
 	rm -f $(NAME)
