@@ -47,9 +47,11 @@ BONUS_FILES =	ft_lstadd_back \
 				ft_lstsize \
 
 HOMEMADE_FILES = ft_itoa_base \
+				ft_itoa_unsigned \
 				ft_exallocf \
 				ft_get_next_line \
 				ft_memncat \
+				ft_memsuperclear \
 				ft_memtostr \
 
 CFILES = $(FILES:%=%.c)
@@ -69,7 +71,7 @@ bonus: $(BONUS_OFILES) $(OFILES)
 	ar -rc $(NAME) $(BONUS_OFILES) $(OFILES)
 
 homemade:	$(HOMEMADE_OFILES) $(OFILES) $(BONUS_OFILES)
-	ar -rc $(NAME) $(BONUES_OFILES) $(OFILES) $(HOME_OFILES)
+	ar -rc $(NAME) $(BONUES_OFILES) $(OFILES) $(HOMEMADE_OFILES)
 
 clean:
 	rm -f $(OFILES) $(BONUS_OFILES) $(HOMEMADE_OFILES)

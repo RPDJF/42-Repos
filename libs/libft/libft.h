@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/20 20:13:27 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 12:28:13 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int		ft_isdigit(int c);
 int		ft_isprint(int c);
 //	Converts int number into a string with specific base
 char	*ft_itoa_base(int n, const char *base);
+//	Converts unsigned int number into a string
+char	*ft_itoa_unsigned(unsigned int n);
 //	Converts int number into a string
 char	*ft_itoa(int n);
 //	Returns a pointer to the first occurence of specific byte in memory s
