@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 18:24:03 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 18:55:17 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@
 int	check_format(const char *format)
 {
 	const char		valid_args[] = "cspdiuxX%%";
-	int				output;
 	int				i;
 
-	output = 0;
 	while (*(format++))
 	{
 		i = 0;
@@ -36,9 +34,7 @@ int	check_format(const char *format)
 				if (ft_memchr(format, valid_args[i - 1], 1))
 				{
 					format++;
-					if (*format != '%')
-						output++;
-					break ;
+					break;
 				}
 				if (!valid_args[i])
 					return (-1);
@@ -47,6 +43,8 @@ int	check_format(const char *format)
 	}
 	return (1);
 }
+
+#include <stdio.h>
 
 static void	printarg(char c, va_list args, int *size)
 {
@@ -68,11 +66,9 @@ static void	printarg(char c, va_list args, int *size)
 	else if (c == 'X')
 		str = ft_itoa_base(va_arg(args, int), "0123456789ABCDEF");
 	if (str)
-	{
 		ft_putstr_count(str, size);
+	if (str)
 		free(str);
-		*size += ft_strlen(str);
-	}
 }
 
 static void	print(const char **str, va_list args, int *size)
