@@ -69,7 +69,6 @@ LIBFT_SRC =	ft_bzero \
 			ft_itoa \
 			ft_memchr \
 			ft_memset \
-			ft_strdup \
 			ft_strjoin \
 			ft_strlen \
 			ft_itoa_base_unsigned \
