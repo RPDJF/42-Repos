@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 20:33:47 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 21:38:22 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	printarg(char c, va_list args, int *size)
 	else if (c == 'i' || c == 'd')
 		str = ft_itoa(va_arg(args, int));
 	else if (c == 's')
-		str = ft_strdup(va_arg(args, char *));
+		ft_putstr_count(va_arg(args, char *), size);
 	else if (c == 'p')
 		str = ft_inttohex((unsigned long int)va_arg(args, void *));
 	else if (c == 'u')
