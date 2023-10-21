@@ -6,13 +6,25 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 12:56:02 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 14:35:58 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 16:53:11 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // These utils are modified versions of my libft
 
+#include "../libs/libft.h"
 #include <unistd.h>
+
+char	*ft_inttohex(int n)
+{
+	char	*output;
+	char	*itoa_base;
+
+	itoa_base = ft_itoa_base(n, "0123456789abcdef");
+	output = ft_strjoin("0x", itoa_base);
+	free(itoa_base);
+	return (output);
+}
 
 void	ft_putchar_count(char c, int *size)
 {
