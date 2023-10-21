@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 12:28:13 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 18:11:22 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int		ft_isascii(int c);
 int		ft_isdigit(int c);
 //	Check if is printable character
 int		ft_isprint(int c);
+//	Converts unsigned long int number into a string with specific base
+char	*ft_itoa_base_unsigned(unsigned long int n, const char *base);
 //	Converts int number into a string with specific base
 char	*ft_itoa_base(int n, const char *base);
 //	Converts unsigned int number into a string

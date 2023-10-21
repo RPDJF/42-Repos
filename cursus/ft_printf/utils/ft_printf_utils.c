@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 12:56:02 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 17:11:55 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 18:12:25 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include "../ft_printf.h"
 #include <unistd.h>
 
-char	*ft_inttohex(int n)
+char	*ft_inttohex(unsigned long int n)
 {
 	char	*output;
 	char	*itoa_base;
 
-	itoa_base = ft_itoa_base(n, "0123456789abcdef");
+	itoa_base = ft_itoa_base_unsigned(n, "0123456789abcdef");
 	output = ft_strjoin("0x", itoa_base);
 	free(itoa_base);
 	return (output);

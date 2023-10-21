@@ -72,6 +72,7 @@ LIBFT_SRC =	ft_bzero \
 			ft_strdup \
 			ft_strjoin \
 			ft_strlen \
+			ft_itoa_base_unsigned \
 			ft_itoa_base \
 			ft_itoa_unsigned \
 

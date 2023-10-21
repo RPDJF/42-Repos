@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 16:50:21 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 18:24:03 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,12 @@ static void	printarg(char c, va_list args, int *size)
 	str = 0;
 	if (c == 'c')
 		ft_putchar_count(va_arg(args, int), size);
-	else if (c == 'i')
-		ft_putchar_count(va_arg(args, int) + '0', size);
+	else if (c == 'i' || c == 'd')
+		str = ft_itoa(va_arg(args, int));
 	else if (c == 's')
 		str = ft_strdup(va_arg(args, char *));
 	else if (c == 'p')
-		str = ft_inttohex(va_arg(args, int));
-	else if (c == 'd')
-		str = ft_itoa(va_arg(args, int));
+		str = ft_inttohex((unsigned long int)va_arg(args, void *));
 	else if (c == 'u')
 		str = ft_itoa_unsigned(va_arg(args, unsigned int));
 	else if (c == 'x')
