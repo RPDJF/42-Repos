@@ -1,6 +1,6 @@
 <img src="https://42lausanne.ch/wp-content/uploads/2021/01/42_logo.svg" style="width:30%;"></img>
 
-# 🚀 Cours de l'école 42 Lausanne - Mon dépôt de projets 🚀
+# 🚀 Cours de 42 Lausanne - Mon dépôt de projets 🚀
 
 Ce dépôt GitHub contient l'ensemble de mes projets du cursus de la 42 que je remplis au fur et à mesure. C'est avant tout mon espace de travail personnel, me permettant de travailler de n'importe où. Il est ouvert au public pour aider les curieux à comprendre les projets, mais mon conseil numéro un est de les aborder par toi-même avant de consulter mon code.
 
