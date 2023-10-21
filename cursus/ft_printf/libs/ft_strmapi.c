@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 10:08:36 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 13:05:28 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/14 20:48:57 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/14 21:17:36 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include "libs/libft.h"
-# include <stdarg.h>
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	char			*output;
+	char			*owriter;
 
-int		ft_printf(const char *format, ...);
-void	ft_putchar_count(char c, int *size);
-void	ft_putstr_count(char *s, int *size);
-
-#endif
+	output = (char *)ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (!output)
+		return (0);
+	owriter = output;
+	while (owriter++, *(s++))
+		*(owriter - 1) = f(owriter - 1 - output, *(s - 1));
+	return (output);
+}

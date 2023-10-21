@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 10:08:36 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 13:05:28 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/15 12:25:04 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/15 12:32:52 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include "libs/libft.h"
-# include <stdarg.h>
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*p;
 
-int		ft_printf(const char *format, ...);
-void	ft_putchar_count(char c, int *size);
-void	ft_putstr_count(char *s, int *size);
-
-#endif
+	p = (t_list *)ft_calloc(1, sizeof(t_list));
+	if (!p)
+		return (0);
+	p->content = content;
+	p->next = 0;
+	return (p);
+}

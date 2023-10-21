@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 10:08:36 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 13:05:28 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/15 16:12:18 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/15 17:32:25 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include "libs/libft.h"
-# include <stdarg.h>
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*lstreader;
 
-int		ft_printf(const char *format, ...);
-void	ft_putchar_count(char c, int *size);
-void	ft_putstr_count(char *s, int *size);
-
-#endif
+	lstreader = *lst;
+	while (*lst)
+	{
+		lstreader = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = lstreader;
+	}
+	*lst = 0;
+}

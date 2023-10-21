@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 10:08:36 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 13:05:28 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/15 12:01:00 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/15 12:12:21 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include "libs/libft.h"
-# include <stdarg.h>
+void	ft_putnbr_fd(int n, int fd)
+{
+	unsigned int	un;
 
-int		ft_printf(const char *format, ...);
-void	ft_putchar_count(char c, int *size);
-void	ft_putstr_count(char *s, int *size);
-
-#endif
+	un = n;
+	if (n < 0)
+		un = -n;
+	if (n < 0)
+		ft_putchar_fd('-', fd);
+	if (ft_isdigit(un + '0'))
+		ft_putchar_fd(un + '0', fd);
+	else if (un >= 10)
+	{
+		ft_putnbr_fd(un / 10, fd);
+		ft_putnbr_fd(un % 10, fd);
+	}
+}

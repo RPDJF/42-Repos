@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/20 18:25:20 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/21 13:14:26 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,56 +48,70 @@ int	check_format(const char *format)
 	return (1);
 }
 
-static int	printarg(char c, va_list args)
+static void	printarg(char c, va_list args, int *size)
 {
-	ssize_t	size;
 	char	*str;
 
+	str = 0;
 	if (c == 'c')
-		ft_putchar_fd(va_arg(args, int), 1);
-	if (c == 'c')
-		return (1);
-	if (c == 'i')
+		ft_putchar_count(va_arg(args, int), size);
+	else if (c == 'i')
+		ft_putchar_count(va_arg(args, int) + '0', size);
+	else if (c == 's')
+		str = ft_strdup(va_arg(args, char *));
+	else if (c == 'p')
+		str = ft_strjoin("0x", ft_itoa_base(va_arg(args, int), "0123456789abcdef"));
+	else if (c == 'd')
 		str = ft_itoa(va_arg(args, int));
-	ft_putstr_fd(str, 1);
-	size = ft_strlen(str);
-	free(str);
-	return (size);
+	else if (c == 'u')
+		str = ft_itoa_unsigned(va_arg(args, unsigned int));
+	else if (c == 'x')
+		str = ft_itoa_base(va_arg(args, int), "0123456789abcdef");
+	else if (c == 'X')
+		str = ft_itoa_base(va_arg(args, int), "0123456789ABCDEF");
+	if (str)
+		ft_putstr_count(str, size);
+	if (str)
+		free(str);
 }
 
 #include <stdio.h>
 
-static void	print(const char **str, va_list args)
+static void	print(const char **str, va_list args, int *size)
 {
 	while (*(*str) && *((*str)++) != '%')
-		ft_putchar_fd(*((*str) - 1), 1);
+		ft_putchar_count(*((*str) - 1), size);
 	if (*((*str) - 1) == '%')
 	{
 		if (*(*str) != '%')
-		{
-			printarg(*(*str), args);
-			(*str)++;
-		}
+			printarg(*((*str)++), args, size);
 		else
-			ft_putchar_fd(*(*str++), 1);
+			ft_putchar_count(*((*str)++), size);
 	}
 }
 
 int	ft_printf(const char *format, ...)
 {
+	int		size;
 	va_list	args;
 
 	if (check_format(format) < 0)
 		return (0);
+	size = 0;
 	va_start(args, format);
 	while (*format)
-		print(&format, args);
+		print(&format, args, &size);
 	va_end(args);
-	return (1);
+	return (size);
 }
 
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
-	//printf("hello %%\n");
-	ft_printf(argv[1], 'x', 45);
+	char *p;
+	char a;
+
+	a = 'a';
+	p = &a;
+	ft_printf("%d\n", ft_printf("Bonjour %%s, comment allez %cous ? Tu as %d ans, %i ok ?\nSinon %p\n, %x %X\n", 'v', 45, 3, p, 12, 12));
 }
+*/

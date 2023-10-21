@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 10:08:36 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 13:05:28 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/10 13:18:39 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/20 12:57:24 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include <stdlib.h>
 
-# include "libs/libft.h"
-# include <stdarg.h>
+void	*ft_memchr(const void *s, int c, size_t n)
+{
+	size_t	i;
 
-int		ft_printf(const char *format, ...);
-void	ft_putchar_count(char c, int *size);
-void	ft_putstr_count(char *s, int *size);
-
-#endif
+	i = 0;
+	while (i < n)
+	{
+		if (((unsigned char *)s)[i] == (unsigned char)c)
+			return ((void *)s + i);
+		i++;
+	}
+	return (0);
+}

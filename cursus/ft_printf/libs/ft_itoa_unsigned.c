@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_itoa_unsigned.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 10:08:36 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 13:05:28 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/20 20:03:30 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/21 12:27:18 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include "libs/libft.h"
-# include <stdarg.h>
+char	*ft_itoa_unsigned(unsigned int n)
+{
+	char			*p;
+	unsigned int	temp;
+	int				len;
 
-int		ft_printf(const char *format, ...);
-void	ft_putchar_count(char c, int *size);
-void	ft_putstr_count(char *s, int *size);
-
-#endif
+	temp = n;
+	len = 0;
+	while (++len, temp >= 10)
+		temp /= 10;
+	p = (char *)ft_calloc(len + 1, sizeof(char));
+	if (!p)
+		return (0);
+	temp = n;
+	while (len-- > 0)
+	{
+		p[len] = (temp % 10) + '0';
+		temp /= 10;
+	}
+	return (p);
+}
