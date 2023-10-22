@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/22 17:07:27 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:33:57 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	ft_printf(const char *format, ...)
 	int		size;
 	va_list	args;
 
-	
 	if (check_format(format) < 0)
 		return (0);
 	size = 0;
