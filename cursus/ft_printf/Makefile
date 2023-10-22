@@ -94,23 +94,23 @@ NAME = libftprintf.a
 all: $(NAME)
 
 %.o: %.c
-	@if [ -n "$$SHELL" ]; then \
+	@if [ -n "$$TERM" ]; then \
 		printf "\t🤖 Compiling $<...\r"; \
 	fi
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@if [ -n "$$SHELL" ]; then \
+	@if [ -n "$$TERM" ]; then \
 		tput el; \
 	else \
 		echo "\t[INFO] [$(NAME)]\t$< is compiled ✅"; \
 	fi
 
-$(NAME): header $(CFILES) lib_header buildlibft $(LIBFT_OFILES) $(OFILES)
+$(NAME): header $(CFILES) lib_header buildlibft $(OFILES)
 	@echo "$$APP_HEADER"
-	@if [ -n "$$SHELL" ]; then \
+	@if [ -n "$$TERM" ]; then \
 		printf "\t🤖 Compiling $(NAME)...\r"; \
 	fi
 	@ar -rc $(NAME) $(LIBFT_OFILES) $(OFILES)
-	@if [ -n "$$SHELL" ]; then \
+	@if [ -n "$$TERM" ]; then \
 		tput el; \
 	fi
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅\n"

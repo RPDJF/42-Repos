@@ -61,22 +61,22 @@ NAME = libft.a
 all: $(NAME)
 
 %.o: %.c
-	@if [ -n "$$SHELL" ]; then \
+	@if [ -n "$$TERM" ]; then \
 		printf "\t🤖 Compiling $<...\r"; \
 	fi
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@if [ -n "$$SHELL" ]; then \
+	@if [ -n "$$TERM" ]; then \
 		tput el; \
 	else \
 		echo "\t[INFO] [$(NAME)]\t$< is compiled ✅"; \
 	fi
 
 $(NAME): $(CFILES) $(OFILES)
-	@if [ -n "$$SHELL" ]; then \
+	@if [ -n "$$TERM" ]; then \
 		printf "\t🤖 Compiling $(NAME)...\r"; \
 	fi
 	@ar -rc $(NAME) $(OFILES)
-	@if [ -n "$$SHELL" ]; then \
+	@if [ -n "$$TERM" ]; then \
 		tput el; \
 	fi
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
