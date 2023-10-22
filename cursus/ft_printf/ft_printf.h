@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:08:36 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/22 16:00:39 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/22 16:07:32 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define FT_PRINTF_H
 
 # include "libft/libft.h"
-# include <stdarg.h>
-
-// desc function
 
 //	Print a formatted string to stdout with a variable number of arguments
 int		ft_printf(const char *format, ...);
