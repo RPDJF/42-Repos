@@ -94,18 +94,25 @@ NAME = libftprintf.a
 all: $(NAME)
 
 %.o: %.c
-	@tput el
-	@printf "\t🤖 Compiling $<...\r"
+	@if [ -n "$$SHELL" ]; then \
+		printf "\t🤖 Compiling $<...\r"; \
+	fi
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@tput el
-	@echo "\t[INFO] [$(NAME)]\t$< is compiled ✅"
+	@if [ -n "$$SHELL" ]; then \
+		tput el; \
+	else \
+		echo "\t[INFO] [$(NAME)]\t$< is compiled ✅"; \
+	fi
 
 $(NAME): header $(CFILES) lib_header buildlibft $(LIBFT_OFILES) $(OFILES)
 	@echo "$$APP_HEADER"
-	@tput el
-	@printf "\t🤖 Compiling $(NAME)...\r"
+	@if [ -n "$$SHELL" ]; then \
+		printf "\t🤖 Compiling $(NAME)...\r"; \
+	fi
 	@ar -rc $(NAME) $(LIBFT_OFILES) $(OFILES)
-	@tput el
+	@if [ -n "$$SHELL" ]; then \
+		tput el; \
+	fi
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅\n"
 
 buildlibft: $(LIBFT_PATH)Makefile
