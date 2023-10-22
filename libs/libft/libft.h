@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 18:11:22 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/22 13:56:32 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int		ft_isdigit(int c);
 //	Check if is printable character
 int		ft_isprint(int c);
 //	Converts unsigned long int number into a string with specific base
-char	*ft_itoa_base_unsigned(unsigned long int n, const char *base);
+char	*ft_itoa_base_un(unsigned long int n, const char *base);
 //	Converts int number into a string with specific base
 char	*ft_itoa_base(int n, const char *base);
 //	Converts unsigned int number into a string
-char	*ft_itoa_unsigned(unsigned int n);
+char	*ft_itoa_un(unsigned int n);
 //	Converts int number into a string
 char	*ft_itoa(int n);
 //	Returns a pointer to the first occurence of specific byte in memory s

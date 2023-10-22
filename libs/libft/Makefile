@@ -44,9 +44,9 @@ FILES = ft_atoi \
 		ft_lstmap \
 		ft_lstnew \
 		ft_lstsize \
-		ft_itoa_base_unsigned \
+		ft_itoa_base_un \
 		ft_itoa_base \
-		ft_itoa_unsigned \
+		ft_itoa_un \
 		ft_exallocf \
 		ft_get_next_line \
 		ft_memncat \
