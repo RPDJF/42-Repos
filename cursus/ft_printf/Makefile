@@ -71,7 +71,6 @@ LIBFT_SRC =	ft_bzero \
 			ft_memset \
 			ft_strjoin \
 			ft_strlen \
-			ft_itoa_base_signed \
 			ft_itoa_base_unsigned \
 			ft_itoa_base \
 			ft_itoa_unsigned \
@@ -110,7 +109,7 @@ $(NAME): header $(CFILES) lib_header $(LIBFT_CFILES) buildlibft $(LIBFT_OFILES) 
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅\n"
 
 buildlibft: $(LIBFT_PATH)Makefile
-	@$(MAKE) -C $(LIBFT_PATH) all --no-print-directory
+	@make -C $(LIBFT_PATH) all --no-print-directory
 
 lib_header:
 	@echo "$$LIB_HEADER"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 10:56:55 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/22 11:31:52 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/22 13:14:40 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 
 int	main(void)
 {
-	printf("%x\n", 42);
+	printf("%s\n", "-42");
 	printf("%x\n", -42);
 	ft_printf("%x\n", -42);
-	printf("%x\n", 1);
+	ft_putendl_fd("", 1);
+	printf("%s\n", "-1");
 	printf("%x\n", -1);
 	ft_printf("%x\n", -1);
+	ft_putendl_fd("", 1);
+	printf("%s\n", "-4278");
+	printf("%x\n", -4278);
+	ft_printf("%x\n", -4278);
+	ft_putendl_fd("", 1);
 	return (0);
 }
