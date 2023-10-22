@@ -44,6 +44,7 @@ FILES = ft_atoi \
 		ft_lstmap \
 		ft_lstnew \
 		ft_lstsize \
+		ft_itoa_base_signed \
 		ft_itoa_base_unsigned \
 		ft_itoa_base \
 		ft_itoa_unsigned \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/21 21:38:22 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/22 11:17:42 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ static void	printarg(char c, va_list args, int *size)
 	else if (c == 'u')
 		str = ft_itoa_unsigned(va_arg(args, unsigned int));
 	else if (c == 'x')
-		str = ft_itoa_base(va_arg(args, int), "0123456789abcdef");
+		str = ft_itoa_base_signed(va_arg(args, int), "0123456789abcdef");
 	else if (c == 'X')
-		str = ft_itoa_base(va_arg(args, int), "0123456789ABCDEF");
+		str = ft_itoa_base_signed(va_arg(args, int), "0123456789ABCDEF");
 	if (str)
 		ft_putstr_count(str, size);
 	if (str)
