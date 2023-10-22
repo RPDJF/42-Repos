@@ -61,16 +61,14 @@ NAME = libft.a
 all: $(NAME)
 
 %.o: %.c
-	@tput el
 	@printf "\t🤖 Compiling $<...\r"
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@tput el
+	@printf "\33[2K"
 
 $(NAME): $(CFILES) $(OFILES)
-	@tput el
 	@printf "\t🤖 Compiling $(NAME)...\r"
 	@ar -rc $(NAME) $(OFILES)
-	@tput el
+	@printf "\33[2K"
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
 
 clean:
