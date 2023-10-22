@@ -6,15 +6,12 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 12:56:02 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/22 14:48:25 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/22 16:04:10 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
-#include <unistd.h>
 
-//	Returns an hex memory address (basically 
-//joining 0x to ft_itoa_base_unsigned)
 char	*ft_inttohex(unsigned long int n)
 {
 	char	*output;
@@ -32,7 +29,6 @@ char	*ft_inttohex(unsigned long int n)
 	return (output);
 }
 
-//	Writes char and increment pointer size
 void	ft_putchar_count(char c, int *size)
 {
 	if (!c)
@@ -42,8 +38,6 @@ void	ft_putchar_count(char c, int *size)
 		*size = -1;
 }
 
-//	Calls ft_putchar_count for each char in pointer s
-//	If s is null, writes "(null)"
 void	ft_putstr_count(char *s, int *size)
 {
 	if (!s)

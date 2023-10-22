@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/22 14:50:50 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:53:17 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int	check_format(const char *format)
 	return (1);
 }
 
+/*
+*	Prints the argument passed to the function
+*	Depending on the conversion, the argument is casted to the correct type
+*	Then, the argument is converted to a string and printed
+*/
 static void	printarg(char c, va_list args, int *size)
 {
 	void		*s;
@@ -70,6 +75,10 @@ static void	printarg(char c, va_list args, int *size)
 		free(s);
 }
 
+/*
+*	While the size is not negative, print the string
+*	If '%' is found, print the argument with printarg()
+*/
 static void	print(const char **s, va_list args, int *size)
 {
 	while (*size >= 0 && *(*s) && *((*s)++) != '%')

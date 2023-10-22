@@ -1,4 +1,4 @@
-.PHONY = all clean fclean re bonus homemade
+.PHONY = all clean fclean re
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 FILES = ft_atoi \

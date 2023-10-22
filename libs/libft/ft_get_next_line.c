@@ -6,14 +6,14 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 13:20:51 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/20 18:14:25 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/22 16:04:56 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 4
+# define BUFFER_SIZE 1024
 #endif
 
 /*
