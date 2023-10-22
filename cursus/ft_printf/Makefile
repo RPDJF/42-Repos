@@ -71,9 +71,9 @@ LIBFT_SRC =	ft_bzero \
 			ft_memset \
 			ft_strjoin \
 			ft_strlen \
-			ft_itoa_base_unsigned \
+			ft_itoa_base_un \
 			ft_itoa_base \
-			ft_itoa_unsigned \
+			ft_itoa_un \
 
 LIBFT_CFILES = $(LIBFT_SRC:%=$(LIBFT_PATH)%.c)
 LIBFT_OFILES = $(LIBFT_SRC:%=$(LIBFT_PATH)%.o)
@@ -100,7 +100,7 @@ all: $(NAME)
 	@tput el
 	@echo "\t[INFO] [$(NAME)]\t$< is compiled ✅"
 
-$(NAME): header $(CFILES) lib_header $(LIBFT_CFILES) buildlibft $(LIBFT_OFILES) $(OFILES)
+$(NAME): header $(CFILES) lib_header buildlibft $(LIBFT_OFILES) $(OFILES)
 	@echo "$$APP_HEADER"
 	@tput el
 	@printf "\t🤖 Compiling $(NAME)...\r"
@@ -130,9 +130,9 @@ header:
 	@echo "$$HEADER"
 
 help:
-	@echo "all		-	Build the whole project"
+	@echo "all		-	Build $(NAME)"
 	@echo "clean		-	Clean temporary files"
 	@echo "fclean		-	Clean the whole build"
-	@echo "$$NAME	-	Build the libftprintf.a with necessary libs"
+	@echo "$(NAME)	-	Build the $(NAME) with necessary libs"
 
 .PHONY = help all clean fclean re header buildlibft lib_header
