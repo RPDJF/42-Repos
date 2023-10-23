@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:04:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/22 19:33:57 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:23:45 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,20 @@ int	check_format(const char *format)
 */
 static void	printarg(char c, va_list args, int *size)
 {
-	void		*s;
-	char		nu;
-
-	nu = -1;
-	s = &nu;
 	if (c == 'c')
 		ft_putchar_count(va_arg(args, int), size);
 	else if (c == 'i' || c == 'd')
-		s = ft_itoa(va_arg(args, int));
+		ft_putnbr_count(va_arg(args, int), "0123456789", size);
 	else if (c == 's')
 		ft_putstr_count(va_arg(args, char *), size);
 	else if (c == 'p')
-		s = ft_inttohex((unsigned long int)va_arg(args, void *));
+		ft_inttohex((unsigned long int)va_arg(args, void *), size);
 	else if (c == 'u')
-		s = ft_itoa_un(va_arg(args, unsigned int));
+		ft_putunnbr_count(va_arg(args, unsigned int), "0123456789", size);
 	else if (c == 'x')
-		s = ft_itoa_base_un(va_arg(args, unsigned int), "0123456789abcdef");
+		ft_putunnbr_count(va_arg(args, unsigned int), "0123456789abcdef", size);
 	else if (c == 'X')
-		s = ft_itoa_base_un(va_arg(args, unsigned int), "0123456789ABCDEF");
-	if (!s)
-		*size = -1;
-	if (s && *(char *)s != -1)
-		ft_putstr_count((char *)s, size);
-	if (s && *(char *)s != -1)
-		free(s);
+		ft_putunnbr_count(va_arg(args, unsigned int), "0123456789ABCDEF", size);
 }
 
 /*

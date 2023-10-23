@@ -61,16 +61,9 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 LIBFT_PATH = ./libft/
-LIBFT_SRC =	ft_bzero \
-			ft_calloc \
-			ft_itoa \
+LIBFT_SRC =	ft_isdigit \
 			ft_memchr \
-			ft_memset \
-			ft_strjoin \
 			ft_strlen \
-			ft_itoa_base_un \
-			ft_itoa_base \
-			ft_itoa_un \
 
 LIBFT_CFILES = $(LIBFT_SRC:%=$(LIBFT_PATH)%.c)
 LIBFT_OFILES = $(LIBFT_SRC:%=$(LIBFT_PATH)%.o)
