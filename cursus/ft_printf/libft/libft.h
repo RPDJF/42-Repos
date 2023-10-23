@@ -68,8 +68,9 @@ void	ft_memsuperclear(void **m, size_t size);
 void	ft_putchar_fd(char c, int fd);
 //	Write eol in specific filedescriptor
 void	ft_putendl_fd(char *s, int fd);
+//	Write nbr in specific filedescriptor and base
 //	Write nbr in specific filedescriptor
-void	ft_putnbr_fd(int n, int fd);
+void	ft_putnbr_base(int n, char *base, int fd);
 //	Write str in specific filedescriptor
 void	ft_putstr_fd(char *s, int fd);
 //	Split s with specific separator and return them in a NULL Terminated malloc
