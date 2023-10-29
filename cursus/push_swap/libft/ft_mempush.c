@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_mempush.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/29 20:25:25 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/10/29 20:02:30 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/10/29 20:07:18 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include "libft/libft.h"
+void	*ft_mempush(void *mem, size_t size, int byte)
+{
+	void	*p;
 
-#endif
+	p = ft_exallocf(mem, size, size + 1);
+	if (!p)
+		return (0);
+	ft_memmove(p, mem, size);
+	((unsigned char *)p)[size] = byte;
+	return (p);
+}

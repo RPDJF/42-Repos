@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/29 15:07:59 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/10/29 20:29:36 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 //	Fill memory with itn c value
 void	*ft_memset(void *s, int c, size_t n);
+//	Push byte to malloc, extending it. Returns NULL if error
+void	*ft_mempush(void *mem, size_t size, int byte);
 //	Free mem references and mem itself
 void	ft_memsuperclear(void **m, size_t size);
 //	Home made printf
@@ -122,6 +124,16 @@ t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
+
+// Garbage collector
+typedef struct s_garbage_collector
+{
+	void	**collector;
+	size_t	size;
+}			t_garbage_collector;
+
+//	Free the garbage collector
+void	ft_garbage_destroy(t_garbage_collector gc);
 
 // Home made functions
 
