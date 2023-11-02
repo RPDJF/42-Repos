@@ -65,7 +65,8 @@ LIBFT_LIB = $(LIBFT_PATH:%=%libft.a)
 
 
 SRC = 	push_swap \
-		utils/push_swap_utils
+		utils/push_swap_utils \
+		utils/push_swap_orchestror \
 
 CFILES = $(SRC:%=%.c) 
 OFILES = $(SRC:%=%.o)

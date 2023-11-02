@@ -6,40 +6,11 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:36:24 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/02 15:41:43 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:23:46 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static int	handler(char	*operation, t_list **a, t_list	**b)
-{
-	ft_printf("%s\n", operation);
-	if (ft_strlen(operation) == 3)
-	{
-		if (operation[2] == 'a')
-			*a = ft_lstrevrotate(*a);
-		else if (operation[2] == 'b')
-			*b = ft_lstrevrotate(*b);
-		else
-		{
-			*a = ft_lstrevrotate(*a);
-			*b = ft_lstrevrotate(*b);
-		}
-	}
-	else
-	{
-		if (operation[1] == 'a')
-			return (simple_handler(operation, a, b));
-		else if (operation[1] == 'b')
-			return (simple_handler(operation, b, a));
-		else
-			if (simple_handler(operation, a, b) < 0
-				|| simple_handler(operation, a, b) < 0)
-				return (-1);
-	}
-	return (0);
-}
 
 static t_list	*parse_args(char **args, size_t size)
 {
@@ -64,6 +35,22 @@ static t_list	*parse_args(char **args, size_t size)
 		ft_lstadd_front(&stack, tmp);
 	}
 	return (stack);
+}
+
+int	main(int argc, char **argv)
+{
+	t_list	*a;
+	t_list	*b;
+
+	a = parse_args(argv + 1, argc - 1);
+	if (!a)
+		return (0);
+	b = 0;
+	if (ft_lstsize(a) == 3)
+		triple(&a);
+
+	ft_lstclear(&a, free);
+	ft_lstclear(&b, free);
 }
 
 // for debug purpose
