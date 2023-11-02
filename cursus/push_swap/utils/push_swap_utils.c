@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:47:50 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/02 17:02:49 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/02 18:44:57 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	push_stack(t_list **src, t_list **dst)
 }
 
 //	Handles all of the operations
-int	handler(char	*operation, t_list **a, t_list	**b)
+int	handler(char *operation, t_list **a, t_list	**b)
 {
 	ft_printf("%s\n", operation);
 	if (ft_strlen(operation) == 3)
@@ -71,4 +71,43 @@ int	simple_handler(char	*operation, t_list **src, t_list **dst)
 	else if (operation[0] == 'r')
 		*src = ft_lstrotate(*src);
 	return (0);
+}
+
+//	Get the idx of the least number
+int	getleastnb(t_list *stack)
+{
+	int	idx;
+	int	size;
+	int	nb;
+
+	size = ft_lstsize(stack) - 1;
+	nb = *((int *)ft_lstlast(stack)->content);
+	idx = size;
+	while (size-- > 0)
+	{
+		if (*((int *)ft_lstget(stack, size)->content) < nb)
+		{
+			nb = *((int *)ft_lstget(stack, size)->content);
+			idx = size;
+		}
+	}
+	return (idx);
+}
+
+//	Check if it's on good order
+//	Returns 1 if ok
+int	check_lstorder(t_list *stack)
+{
+	int	nb;
+	int	size;
+
+	size = ft_lstsize(stack) - 1;
+	nb = *((int *)ft_lstlast(stack)->content);
+	while (size-- > 0)
+	{
+		if (*((int *)ft_lstget(stack, size)->content) > nb)
+			return (0);
+		nb = *((int *)ft_lstget(stack, size)->content);
+	}
+	return (1);
 }
