@@ -64,7 +64,8 @@ LIBFT_PATH = ./libft/
 LIBFT_LIB = $(LIBFT_PATH:%=%libft.a)
 
 
-SRC = push_swap \
+SRC = 	push_swap \
+		utils/push_swap_utils
 
 CFILES = $(SRC:%=%.c) 
 OFILES = $(SRC:%=%.o)
@@ -117,6 +118,7 @@ help:
 	@echo "all		-	Build $(NAME)"
 	@echo "clean		-	Clean temporary files"
 	@echo "fclean		-	Clean the whole build"
+	@echo "debug		-	Runs the program with g3 fsanitize=address"
 	@echo "$(NAME)	-	Build the $(NAME) with necessary libs"
 
 .PHONY = help all clean fclean re header buildlibft lib_header

@@ -42,11 +42,17 @@ FILES = ft_atoi \
 		ft_lstadd_front \
 		ft_lstclear \
 		ft_lstdelone \
+		ft_lstget \
 		ft_lstiter \
 		ft_lstlast \
 		ft_lstmap \
 		ft_lstnew \
+		ft_lstpop \
+		ft_lstpush \
+		ft_lstrevrotate \
+		ft_lstrotate \
 		ft_lstsize \
+		ft_lstswap \
 		ft_itoa_base_un \
 		ft_itoa_base \
 		ft_itoa_un \

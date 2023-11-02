@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_garbage_destroy.c                               :+:      :+:    :+:   */
+/*   ft_lstpush.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/29 20:24:09 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/29 20:28:32 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/01 18:05:00 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/01 18:05:20 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_garbage_destroy(t_garbage_collector gc)
+t_list	*ft_lstpush(t_list *lst, void *content)
 {
-	ft_memsuperclear(gc.collector, gc.size);
+	t_list	*newlist;
+
+	newlist = ft_lstnew(content);
+	if (!newlist)
+		return (0);
+	ft_lstadd_front(&lst, newlist);
+	return (lst);
 }

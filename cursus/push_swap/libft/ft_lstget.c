@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_garbage_add.c                                   :+:      :+:    :+:   */
+/*   ft_lstget.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/29 20:31:00 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/29 20:33:12 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/01 16:53:54 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/01 16:57:20 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_garbage_collector	*ft_garbage_add(t_garbage_collector gc, void *mem)
+t_list	*ft_lstget(t_list *lst, size_t idx)
 {
-	ft_mempush(gc.collector, gc.size, mem);
+	size_t	i;
+
+	i = 0;
+	if (!lst)
+		return (0);
+	while (i < idx)
+	{	
+		if (!lst->next)
+			return (0);
+		lst = lst->next;
+		i++;
+	}
+	return (lst);
 }

@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_lstrevrotate.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/02 15:10:31 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/01 18:03:54 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/01 18:04:45 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include "libft/libft.h"
+t_list	*ft_lstrevrotate(t_list *lst)
+{
+	t_list	*tmp;
 
-int		push_stack(t_list **src, t_list **dst);
-void	simple_handler(char *operation, t_list **src, t_list **dst);
-void	advanced_handler(char *operation, t_list **stack);
-
-#endif
+	if (ft_lstsize(lst) < 2)
+		return (lst);
+	tmp = lst;
+	lst = lst->next;
+	ft_lstlast(lst)->next = tmp;
+	tmp->next = 0;
+	return (lst);
+}

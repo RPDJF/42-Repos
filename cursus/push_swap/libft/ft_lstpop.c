@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_mempush.c                                       :+:      :+:    :+:   */
+/*   ft_lstpop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/29 20:02:30 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/29 20:07:18 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/01 18:05:37 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/01 18:09:24 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_mempush(void *mem, size_t size, int byte)
+t_list	*ft_lstpop(t_list *lst, void (*del)(void *))
 {
-	void	*p;
+	t_list	*tmp;
 
-	p = ft_exallocf(mem, size, size + 1);
-	if (!p)
-		return (0);
-	ft_memmove(p, mem, size);
-	((unsigned char *)p)[size] = byte;
-	return (p);
+	tmp = lst->next;
+	ft_lstdelone(lst, del);
+	return (tmp);
 }
