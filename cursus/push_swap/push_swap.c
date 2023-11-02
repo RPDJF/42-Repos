@@ -6,14 +6,15 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:36:24 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/02 15:07:25 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:41:43 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	handler(char	*operation, t_list **a, t_list	**b)
+static int	handler(char	*operation, t_list **a, t_list	**b)
 {
+	ft_printf("%s\n", operation);
 	if (ft_strlen(operation) == 3)
 	{
 		if (operation[2] == 'a')
@@ -29,22 +30,14 @@ static void	handler(char	*operation, t_list **a, t_list	**b)
 	else
 	{
 		if (operation[1] == 'a')
-			simple_handler(operation, a, b);
+			return (simple_handler(operation, a, b));
 		else if (operation[1] == 'b')
-			simple_handler(operation, b, a);
+			return (simple_handler(operation, b, a));
 		else
-		{
-			simple_handler(operation, a, b);
-			simple_handler(operation, b, a);
-		}
+			if (simple_handler(operation, a, b) < 0
+				|| simple_handler(operation, a, b) < 0)
+				return (-1);
 	}
-	ft_printf("%s\n", operation);
-}
-
-static int	print_content(void *content)
-{
-	if (content)
-		return (ft_printf("%d\n", *((int *)content)));
 	return (0);
 }
 
@@ -73,7 +66,15 @@ static t_list	*parse_args(char **args, size_t size)
 	return (stack);
 }
 
-/*int	main(int argc, char **argv)
+// for debug purpose
+/*static int	print_content(void *content)
+{
+	if (content)
+		return (ft_printf("%d\t", *((int *)content)));
+	return (0);
+}
+
+int	main(int argc, char **argv)
 {
 	t_list	*a;
 	t_list	*b;
@@ -84,210 +85,233 @@ static t_list	*parse_args(char **args, size_t size)
 		return (0);
 	b = 0;
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("ra", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("rra", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("sa", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("sa", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pa", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pa", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pa", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	handler("pb", &a, &b);
 
-	ft_printf("=====\n");
-	ft_printf("a:\n");
+	ft_printf("========================================================\n");
+	ft_printf("a:\t");
 	ft_lstiter(a, (void *)print_content);
-	ft_printf("b:\n");
+	ft_printf("\n");
+	ft_printf("b:\t");
 	ft_lstiter(b, (void *)print_content);
-	ft_printf("=====\n\n");
+	ft_printf("\n\n");
 
 	ft_lstclear(&a, free);
 	ft_lstclear(&b, free);
