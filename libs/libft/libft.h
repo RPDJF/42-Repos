@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/29 15:07:59 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/01 18:14:26 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 //	Upper lowercase character
 int		ft_toupper(int c);
-
-// Bonus files
-
 //	Adds new list at the start of chainedlist
 void	ft_lstadd_back(t_list **lst, t_list *new);
 //	Adds new list to the end of chainedlist
@@ -122,9 +119,18 @@ t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
-
-// Home made functions
-
+//	Get node from idx
+t_list	*ft_lstget(t_list *lst, size_t idx);
+//	Delete first node
+t_list	*ft_lstpop(t_list *lst, void (*del)(void *));
+//	Push content to head of list (creates a list)
+t_list	*ft_lstpush(t_list *lst, void *content);
+//	Apply a reversed list rotation, the last becomes the first
+t_list	*ft_lstrevrotate(t_list *lst);
+//	Apply a list rotation, the first becomes the last
+t_list	*ft_lstrotate(t_list *lst);
+//	Swaps the first two lists
+t_list	*ft_lstswap(t_list *lst);
 /*
  *	Returns a pointer to an extend malloc
  *	Copies bytes from ptr to the returned malloc
