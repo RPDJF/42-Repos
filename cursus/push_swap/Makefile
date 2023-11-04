@@ -65,8 +65,11 @@ LIBFT_LIB = $(LIBFT_PATH:%=%libft.a)
 
 
 SRC = 	push_swap \
-		utils/push_swap_utils \
-		utils/push_swap_orchestror \
+		utils/checkers \
+		utils/error_handler \
+		utils/handler \
+		utils/sorter \
+		utils/stack_utils \
 
 CFILES = $(SRC:%=%.c) 
 OFILES = $(SRC:%=%.o)
@@ -90,9 +93,10 @@ $(NAME): header $(CFILES) lib_header buildlibft $(OFILES)
 debug: fclean header $(CFILES) lib_header buildlibft $(OFILES)
 	@echo "$$APP_HEADER"
 	@printf "\t🤖 Compiling $(NAME)...\r"
-	@$(CC) -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -g3 -fsanitize=address $(OFILES) $(LIBFT_LIB) -o $(NAME)
+	@$(CC) $(CFLAGS) -g3 -fsanitize=address $(OFILES) $(LIBFT_LIB) -o $(NAME)
 	@printf "\33[2K"
-	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅\nThe programm was compiled with debug sanitizer and without cflags\n"
+	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
+	@echo "\nThe programm was compiled with debug sanitizer and without cflags\nDo not forget to use \"leaks -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n"
 
 buildlibft: $(LIBFT_PATH)Makefile
 	@make -C $(LIBFT_PATH) all --no-print-directory

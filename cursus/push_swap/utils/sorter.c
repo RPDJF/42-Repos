@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_orchestror.c                             :+:      :+:    :+:   */
+/*   sorter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/02 18:44:22 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/04 13:04:46 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-// Case of n stack = 3
 void	sort_triple(t_list **a)
 {
 	int	size;
@@ -48,7 +47,7 @@ int	sort_ten(t_list **a, t_list **b)
 	int	size;
 
 	size = ft_lstsize(*a);
-	while (!check_lstorder(*a))
+	while (!check_stackorder(*a))
 	{
 		while (getleastnb(*a))
 		{
@@ -74,8 +73,19 @@ int	sort_hundred(t_list **a, t_list **b)
 
 //	Case of n stack > 100
 //	May be less optimized than using sort_triple, sort_ten and sort_hundred
-int	sort(t_list **a, t_list **b)
+int	sort_plus(t_list **a, t_list **b)
 {
 	
 }
 */
+
+void	sort(t_list **a, t_list **b)
+{
+	int	lstsize;
+
+	lstsize = ft_lstsize(*a);
+	if (lstsize == 3)
+		sort_triple(a);
+	else if (lstsize <= 10)
+		sort_ten(a, b);
+}
