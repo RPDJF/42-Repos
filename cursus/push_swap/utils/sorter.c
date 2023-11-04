@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/04 15:44:11 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/04 16:52:50 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	sort_triple(t_list **a)
 }
 
 //	Case of n stack <= 10
-int	sort_ten(t_list **a, t_list **b)
+int	sort_turc(t_list **a, t_list **b)
 {
 	int	size;
 
@@ -52,11 +52,11 @@ int	sort_ten(t_list **a, t_list **b)
 		if (ft_lstsize(*a) == 2)
 			handler("sa", a, b);
 		if (ft_lstsize(*a) == 2)
-			continue;
+			continue ;
 		if (ft_lstsize(*a) == 3)
 			sort_triple(a);
 		if (ft_lstsize(*a) == 3)
-			continue;
+			continue ;
 		while (getleastnb(*a))
 		{
 			if (getleastnb(*a) > (size / 2))
@@ -80,7 +80,7 @@ int	sort_hundred(t_list **a, t_list **b)
 }
 
 //	Case of n stack > 100
-//	May be less optimized than using sort_triple, sort_ten and sort_hundred
+//	May be less optimized than using sort_triple, sort_turc and sort_hundred
 int	sort_plus(t_list **a, t_list **b)
 {
 	
@@ -95,5 +95,5 @@ void	sort(t_list **a, t_list **b)
 	if (lstsize == 3)
 		sort_triple(a);
 	else if (lstsize)
-		sort_ten(a, b);
+		sort_turc(a, b);
 }
