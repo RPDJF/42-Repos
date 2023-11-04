@@ -9,6 +9,7 @@ FILES = ft_atoi \
 		ft_isascii \
 		ft_isdigit \
 		ft_isprint \
+		ft_isspace \
 		ft_itoa \
 		ft_memchr \
 		ft_memcmp \
@@ -38,6 +39,7 @@ FILES = ft_atoi \
 		ft_substr \
 		ft_tolower \
 		ft_toupper \
+		ft_lstadd \
 		ft_lstadd_back \
 		ft_lstadd_front \
 		ft_lstclear \
