@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/01 18:14:26 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/03 17:41:27 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int		ft_isascii(int c);
 int		ft_isdigit(int c);
 //	Check if is printable character
 int		ft_isprint(int c);
+// Check if is space character
+int		ft_isspace(char c);
 //	Converts unsigned long int number into a string with specific base
 char	*ft_itoa_base_un(unsigned long int n, const char *base);
 //	Converts int number into a string with specific base
@@ -77,6 +79,8 @@ void	ft_putnbr_base(int n, char *base, int fd);
 void	ft_putstr_fd(char *s, int fd);
 //	Split s with specific separator and return them in a NULL Terminated malloc
 char	**ft_split(char const *s, char c);
+void	free2dmalloc(void **m, size_t size);
+size_t	ft_countwords(char const *s, char c);
 //	Search for specific char in string s and returns his address
 char	*ft_strchr(const char *s, int c);
 //	Returns a malloc containing the string src
@@ -107,6 +111,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 //	Upper lowercase character
 int		ft_toupper(int c);
+//	Add content directly to bottom of list
+t_list	*ft_lstadd(t_list *lst, void *content);
 //	Adds new list at the start of chainedlist
 void	ft_lstadd_back(t_list **lst, t_list *new);
 //	Adds new list to the end of chainedlist

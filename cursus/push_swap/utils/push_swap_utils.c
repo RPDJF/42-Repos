@@ -6,11 +6,18 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:47:50 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/02 18:44:57 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:27:44 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
+
+// for debug purpose
+/*static void	print_content(void *content)
+{
+	if (content)
+		ft_printf("%d\t", *((int *)content));
+}*/
 
 // take the first int of src and gives it to dst
 int	push_stack(t_list **src, t_list **dst)
@@ -19,7 +26,7 @@ int	push_stack(t_list **src, t_list **dst)
 
 	if (!*src)
 		return (0);
-	content = (void *)malloc(2 * sizeof(int));
+	content = (void *)malloc(sizeof(int));
 	if (!content)
 		return (-1);
 	*((int *)content) = *((int *)(*src)->content);

@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:10:58 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/15 18:43:04 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:17:22 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free2dmalloc(void **m, size_t size)
 	free(m);
 }
 
-size_t	splitentriescount(char const *s, char c)
+size_t	ft_countwords(char const *s, char c)
 {
 	size_t	entries;
 	int		trigger;
@@ -48,7 +48,7 @@ int	pushwords(char **dst, char const *src, char c)
 	size_t	j;
 	size_t	entries;
 
-	entries = splitentriescount(src, c);
+	entries = ft_countwords(src, c);
 	i = 0;
 	while (i < entries)
 	{
@@ -77,7 +77,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s || !*s)
 		return ((char **)ft_calloc(1, sizeof(char *)));
-	entries = splitentriescount(s, c);
+	entries = ft_countwords(s, c);
 	if (!entries)
 	{
 		p = (char **)ft_calloc(1, sizeof(char *));

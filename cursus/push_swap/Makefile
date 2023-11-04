@@ -90,9 +90,9 @@ $(NAME): header $(CFILES) lib_header buildlibft $(OFILES)
 debug: fclean header $(CFILES) lib_header buildlibft $(OFILES)
 	@echo "$$APP_HEADER"
 	@printf "\t🤖 Compiling $(NAME)...\r"
-	@$(CC) $(CFLAGS) -g3 -fsanitize=address $(OFILES) $(LIBFT_LIB) -o $(NAME)
+	@$(CC) -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -g3 -fsanitize=address $(OFILES) $(LIBFT_LIB) -o $(NAME)
 	@printf "\33[2K"
-	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅\nThe programm was compiled with debug sanitizer\n"
+	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅\nThe programm was compiled with debug sanitizer and without cflags\n"
 
 buildlibft: $(LIBFT_PATH)Makefile
 	@make -C $(LIBFT_PATH) all --no-print-directory
