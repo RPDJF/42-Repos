@@ -6,11 +6,20 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:36:24 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/04 13:35:35 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:41:05 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+static void	secure_exit(t_list **a, t_list **b, char *msg)
+{
+	ft_lstclear(a, free);
+	ft_lstclear(b, free);
+	if (msg && *msg)
+		senderror(msg);
+	exit(0);
+}
 
 static t_list	*parse_args(char **args, size_t size)
 {
@@ -46,12 +55,11 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		senderror(0);
 	if (!check_input(argv + 1, argc - 1))
-		senderror("Error");
+		secure_exit(&a, &b, "Error");
 	a = parse_args(argv + 1, argc - 1);
-	if (!check_duplicates(a))
-		senderror("Error");
+	if (!a || !check_duplicates(a))
+		secure_exit(&a, &b, "Error");
 	b = 0;
 	sort(&a, &b);
-	ft_lstclear(&a, free);
-	ft_lstclear(&b, free);
+	secure_exit(&a, &b, 0);
 }

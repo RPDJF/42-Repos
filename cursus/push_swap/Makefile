@@ -74,7 +74,7 @@ SRC = 	push_swap \
 CFILES = $(SRC:%=%.c) 
 OFILES = $(SRC:%=%.o)
 
-NAME = push_swap.out
+NAME = push_swap
 
 all: $(NAME)
 

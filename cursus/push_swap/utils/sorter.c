@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/04 13:04:46 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:44:11 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ int	sort_ten(t_list **a, t_list **b)
 	size = ft_lstsize(*a);
 	while (!check_stackorder(*a))
 	{
+		if (ft_lstsize(*a) == 2)
+			handler("sa", a, b);
+		if (ft_lstsize(*a) == 2)
+			continue;
+		if (ft_lstsize(*a) == 3)
+			sort_triple(a);
+		if (ft_lstsize(*a) == 3)
+			continue;
 		while (getleastnb(*a))
 		{
 			if (getleastnb(*a) > (size / 2))
@@ -86,6 +94,6 @@ void	sort(t_list **a, t_list **b)
 	lstsize = ft_lstsize(*a);
 	if (lstsize == 3)
 		sort_triple(a);
-	else if (lstsize <= 10)
+	else if (lstsize)
 		sort_ten(a, b);
 }
