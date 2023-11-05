@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/05 18:41:38 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/05 17:45:42 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,46 @@ void	sort_triple(t_list **a)
 }
 
 //	Case of n stack <= 10
-int	sort_turc(t_list **a, t_list **b)
+//	First, push 2 first numbers from a to b
+//	Then, check nearest min-max of a and rotate until getting it
+//	If it's the min
+//		Rotate b until the nearest bigger
+//		Push a to b
+//	If it's the max
+//		Rotate b until the b-max is idx 0
+//		Push a to b
+//	If stack a is empty
+//		Rotate b until the b-max is idx 0
+//		Push b to a until b is empty
+int	sort_algo(t_list **a, t_list **b)
 {
 	int	size;
+	int	(*target)(t_list *a);
 
 	size = ft_lstsize(*a);
-	while (!check_stackorder(*a))
+	while (ft_lstsize(*a))
 	{
-		if (ft_lstsize(*a) == 2)
-			handler("sa", a, b);
-		if (ft_lstsize(*a) == 2)
-			continue ;
-		if (ft_lstsize(*a) == 3)
-			sort_triple(a);
-		if (ft_lstsize(*a) == 3)
-			continue ;
-		go_to(a, b, 'a', getleastnb(*a));
+		while (ft_lstsize(*b) < 2)
+			handler("pb", a, b);
+		target = getleastnb;
+		if (((getmostnb(*a) - getleastnb(*a) + size) % size) <= ((getleastnb(*a) - getmostnb(*a) + size) % size))
+			target = getmostnb;
+		go_to(a, b, 'a', target(*a));
+		if (target == getleastnb)
+		{
+			go_to(a, b, 'b', getnearest(*b, *((int *)(*a)->content)));
+			if (*((int *)(*a)->content) < *((int *)(*b)->content))
+				handler("rb", a, b);
+		}
+		else
+		{
+			go_to(a, b, 'b', getnearest(*b, *((int *)(*a)->content)));
+			if (*((int *)(*a)->content) < *((int *)(*b)->content))
+				handler("rb", a, b);
+		}
 		handler("pb", a, b);
 	}
+	go_to(a, b, 'b', getmostnb(*b));
 	size = ft_lstsize(*b);
 	while (size-- > 0)
 		handler("pa", a, b);
@@ -74,7 +96,7 @@ int	sort_hundred(t_list **a, t_list **b)
 }
 
 //	Case of n stack > 100
-//	May be less optimized than using sort_triple, sort_turc and sort_hundred
+//	May be less optimized than using sort_triple, sort_algo and sort_hundred
 int	sort_plus(t_list **a, t_list **b)
 {
 	
@@ -88,6 +110,8 @@ void	sort(t_list **a, t_list **b)
 	lstsize = ft_lstsize(*a);
 	if (lstsize == 3)
 		sort_triple(a);
+	else if (lstsize == 2)
+		handler("sa", a, b);
 	else if (lstsize)
-		sort_turc(a, b);
+		sort_algo(a, b);
 }

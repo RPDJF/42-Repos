@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/04 13:10:40 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/05 16:15:02 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ void	senderror(char *message);
 //	Apply operation to stacks
 int		handler(char *operation, t_list **a, t_list	**b);
 
+//		FROM resolver.c
+
+//	Get the node id for the lowest value from stack
+int		getleastnb(t_list *stack);
+//	Get the node id for the lowest value from stack
+int		getmostnb(t_list *stack);
+//	Get the node id for the nearest content from int value, returns -1 on error
+int		getnearest(t_list *stack, int value);
+//	Get the node id for specific value, returns -1 on error
+int		getnode(t_list *stack, int value);
+
 //		FROM sorter.c
 
 //	Sort stack A
@@ -47,11 +58,13 @@ void	sort(t_list **a, t_list **b);
 
 //		FROM stack_utils
 
-//	Get the node id for the lowest value from stack
-int		getleastnb(t_list *stack);
 //	Take the first int of src stack and gives it to dst stack
 void	push_stack(t_list **src, t_list **dst);
+//	Rotate until specific idx
+void 	go_to(t_list **a, t_list **b, char src, int idx);
 //	Converts an array of strings into stack
 t_list	*arg2stack(char **tab);
+//  Print stacks in a readable output
+void	print_stacks(t_list *a, t_list *b);
 
 #endif

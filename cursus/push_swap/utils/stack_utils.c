@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:30:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/04 15:42:32 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:08:05 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
-
-int	getleastnb(t_list *stack)
-{
-	int	idx;
-	int	size;
-	int	nb;
-
-	size = ft_lstsize(stack) - 1;
-	nb = *((int *)ft_lstlast(stack)->content);
-	idx = size;
-	while (size-- > 0)
-	{
-		if (*((int *)ft_lstget(stack, size)->content) < nb)
-		{
-			nb = *((int *)ft_lstget(stack, size)->content);
-			idx = size;
-		}
-	}
-	return (idx);
-}
 
 void	push_stack(t_list **src, t_list **dst)
 {
@@ -41,6 +21,41 @@ void	push_stack(t_list **src, t_list **dst)
 	*dst = *src;
 	*src = swap;
 }
+
+void go_to(t_list **a, t_list **b, char src, int idx)
+{
+    int i = 0;
+    int size;
+	
+	size = ft_lstsize(*a);
+	if (src == 'b')
+		size = ft_lstsize(*b);
+    if (idx >= 0 && idx < size)
+    {
+        if (idx > (size / 2))
+        {
+            i = size - idx;
+            while (i-- > 0)
+            {
+                if (src == 'a')
+                    handler("rra", a, b);
+                else
+                    handler("rrb", a, b);
+            }
+        }
+        else
+        {
+            while (i++ < idx)
+            {
+                if (src == 'a')
+                    handler("ra", a, b);
+                else
+                    handler("rb", a, b);
+            }
+        }
+    }
+}
+
 
 t_list	*arg2stack(char **tab)
 {
@@ -69,4 +84,21 @@ t_list	*arg2stack(char **tab)
 		tab++;
 	}
 	return (head);
+}
+
+void	print_stacks(t_list *a, t_list *b)
+{
+	if (a)
+		ft_printf("%d", *((int *)a->content));
+	if (a)
+		a = a->next;
+	if (b)
+		ft_printf("\t%d", *((int *)b->content));
+	if (b)
+		b = b->next;
+	ft_printf("\n");
+	if (!b && !a)
+		ft_printf("_\t_\na\tb\n\n");
+	if (a || b)
+		print_stacks(a, b);
 }

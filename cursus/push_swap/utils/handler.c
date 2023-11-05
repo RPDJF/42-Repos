@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:47:50 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/04 12:59:58 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:10:39 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-static int	simple_handler(char	*operation, t_list **src, t_list **dst)
+void	simple_handler(char	*operation, t_list **src, t_list **dst)
 {
 	if (operation[0] == 's')
 		*src = ft_lstswap(*src);
@@ -20,7 +20,6 @@ static int	simple_handler(char	*operation, t_list **src, t_list **dst)
 		push_stack(dst, src);
 	else if (operation[0] == 'r')
 		*src = ft_lstrotate(*src);
-	return (0);
 }
 
 int	handler(char *operation, t_list **a, t_list	**b)
@@ -41,13 +40,13 @@ int	handler(char *operation, t_list **a, t_list	**b)
 	else
 	{
 		if (operation[1] == 'a')
-			return (simple_handler(operation, a, b));
+			simple_handler(operation, a, b);
 		else if (operation[1] == 'b')
-			return (simple_handler(operation, b, a));
-		else
-			if (simple_handler(operation, a, b) < 0
-				|| simple_handler(operation, a, b) < 0)
-				return (-1);
+			simple_handler(operation, b, a);
 	}
+	/*if (b)
+		print_stacks(*a, *b);
+	else
+		print_stacks(*a, 0);*/
 	return (0);
 }
