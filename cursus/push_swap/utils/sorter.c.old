@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/06 18:57:26 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/06 13:04:00 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,55 +41,23 @@ void	sort_triple(t_list **a)
 	}
 }
 
-//	Pour chaque nombre dans A
-//		Calculer cout deplacement (sim_go_to)
-//		Ajouter cout deplacement B pour bonne position sim_go_to + get_near
-//			Si nombre plus petit que nearest B, ajouter 1 pour le sb
-int	*get_bestmove(t_list *a, t_list *b)
-{
-	int	*output;
-	int	i;
-	int	current_cost;
-	int	tmp;
-
-	output = (int *)ft_calloc(2, sizeof(int));
-	if (!output)
-		return (0);
-	i = 0;
-	while (i < ft_lstsize(a))
-	{
-		tmp = sim_go_to(a, b, "a", i)
-			+ sim_go_to(a, b, "b", getnear(b, *ft_lstget(a, i)));
-		if (*((int *)(ft_lstget(a, i)->content))
-			< *((int *)ft_lstget(b, getnear(b, *ft_lstget(a, i)))->content))
-			tmp++;
-		if (!i || tmp < current_cost)
-		{
-			current_cost = tmp;
-			output[0] = i;
-			output[1] = getnear(b, *ft_lstget(a, i));
-		}
-		i++;
-	}
-	return (output);
-}
-
 //	Case of n stack <= 10
 int	sort_turc(t_list **a, t_list **b)
 {
 	int	size;
-	int	*bestmove;
-	int	i;
 
-	i = 0;
 	size = ft_lstsize(*a);
 	while (!check_stackorder(*a))
 	{
-		bestmove = get_bestmove(*a, *b);
-		if (!bestmove)
-			return (-1);
-		go_to(a, b, "a", bestmove[0]);
-		go_to(a, b, "b", bestmove[1]);
+		if (ft_lstsize(*a) == 2)
+			handler("sa", a, b, 0);
+		if (ft_lstsize(*a) == 2)
+			continue ;
+		if (ft_lstsize(*a) == 3)
+			sort_triple(a);
+		if (ft_lstsize(*a) == 3)
+			continue ;
+		go_to(a, b, "a", getleastnb(*a));
 		handler("pb", a, b, 0);
 	}
 	size = ft_lstsize(*b);
@@ -115,32 +83,11 @@ int	sort_plus(t_list **a, t_list **b)
 
 void	sort(t_list **a, t_list **b)
 {
-	int	*tmp;
 	int	lstsize;
 
 	lstsize = ft_lstsize(*a);
 	if (lstsize == 3)
 		sort_triple(a);
 	else if (lstsize)
-	{
-		handler("pb", a, b, 0);
-		handler("pb", a, b, 0);
-		while (ft_lstsize(*a))
-		{
-			tmp = get_bestmove(*a, *b);
-			//print_stacks(*a, *b);
-			//ft_printf("\nBest A\t%d\nBest B\t%d\n", tmp[0], tmp[1]);
-			go_to(a, b, "a", tmp[0]);
-			go_to(a, b, "b", tmp[1]);
-			handler("pb", a, b, 0);
-			if (*((int *)(ft_lstget(*b, 1))->content) > *((int *)(*b)->content))
-				handler("sb", a, b, 0);
-			free(tmp);
-		}
-		while (ft_lstsize(*b))
-			handler("pa", a, b, 0);
-		go_to(a, b, "a", getleastnb(*a));
-		//sort_turc(a, b);
-	}
-	
+		sort_turc(a, b);
 }

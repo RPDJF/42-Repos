@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:30:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/05 18:08:05 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:47:50 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,40 +22,42 @@ void	push_stack(t_list **src, t_list **dst)
 	*src = swap;
 }
 
-void go_to(t_list **a, t_list **b, char src, int idx)
+void	go_to(t_list **a, t_list **b, char *src, int idx)
 {
-    int i = 0;
-    int size;
-	
+	int	i;
+	int	size;
+
+	i = 0;
 	size = ft_lstsize(*a);
-	if (src == 'b')
+	if (ft_strncmp(src, "a", ft_strlen(src)))
 		size = ft_lstsize(*b);
-    if (idx >= 0 && idx < size)
-    {
-        if (idx > (size / 2))
-        {
-            i = size - idx;
-            while (i-- > 0)
-            {
-                if (src == 'a')
-                    handler("rra", a, b);
-                else
-                    handler("rrb", a, b);
-            }
-        }
-        else
-        {
-            while (i++ < idx)
-            {
-                if (src == 'a')
-                    handler("ra", a, b);
-                else
-                    handler("rb", a, b);
-            }
-        }
-    }
+	if (idx > (size / 2))
+			i = size - idx;
+	while (idx > (size / 2) && i-- > 0)
+		handler(ft_strjoin("rr", src), a, b, 1);
+	while (!(idx > (size / 2)) && i++ < idx)
+		handler(ft_strjoin("r", src), a, b, 1);
 }
 
+int	sim_go_to(t_list *a, t_list *b, char *src, int idx)
+{
+	int	i;
+	int	size;
+	int	cost;
+
+	cost = 0;
+	i = 0;
+	size = ft_lstsize(a);
+	if (ft_strncmp(src, "a", ft_strlen(src)))
+		size = ft_lstsize(b);
+	if (idx > (size / 2))
+			i = size - idx;
+	while (idx > (size / 2) && i-- > 0)
+		cost++;
+	while (!(idx > (size / 2)) && i++ < idx)
+		cost++;
+	return (cost);
+}
 
 t_list	*arg2stack(char **tab)
 {
@@ -66,7 +68,7 @@ t_list	*arg2stack(char **tab)
 	head = 0;
 	while (tab && *tab)
 	{
-		content = (int *)malloc(sizeof(int));
+		content = (int *)malloc(2 * sizeof(int));
 		if (!content)
 			return (0);
 		*content = ft_atoi(*tab);
@@ -84,6 +86,13 @@ t_list	*arg2stack(char **tab)
 		tab++;
 	}
 	return (head);
+}
+
+void	indexer(t_list *stack)
+{
+	int	current;
+
+	current = *((int *)ft_lstget(stack, getleastnb(stack))->content);
 }
 
 void	print_stacks(t_list *a, t_list *b)

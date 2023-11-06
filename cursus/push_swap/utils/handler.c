@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:47:50 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/05 18:10:39 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:58:32 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	simple_handler(char	*operation, t_list **src, t_list **dst)
 		*src = ft_lstrotate(*src);
 }
 
-int	handler(char *operation, t_list **a, t_list	**b)
+int	handler(char *operation, t_list **a, t_list	**b, int isheap)
 {
 	ft_printf("%s\n", operation);
 	if (ft_strlen(operation) == 3)
@@ -44,6 +44,9 @@ int	handler(char *operation, t_list **a, t_list	**b)
 		else if (operation[1] == 'b')
 			simple_handler(operation, b, a);
 	}
+	if (isheap)
+		free (operation);
+	//print_stacks(*a, *b);
 	/*if (b)
 		print_stacks(*a, *b);
 	else

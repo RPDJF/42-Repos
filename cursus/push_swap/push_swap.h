@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/05 16:15:02 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:46:19 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	senderror(char *message);
 //		FROM handler.c
 
 //	Apply operation to stacks
-int		handler(char *operation, t_list **a, t_list	**b);
+int		handler(char *operation, t_list **a, t_list	**b, int isheap);
 
 //		FROM resolver.c
 
@@ -46,8 +46,8 @@ int		handler(char *operation, t_list **a, t_list	**b);
 int		getleastnb(t_list *stack);
 //	Get the node id for the lowest value from stack
 int		getmostnb(t_list *stack);
-//	Get the node id for the nearest content from int value, returns -1 on error
-int		getnearest(t_list *stack, int value);
+//	Get the node id for the nearest content from node int* content, returns -1 on error
+int		getnear(t_list *stack, t_list node);
 //	Get the node id for specific value, returns -1 on error
 int		getnode(t_list *stack, int value);
 
@@ -61,7 +61,9 @@ void	sort(t_list **a, t_list **b);
 //	Take the first int of src stack and gives it to dst stack
 void	push_stack(t_list **src, t_list **dst);
 //	Rotate until specific idx
-void 	go_to(t_list **a, t_list **b, char src, int idx);
+void	go_to(t_list **a, t_list **b, char *src, int idx);
+//	Simulates a go_to and returns the cost as int
+int		sim_go_to(t_list *a, t_list *b, char *src, int idx);
 //	Converts an array of strings into stack
 t_list	*arg2stack(char **tab);
 //  Print stacks in a readable output

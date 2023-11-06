@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   resolver.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 14:22:38 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/05 14:22:38 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:42:36 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,27 @@ int	getmostnb(t_list *stack)
 	return (idx);
 }
 
-int	getnearest(t_list *stack, int value)
+// erreure ici
+int	getnear(t_list *stack, t_list node)
 {
 	int	idx;
 	int	size;
-	int diff;
+	int	value;
+	int	current;
+	int	tmp;
 
-	size = ft_lstsize(stack);
-	diff = 0;
 	idx = -1;
+	value = *((int *)node.content);
+	size = ft_lstsize(stack);
+	current = 0;
 	while (size-- > 0)
 	{
-		if (*((int *)ft_lstget(stack, size)->content) > value)
+		tmp = *((int *)ft_lstget(stack, size)->content);
+		if ((idx < 0 && tmp > value) || (tmp > value && tmp < current))
 		{
-			if (!diff || *((int *)ft_lstget(stack, size)->content) - value < diff)
-			{
-				diff = *((int *)ft_lstget(stack, size)->content) - value;
-				idx = size;
-			}
-		}
-		else if (!diff && *((int *)ft_lstget(stack, size)->content) == value)
+			current = tmp;
 			idx = size;
+		}
 	}
 	if (idx < 0)
 		idx = getmostnb(stack);
@@ -85,7 +85,7 @@ int	getnode(t_list *stack, int value)
 
 	size = ft_lstsize(stack);
 	while (size-- > 0)
-		if(*((int *)ft_lstget(stack, size)->content) == value)
+		if (*((int *)ft_lstget(stack, size)->content) == value)
 			return (getnode(stack, *((int *)stack->content)));
 	return (-1);
 }

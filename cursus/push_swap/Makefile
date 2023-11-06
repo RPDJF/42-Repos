@@ -118,6 +118,7 @@ fclean: clean
 re: fclean all
 
 help:
+	@echo "$$HEADER"
 	@echo "all		-	Build $(NAME)"
 	@echo "clean		-	Clean temporary files"
 	@echo "fclean		-	Clean the whole build"
