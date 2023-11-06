@@ -1,4 +1,5 @@
 define HEADER
+
                                 ..                                
                               ...                                 
                       ..........................                  
@@ -78,19 +79,24 @@ NAME = push_swap
 
 all: $(NAME)
 
+header:
+	@echo "$$HEADER"
+
+$(CFILES): header
+
 %.o: %.c
 	@printf "\t🤖 Compiling $<...\r"
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@printf "\33[2K"
 
-$(NAME): header $(CFILES) lib_header buildlibft
+$(NAME): $(CFILES) $(LIBFT_LIB)
 	@echo "$$APP_HEADER"
 	@printf "\t🤖 Compiling $(NAME)...\r"
 	@$(CC) $(CFLAGS) $(CFILES) $(LIBFT_LIB) -o $(NAME)
 	@printf "\33[2K"
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅\n"
 
-debug: fclean header $(CFILES) lib_header buildlibft
+debug: fclean $(CFILES) $(LIBFT_LIB)
 	@echo "$$APP_HEADER"
 	@printf "\t🤖 Compiling $(NAME)...\r"
 	@$(CC) $(CFLAGS) -g -fsanitize=address $(CFILES) $(LIBFT_LIB) -o $(NAME)
@@ -98,11 +104,9 @@ debug: fclean header $(CFILES) lib_header buildlibft
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
 	@echo "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n"
 
-buildlibft: $(LIBFT_PATH)Makefile
-	@make -C $(LIBFT_PATH) all --no-print-directory
-
-lib_header:
+$(LIBFT_LIB): $(LIBFT_PATH)Makefile
 	@echo "$$LIB_HEADER"
+	@make -C $(LIBFT_PATH) all --no-print-directory
 
 clean:
 	@$(MAKE) -C $(LIBFT_PATH) fclean --no-print-directory
@@ -113,15 +117,12 @@ fclean: clean
 
 re: fclean all
 
-header:
-	@echo
-	@echo "$$HEADER"
-
 help:
 	@echo "all		-	Build $(NAME)"
 	@echo "clean		-	Clean temporary files"
 	@echo "fclean		-	Clean the whole build"
 	@echo "debug		-	Runs the program with g3 fsanitize=address"
 	@echo "$(NAME)	-	Build the $(NAME) with necessary libs"
+	@echo "$(LIBFT_LIB)	-	Build the lib $(LIBFT_LIB)"
 
-.PHONY = help all clean fclean re header buildlibft lib_header
+.PHONY = help all clean fclean re header
