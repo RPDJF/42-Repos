@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:36:24 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/05 17:55:14 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/06 23:06:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	main(int argc, char **argv)
 	if (!a || !check_duplicates(a))
 		secure_exit(&a, &b, "Error");
 	b = 0;
-	//print_stacks(a, b);
 	if (!check_stackorder(a))
 		sort(&a, &b);
 	secure_exit(&a, &b, 0);

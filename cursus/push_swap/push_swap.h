@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/06 14:46:19 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/06 23:06:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int		handler(char *operation, t_list **a, t_list	**b, int isheap);
 int		getleastnb(t_list *stack);
 //	Get the node id for the lowest value from stack
 int		getmostnb(t_list *stack);
-//	Get the node id for the nearest content from node int* content, returns -1 on error
+//	Get the node id for the nearest content from node int* content
+//  Returns -1 on error
 int		getnear(t_list *stack, t_list node);
 //	Get the node id for specific value, returns -1 on error
 int		getnode(t_list *stack, int value);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:30:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/06 17:47:50 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/06 23:04:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	go_to(t_list **a, t_list **b, char *src, int idx)
 	if (ft_strncmp(src, "a", ft_strlen(src)))
 		size = ft_lstsize(*b);
 	if (idx > (size / 2))
-			i = size - idx;
+		i = size - idx;
 	while (idx > (size / 2) && i-- > 0)
 		handler(ft_strjoin("rr", src), a, b, 1);
 	while (!(idx > (size / 2)) && i++ < idx)
@@ -51,7 +51,7 @@ int	sim_go_to(t_list *a, t_list *b, char *src, int idx)
 	if (ft_strncmp(src, "a", ft_strlen(src)))
 		size = ft_lstsize(b);
 	if (idx > (size / 2))
-			i = size - idx;
+		i = size - idx;
 	while (idx > (size / 2) && i-- > 0)
 		cost++;
 	while (!(idx > (size / 2)) && i++ < idx)
@@ -86,13 +86,6 @@ t_list	*arg2stack(char **tab)
 		tab++;
 	}
 	return (head);
-}
-
-void	indexer(t_list *stack)
-{
-	int	current;
-
-	current = *((int *)ft_lstget(stack, getleastnb(stack))->content);
 }
 
 void	print_stacks(t_list *a, t_list *b)

@@ -102,7 +102,8 @@ debug: fclean $(CFILES) $(LIBFT_LIB)
 	@$(CC) $(CFLAGS) -g -fsanitize=address $(CFILES) $(LIBFT_LIB) -o $(NAME)
 	@printf "\33[2K"
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
-	@echo "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n"
+	@echo "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n\n"
+	@echo $(shell norminette)
 
 $(LIBFT_LIB): $(LIBFT_PATH)Makefile
 	@echo "$$LIB_HEADER"

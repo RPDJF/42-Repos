@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/06 18:57:26 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/06 23:04:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	*get_bestmove(t_list *a, t_list *b)
 	int	*output;
 	int	i;
 	int	current_cost;
-	int	tmp;
+	int	tmp[2];
 
 	output = (int *)ft_calloc(2, sizeof(int));
 	if (!output)
@@ -58,16 +58,16 @@ int	*get_bestmove(t_list *a, t_list *b)
 	i = 0;
 	while (i < ft_lstsize(a))
 	{
-		tmp = sim_go_to(a, b, "a", i)
-			+ sim_go_to(a, b, "b", getnear(b, *ft_lstget(a, i)));
+		tmp[0] = getnear(b, *ft_lstget(a, i));
+		tmp[1] = sim_go_to(a, b, "a", i) + sim_go_to(a, b, "b", tmp[0]);
 		if (*((int *)(ft_lstget(a, i)->content))
-			< *((int *)ft_lstget(b, getnear(b, *ft_lstget(a, i)))->content))
-			tmp++;
-		if (!i || tmp < current_cost)
+			< *((int *)ft_lstget(b, tmp[0])->content))
+			tmp[1]++;
+		if (!i || tmp[1] < current_cost)
 		{
-			current_cost = tmp;
+			current_cost = tmp[1];
 			output[0] = i;
-			output[1] = getnear(b, *ft_lstget(a, i));
+			output[1] = tmp[0];
 		}
 		i++;
 	}
@@ -77,70 +77,42 @@ int	*get_bestmove(t_list *a, t_list *b)
 //	Case of n stack <= 10
 int	sort_turc(t_list **a, t_list **b)
 {
-	int	size;
-	int	*bestmove;
+	int	*tmp;
+	int	lstsize;
 	int	i;
 
+	handler("pb", a, b, 0);
+	handler("pb", a, b, 0);
+	lstsize = ft_lstsize(*a);
 	i = 0;
-	size = ft_lstsize(*a);
-	while (!check_stackorder(*a))
+	while (lstsize - i)
 	{
-		bestmove = get_bestmove(*a, *b);
-		if (!bestmove)
-			return (-1);
-		go_to(a, b, "a", bestmove[0]);
-		go_to(a, b, "b", bestmove[1]);
+		tmp = get_bestmove(*a, *b);
+		go_to(a, b, "a", tmp[0]);
+		go_to(a, b, "b", tmp[1]);
 		handler("pb", a, b, 0);
+		if (*((int *)(ft_lstget(*b, 1))->content) > *((int *)(*b)->content))
+			handler("sb", a, b, 0);
+		free(tmp);
+		i++;
 	}
-	size = ft_lstsize(*b);
-	while (size-- > 0)
+	lstsize = ft_lstsize(*b);
+	i = 0;
+	while (i++, lstsize - i + 1)
 		handler("pa", a, b, 0);
-	return (0);
+	go_to(a, b, "a", getleastnb(*a));
+	return (1);
 }
-
-/*
-//	Case of n stack  <= 100
-int	sort_hundred(t_list **a, t_list **b)
-{
-
-}
-
-//	Case of n stack > 100
-//	May be less optimized than using sort_triple, sort_turc and sort_hundred
-int	sort_plus(t_list **a, t_list **b)
-{
-	
-}
-*/
 
 void	sort(t_list **a, t_list **b)
 {
-	int	*tmp;
-	int	lstsize;
+	int	size;
 
-	lstsize = ft_lstsize(*a);
-	if (lstsize == 3)
+	size = ft_lstsize(*a);
+	if (size == 2)
+		handler("sa", a, b, 0);
+	else if (size == 3)
 		sort_triple(a);
-	else if (lstsize)
-	{
-		handler("pb", a, b, 0);
-		handler("pb", a, b, 0);
-		while (ft_lstsize(*a))
-		{
-			tmp = get_bestmove(*a, *b);
-			//print_stacks(*a, *b);
-			//ft_printf("\nBest A\t%d\nBest B\t%d\n", tmp[0], tmp[1]);
-			go_to(a, b, "a", tmp[0]);
-			go_to(a, b, "b", tmp[1]);
-			handler("pb", a, b, 0);
-			if (*((int *)(ft_lstget(*b, 1))->content) > *((int *)(*b)->content))
-				handler("sb", a, b, 0);
-			free(tmp);
-		}
-		while (ft_lstsize(*b))
-			handler("pa", a, b, 0);
-		go_to(a, b, "a", getleastnb(*a));
-		//sort_turc(a, b);
-	}
-	
+	else if (size > 3)
+		sort_turc(a, b);
 }
