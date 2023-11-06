@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/06 23:06:58 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/06 23:15:28 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int		getmostnb(t_list *stack);
 //	Get the node id for the nearest content from node int* content
 //  Returns -1 on error
 int		getnear(t_list *stack, t_list node);
-//	Get the node id for specific value, returns -1 on error
-int		getnode(t_list *stack, int value);
 
 //		FROM sorter.c
 

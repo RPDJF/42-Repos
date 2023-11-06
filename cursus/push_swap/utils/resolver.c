@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 14:22:38 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/06 18:42:36 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/06 23:15:45 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,17 @@ int	getleastnb(t_list *stack)
 	int	idx;
 	int	size;
 	int	nb;
+	int	tmp;
 
 	size = ft_lstsize(stack) - 1;
 	nb = *((int *)ft_lstlast(stack)->content);
 	idx = size;
 	while (size-- > 0)
 	{
-		if (*((int *)ft_lstget(stack, size)->content) < nb)
+		tmp = *((int *)ft_lstget(stack, size)->content);
+		if (tmp < nb)
 		{
-			nb = *((int *)ft_lstget(stack, size)->content);
+			nb = tmp;
 			idx = size;
 		}
 	}
@@ -37,15 +39,17 @@ int	getmostnb(t_list *stack)
 	int	idx;
 	int	size;
 	int	nb;
+	int	tmp;
 
 	size = ft_lstsize(stack) - 1;
 	nb = *((int *)ft_lstlast(stack)->content);
 	idx = size;
 	while (size-- > 0)
 	{
-		if (*((int *)ft_lstget(stack, size)->content) > nb)
+		tmp = *((int *)ft_lstget(stack, size)->content);
+		if (tmp > nb)
 		{
-			nb = *((int *)ft_lstget(stack, size)->content);
+			nb = tmp;
 			idx = size;
 		}
 	}
@@ -77,15 +81,4 @@ int	getnear(t_list *stack, t_list node)
 	if (idx < 0)
 		idx = getmostnb(stack);
 	return (idx);
-}
-
-int	getnode(t_list *stack, int value)
-{
-	int	size;
-
-	size = ft_lstsize(stack);
-	while (size-- > 0)
-		if (*((int *)ft_lstget(stack, size)->content) == value)
-			return (getnode(stack, *((int *)stack->content)));
-	return (-1);
 }
