@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:36:24 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/07 17:17:05 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/07 22:01:39 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,25 @@ static t_list	*parse_args(char **args, size_t size)
 	return (head);
 }
 
-t_stacks	new_stacks(t_list *a, t_list *b)
+t_stacks	*new_stacks(t_list *a, t_list *b)
 {
-	t_stacks	stacks;
+	t_stacks	*stacks;
 
-	stacks.a = a;
-	stacks.b = b;
-	stacks.size_a = ft_lstsize(a);
-	stacks.size_b = 0;
-	stacks.size = stacks.size_a + stacks.size_b;
+	stacks = (t_stacks *)ft_calloc(1, sizeof(t_stacks));
+	if (!stacks)
+		return (0);
+	stacks->a = a;
+	stacks->b = b;
+	stacks->size_a = ft_lstsize(a);
+	stacks->size_b = 0;
+	stacks->size = stacks->size_a + stacks->size_b;
 	return (stacks);
 }
 
 // need to check for duplicas
 int	main(int argc, char **argv)
 {
-	t_stacks	stacks;
+	t_stacks	*stacks;
 	t_list		*a;
 	t_list		*b;
 
@@ -78,7 +81,10 @@ int	main(int argc, char **argv)
 		secure_exit(&a, &b, "Error");
 	b = 0;
 	stacks = new_stacks(a, b);
-	if (!check_stackorder(stacks, "a"))
-		sort(&stacks);
+	if (!stacks)
+		secure_exit(&a, &b, "Error");
+	if (!check_stackorder(*stacks, "a"))
+		sort(stacks);
+	free(stacks);
 	secure_exit(&a, &b, 0);
 }
