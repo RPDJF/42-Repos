@@ -6,7 +6,11 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/11/07 17:23:40 by rude-jes         ###   ########.fr       */
+=======
+/*   Updated: 2023/11/07 14:45:49 by rude-jes         ###   ########.fr       */
+>>>>>>> 429e7549181b69ccd052486fcea4c95e4e1ed8a9
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +55,12 @@ int		handler(char *operation, t_stacks *stacks, int isheap);
 //		FROM resolver.c
 
 //	Get the node id for the lowest value from stack
-int		getleastnb(t_list *stack);
-//	Get the node id for the lowest value from stack
-int		getmostnb(t_list *stack);
+int		getleastnb(t_list *stack, int size);
+//	Get the node id for the highest value from stack
+int		getmostnb(t_list *stack, int size);
 //	Get the node id for the nearest content from node int* content
 //  Returns -1 on error
-int		getnear(t_list *stack, t_list node);
+int		getnear(t_list *stack, int size, t_list node);
 
 //		FROM sorter.c
 
