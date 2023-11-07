@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/06 23:15:28 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:03:03 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	sort(t_list **a, t_list **b);
 //	Take the first int of src stack and gives it to dst stack
 void	push_stack(t_list **src, t_list **dst);
 //	Rotate until specific idx
-void	go_to(t_list **a, t_list **b, char *src, int idx);
+void	go_to(t_list **stack, char *src, int size, int idx);
 //	Simulates a go_to and returns the cost as int
-int		sim_go_to(t_list *a, t_list *b, char *src, int idx);
+int		sim_go_to(int stack_size, int idx);
 //	Converts an array of strings into stack
 t_list	*arg2stack(char **tab);
 //  Print stacks in a readable output

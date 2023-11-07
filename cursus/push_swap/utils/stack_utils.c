@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:30:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/06 23:04:56 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/07 13:59:10 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,31 @@ void	push_stack(t_list **src, t_list **dst)
 	*src = swap;
 }
 
-void	go_to(t_list **a, t_list **b, char *src, int idx)
+void	go_to(t_list **stack, char *src, int size, int idx)
 {
 	int	i;
-	int	size;
 
 	i = 0;
-	size = ft_lstsize(*a);
-	if (ft_strncmp(src, "a", ft_strlen(src)))
-		size = ft_lstsize(*b);
 	if (idx > (size / 2))
 		i = size - idx;
 	while (idx > (size / 2) && i-- > 0)
-		handler(ft_strjoin("rr", src), a, b, 1);
+		handler(ft_strjoin("rr", src), stack, stack, 1);
 	while (!(idx > (size / 2)) && i++ < idx)
-		handler(ft_strjoin("r", src), a, b, 1);
+		handler(ft_strjoin("r", src), stack, stack, 1);
 }
 
-int	sim_go_to(t_list *a, t_list *b, char *src, int idx)
+int	sim_go_to(int stack_size, int idx)
 {
 	int	i;
-	int	size;
 	int	cost;
 
 	cost = 0;
 	i = 0;
-	size = ft_lstsize(a);
-	if (ft_strncmp(src, "a", ft_strlen(src)))
-		size = ft_lstsize(b);
-	if (idx > (size / 2))
-		i = size - idx;
-	while (idx > (size / 2) && i-- > 0)
+	if (idx > (stack_size / 2))
+		i = stack_size - idx;
+	while (idx > (stack_size / 2) && i-- > 0)
 		cost++;
-	while (!(idx > (size / 2)) && i++ < idx)
+	while (!(idx > (stack_size / 2)) && i++ < idx)
 		cost++;
 	return (cost);
 }

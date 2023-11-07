@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/06 23:04:27 by marvin           ###   ########.fr       */
+/*   Updated: 2023/11/07 14:18:50 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,20 @@ void	sort_triple(t_list **a)
 //		Calculer cout deplacement (sim_go_to)
 //		Ajouter cout deplacement B pour bonne position sim_go_to + get_near
 //			Si nombre plus petit que nearest B, ajouter 1 pour le sb
-int	*get_bestmove(t_list *a, t_list *b)
+void	get_bestmove(t_list **a, t_list **b, int size_a, int size_b)
 {
-	int	*output;
+	int	output[2];
 	int	i;
 	int	current_cost;
 	int	tmp[2];
 
-	output = (int *)ft_calloc(2, sizeof(int));
-	if (!output)
-		return (0);
 	i = 0;
-	while (i < ft_lstsize(a))
+	while (i < size_a)
 	{
-		tmp[0] = getnear(b, *ft_lstget(a, i));
-		tmp[1] = sim_go_to(a, b, "a", i) + sim_go_to(a, b, "b", tmp[0]);
-		if (*((int *)(ft_lstget(a, i)->content))
-			< *((int *)ft_lstget(b, tmp[0])->content))
+		tmp[0] = getnear(*b, *ft_lstget(*a, i));
+		tmp[1] = sim_go_to(size_a, i) + sim_go_to(size_b, tmp[0]);
+		if (*((int *)(ft_lstget(*a, i)->content))
+			< *((int *)ft_lstget(*b, tmp[0])->content))
 			tmp[1]++;
 		if (!i || tmp[1] < current_cost)
 		{
@@ -71,13 +68,13 @@ int	*get_bestmove(t_list *a, t_list *b)
 		}
 		i++;
 	}
-	return (output);
+	go_to(a, "a", size_a, output[0]);
+	go_to(b, "b", size_b, output[1]);
 }
 
 //	Case of n stack <= 10
 int	sort_turc(t_list **a, t_list **b)
 {
-	int	*tmp;
 	int	lstsize;
 	int	i;
 
@@ -87,20 +84,16 @@ int	sort_turc(t_list **a, t_list **b)
 	i = 0;
 	while (lstsize - i)
 	{
-		tmp = get_bestmove(*a, *b);
-		go_to(a, b, "a", tmp[0]);
-		go_to(a, b, "b", tmp[1]);
+		get_bestmove(a, b, lstsize - i, 2 + i);
 		handler("pb", a, b, 0);
-		if (*((int *)(ft_lstget(*b, 1))->content) > *((int *)(*b)->content))
-			handler("sb", a, b, 0);
-		free(tmp);
 		i++;
 	}
-	lstsize = ft_lstsize(*b);
-	i = 0;
-	while (i++, lstsize - i + 1)
+	while (2 + i)
+	{
 		handler("pa", a, b, 0);
-	go_to(a, b, "a", getleastnb(*a));
+		i--;
+	}
+	go_to(a, "a", lstsize + 2, getleastnb(*a));
 	return (1);
 }
 
