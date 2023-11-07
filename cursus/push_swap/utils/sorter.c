@@ -6,38 +6,38 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/07 14:18:50 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:18:16 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	sort_triple(t_list **a)
+void	sort_triple(t_stacks *stacks)
 {
 	int	size;
 	int	*nb[3];
 
 	size = 3;
 	while (size-- > 0)
-		nb[size] = (int *)ft_lstget(*a, size)->content;
+		nb[size] = (int *)ft_lstget(stacks->a, size)->content;
 	if (*nb[0] < *nb[1] && *nb[1] < *nb[2] && *nb[0] < *nb[2])
 		return ;
 	else if ((*nb[0] > *nb[1] && *nb[1] < *nb[2] && *nb[0] < *nb[2])
 		|| (*nb[0] > *nb[1] && *nb[1] > *nb[2] && *nb[0] > *nb[2])
 		|| (*nb[0] < *nb[1] && *nb[1] > *nb[2] && *nb[0] < *nb[2]))
 	{
-		handler("sa", a, 0, 0);
-		sort_triple(a);
+		handler("sa", stacks, 0);
+		sort_triple(stacks);
 	}
 	else if ((*nb[0] > *nb[1] && *nb[1] < *nb[2] && *nb[0] > *nb[2]))
 	{
-		handler("ra", a, 0, 0);
-		sort_triple(a);
+		handler("ra", stacks, 0);
+		sort_triple(stacks);
 	}
 	else
 	{
-		handler("rra", a, 0, 0);
-		sort_triple(a);
+		handler("rra", stacks, 0);
+		sort_triple(stacks);
 	}
 }
 
@@ -45,7 +45,7 @@ void	sort_triple(t_list **a)
 //		Calculer cout deplacement (sim_go_to)
 //		Ajouter cout deplacement B pour bonne position sim_go_to + get_near
 //			Si nombre plus petit que nearest B, ajouter 1 pour le sb
-void	get_bestmove(t_list **a, t_list **b, int size_a, int size_b)
+void	get_bestmove(t_stacks *stacks)
 {
 	int	output[2];
 	int	i;
@@ -53,12 +53,12 @@ void	get_bestmove(t_list **a, t_list **b, int size_a, int size_b)
 	int	tmp[2];
 
 	i = 0;
-	while (i < size_a)
+	while (i < stacks->size_a)
 	{
-		tmp[0] = getnear(*b, *ft_lstget(*a, i));
-		tmp[1] = sim_go_to(size_a, i) + sim_go_to(size_b, tmp[0]);
-		if (*((int *)(ft_lstget(*a, i)->content))
-			< *((int *)ft_lstget(*b, tmp[0])->content))
+		tmp[0] = getnear(stacks->b, *ft_lstget(stacks->a, i));
+		tmp[1] = sim_go_to(stacks, "a", i) + sim_go_to(stacks, "b", tmp[0]);
+		if (*((int *)(ft_lstget(stacks->a, i)->content))
+			< *((int *)ft_lstget(stacks->b, tmp[0])->content))
 			tmp[1]++;
 		if (!i || tmp[1] < current_cost)
 		{
@@ -68,44 +68,35 @@ void	get_bestmove(t_list **a, t_list **b, int size_a, int size_b)
 		}
 		i++;
 	}
-	go_to(a, "a", size_a, output[0]);
-	go_to(b, "b", size_b, output[1]);
+	go_to(stacks, "a", output[0]);
+	go_to(stacks, "b", output[0]);
 }
 
 //	Case of n stack <= 10
-int	sort_turc(t_list **a, t_list **b)
+int	sort_turc(t_stacks *stacks)
 {
 	int	lstsize;
-	int	i;
 
-	handler("pb", a, b, 0);
-	handler("pb", a, b, 0);
-	lstsize = ft_lstsize(*a);
-	i = 0;
-	while (lstsize - i)
+	handler("pb", stacks, 0);
+	handler("pb", stacks, 0);
+	lstsize = stacks->size;
+	while (stacks->size_a)
 	{
-		get_bestmove(a, b, lstsize - i, 2 + i);
-		handler("pb", a, b, 0);
-		i++;
+		get_bestmove(stacks);
+		handler("pb", stacks, 0);
 	}
-	while (2 + i)
-	{
-		handler("pa", a, b, 0);
-		i--;
-	}
-	go_to(a, "a", lstsize + 2, getleastnb(*a));
+	while (stacks->size_b)
+		handler("pa", stacks, 0);
+	go_to(stacks, "a", getleastnb(stacks->a));
 	return (1);
 }
 
-void	sort(t_list **a, t_list **b)
+void	sort(t_stacks *stacks)
 {
-	int	size;
-
-	size = ft_lstsize(*a);
-	if (size == 2)
-		handler("sa", a, b, 0);
-	else if (size == 3)
-		sort_triple(a);
-	else if (size > 3)
-		sort_turc(a, b);
+	if (stacks->size == 2)
+		handler("sa", stacks, 0);
+	else if (stacks->size == 3)
+		sort_triple(stacks);
+	else if (stacks->size > 3)
+		sort_turc(stacks);
 }

@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/07 14:03:03 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:23:40 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,21 @@
 
 # include "libft/libft.h"
 
+typedef struct s_stacks{
+	t_list	*a;
+	t_list	*b;
+	int		size;
+	int		size_a;
+	int		size_b;
+}				t_stacks;
+
 //FUNCTIONS PROTOTYPE
 
 //		FROM checkers.c
 
 //	Check if it's on good order
 //	Returns 1 if ok
-int		check_stackorder(t_list *stack);
+int		check_stackorder(t_stacks stacks, char *src);
 //	Returns 1 if no duplicates found
 //	Else return 0
 int		check_duplicates(t_list *head);
@@ -38,7 +46,7 @@ void	senderror(char *message);
 //		FROM handler.c
 
 //	Apply operation to stacks
-int		handler(char *operation, t_list **a, t_list	**b, int isheap);
+int		handler(char *operation, t_stacks *stacks, int isheap);
 
 //		FROM resolver.c
 
@@ -53,19 +61,19 @@ int		getnear(t_list *stack, t_list node);
 //		FROM sorter.c
 
 //	Sort stack A
-void	sort(t_list **a, t_list **b);
+void	sort(t_stacks *stacks);
 
 //		FROM stack_utils
 
 //	Take the first int of src stack and gives it to dst stack
 void	push_stack(t_list **src, t_list **dst);
 //	Rotate until specific idx
-void	go_to(t_list **stack, char *src, int size, int idx);
+void	go_to(t_stacks *stacks, char *src, int idx);
 //	Simulates a go_to and returns the cost as int
-int		sim_go_to(int stack_size, int idx);
+int		sim_go_to(t_stacks *stacks, char *src, int idx);
 //	Converts an array of strings into stack
 t_list	*arg2stack(char **tab);
 //  Print stacks in a readable output
-void	print_stacks(t_list *a, t_list *b);
+void	print_stacks(t_stacks stacks);
 
 #endif

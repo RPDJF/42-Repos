@@ -6,23 +6,42 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:47:50 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/06 23:41:50 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:47:41 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	simple_handler(char	*operation, t_list **src, t_list **dst)
+void	simple_handler(char	*operation, t_stacks *stacks)
 {
+	t_list	**src;
+	t_list	**dst;
+
+	src = &stacks->a;
+	dst = &stacks->b;
+	if (operation[1] == 'b')
+		src = &stacks->b;
+	if (operation[1] == 'b')
+		dst = &stacks->a;
 	if (operation[0] == 's')
 		*src = ft_lstswap(*src);
 	else if (operation[0] == 'p')
+	{
 		push_stack(dst, src);
+		if (operation[1] == 'a')
+			stacks->size_a++;
+		if (operation[1] == 'a')
+			stacks->size_b--;
+		if (operation[1] == 'b')
+			stacks->size_a--;
+		if (operation[1] == 'b')
+			stacks->size_b++;
+	}
 	else if (operation[0] == 'r')
 		*src = ft_lstrotate(*src);
 }
 
-int	handler(char *operation, t_list **a, t_list	**b, int isheap)
+int	handler(char *operation, t_stacks *stacks, int isheap)
 {
 	if (!operation)
 		return (0);
@@ -30,23 +49,19 @@ int	handler(char *operation, t_list **a, t_list	**b, int isheap)
 	if (ft_strlen(operation) == 3)
 	{
 		if (operation[2] == 'a')
-			*a = ft_lstrevrotate(*a);
+			stacks->a = ft_lstrevrotate(stacks->a);
 		else if (operation[2] == 'b')
-			*b = ft_lstrevrotate(*b);
+			stacks->b = ft_lstrevrotate(stacks->b);
 		else
 		{
-			*a = ft_lstrevrotate(*a);
-			*b = ft_lstrevrotate(*b);
+			stacks->a = ft_lstrevrotate(stacks->a);
+			stacks->b = ft_lstrevrotate(stacks->b);
 		}
 	}
 	else
-	{
-		if (operation[1] == 'a')
-			simple_handler(operation, a, b);
-		else if (operation[1] == 'b')
-			simple_handler(operation, b, a);
-	}
+		simple_handler(operation, stacks);
 	if (isheap)
 		free (operation);
+	print_stacks(*stacks);
 	return (1);
 }

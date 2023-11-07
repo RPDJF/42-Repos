@@ -3,21 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:30:28 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/05 16:04:23 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:10:11 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-int	check_stackorder(t_list *stack)
+int	check_stackorder(t_stacks stacks, char *src)
 {
-	int	nb;
-	int	size;
+	int		nb;
+	int		size;
+	t_list	*stack;
 
-	size = ft_lstsize(stack) - 1;
+	size = stacks.size_a;
+	stack = stacks.a;
+	if (*src == 'b')
+		size = stacks.size_b;
+	if (*src == 'b')
+		stack = stacks.b;
 	nb = *((int *)ft_lstlast(stack)->content);
 	while (size-- > 0)
 	{

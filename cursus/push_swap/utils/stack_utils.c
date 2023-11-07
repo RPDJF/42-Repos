@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:30:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/07 13:59:10 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:46:38 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,39 @@ void	push_stack(t_list **src, t_list **dst)
 	*src = swap;
 }
 
-void	go_to(t_list **stack, char *src, int size, int idx)
+void	go_to(t_stacks *stacks, char *src, int idx)
 {
 	int	i;
+	int	size;
 
+	size = stacks->size_a;
+	if (*src == 'b')
+		size = stacks->size_b;
 	i = 0;
 	if (idx > (size / 2))
 		i = size - idx;
 	while (idx > (size / 2) && i-- > 0)
-		handler(ft_strjoin("rr", src), stack, stack, 1);
+		handler(ft_strjoin("rr", src), stacks, 1);
 	while (!(idx > (size / 2)) && i++ < idx)
-		handler(ft_strjoin("r", src), stack, stack, 1);
+		handler(ft_strjoin("r", src), stacks, 1);
 }
 
-int	sim_go_to(int stack_size, int idx)
+int	sim_go_to(t_stacks *stacks, char *src, int idx)
 {
 	int	i;
 	int	cost;
+	int	size;
 
+	size = stacks->size_a;
+	if (*src == 'b')
+		size = stacks->size_b;
 	cost = 0;
 	i = 0;
-	if (idx > (stack_size / 2))
-		i = stack_size - idx;
-	while (idx > (stack_size / 2) && i-- > 0)
+	if (idx > (size / 2))
+		i = size - idx;
+	while (idx > (size / 2) && i-- > 0)
 		cost++;
-	while (!(idx > (stack_size / 2)) && i++ < idx)
+	while (!(idx > (size / 2)) && i++ < idx)
 		cost++;
 	return (cost);
 }
@@ -80,19 +88,19 @@ t_list	*arg2stack(char **tab)
 	return (head);
 }
 
-void	print_stacks(t_list *a, t_list *b)
+void	print_stacks(t_stacks stacks)
 {
-	if (a)
-		ft_printf("%d", *((int *)a->content));
-	if (a)
-		a = a->next;
-	if (b)
-		ft_printf("\t%d", *((int *)b->content));
-	if (b)
-		b = b->next;
+	if (stacks.a)
+		ft_printf("%d", *((int *)stacks.a->content));
+	if (stacks.a)
+		stacks.a = stacks.a->next;
+	if (stacks.b)
+		ft_printf("\t%d", *((int *)stacks.b->content));
+	if (stacks.b)
+		stacks.b = stacks.b->next;
 	ft_printf("\n");
-	if (!b && !a)
+	if (!stacks.b && !stacks.a)
 		ft_printf("_\t_\na\tb\n\n");
-	if (a || b)
-		print_stacks(a, b);
+	if (stacks.a || stacks.b)
+		print_stacks(stacks);
 }
