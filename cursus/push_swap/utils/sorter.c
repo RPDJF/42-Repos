@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/07 14:18:50 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:47:46 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	get_bestmove(t_list **a, t_list **b, int size_a, int size_b)
 	i = 0;
 	while (i < size_a)
 	{
-		tmp[0] = getnear(*b, *ft_lstget(*a, i));
+		tmp[0] = getnear(*b, size_b, *ft_lstget(*a, i));
 		tmp[1] = sim_go_to(size_a, i) + sim_go_to(size_b, tmp[0]);
 		if (*((int *)(ft_lstget(*a, i)->content))
 			< *((int *)ft_lstget(*b, tmp[0])->content))
@@ -73,14 +73,13 @@ void	get_bestmove(t_list **a, t_list **b, int size_a, int size_b)
 }
 
 //	Case of n stack <= 10
-int	sort_turc(t_list **a, t_list **b)
+int	sort_turc(t_list **a, t_list **b, int lstsize)
 {
-	int	lstsize;
 	int	i;
 
 	handler("pb", a, b, 0);
 	handler("pb", a, b, 0);
-	lstsize = ft_lstsize(*a);
+	lstsize -= 2;
 	i = 0;
 	while (lstsize - i)
 	{
@@ -93,7 +92,7 @@ int	sort_turc(t_list **a, t_list **b)
 		handler("pa", a, b, 0);
 		i--;
 	}
-	go_to(a, "a", lstsize + 2, getleastnb(*a));
+	go_to(a, "a", lstsize + 2, getleastnb(*a, lstsize + 2));
 	return (1);
 }
 
@@ -107,5 +106,5 @@ void	sort(t_list **a, t_list **b)
 	else if (size == 3)
 		sort_triple(a);
 	else if (size > 3)
-		sort_turc(a, b);
+		sort_turc(a, b, size);
 }
