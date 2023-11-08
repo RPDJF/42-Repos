@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/03 17:41:27 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 21:14:56 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 //	Free mem references and mem itself
 void	ft_memsuperclear(void **m, size_t size);
+//	Returns the absolute value of int nb
+int		ft_nbabsolute(int nb);
+//	Returns lowest int value between nb1 and nb2
+int		ft_nblowest(int nb1, int nb2);
 //	Home made printf
 int		ft_printf(const char *format, ...);
 //	Write char in specific filedescriptor
@@ -127,6 +131,8 @@ t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
 //	Get node from idx
 t_list	*ft_lstget(t_list *lst, size_t idx);
+//	Get id from node
+int		ft_lstgetid(t_list *list, t_list *node);
 //	Delete first node
 t_list	*ft_lstpop(t_list *lst, void (*del)(void *));
 //	Push content to head of list (creates a list)
