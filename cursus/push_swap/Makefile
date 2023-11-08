@@ -58,6 +58,18 @@ define APP_HEADER
 endef
 export APP_HEADER
 
+define BONUS_HEADER
+
+
+                            __ __ __                   __                            
+.----.-----.--------.-----.|__|  |__|.-----.-----.    |  |--.-----.-----.--.--.-----.
+|  __|  _  |        |  _  ||  |  |  ||     |  _  |    |  _  |  _  |     |  |  |__ --|
+|____|_____|__|__|__|   __||__|__|__||__|__|___  |    |_____|_____|__|__|_____|_____|
+                    |__|                   |_____|                                   
+
+endef
+export BONUS_HEADER
+
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
@@ -73,16 +85,28 @@ SRC = 	push_swap \
 		utils/sorter \
 		utils/stack_utils \
 
-CFILES = $(SRC:%=%.c) 
+CFILES = $(SRC:%=%.c)
+
+BONUS_SRC =	checker_bonus \
+			utils_bonus/checkers \
+			utils_bonus/error_handler \
+			utils_bonus/handler \
+			utils_bonus/resolver \
+			utils_bonus/stack_utils \
+
+CBONUS_FILES = $(BONUS_SRC:%=%.c)
 
 NAME = push_swap
+BONUS_NAME = checker
 
-all: $(NAME)
+all: $(NAME) $(BONUS_NAME)
 
 header:
 	@echo "$$HEADER"
 
 $(CFILES): header
+
+$(CBONUS_FILES): header
 
 %.o: %.c
 	@printf "\t🤖 Compiling $<...\r"
@@ -114,17 +138,30 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -f $(BONUS_NAME)
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is fully deleted 🗑️"
+	@echo "\t[INFO] [$(NAME)]\t$(BONUS_NAME) is fully deleted 🗑️"
 
 re: fclean all
 
 help:
 	@echo "$$HEADER"
 	@echo "all		-	Build $(NAME)"
+	@echo "bonus		-	Build $(BONUS_NAME)"
 	@echo "clean		-	Clean temporary files"
 	@echo "fclean		-	Clean the whole build"
 	@echo "debug		-	Runs the program with g3 fsanitize=address"
 	@echo "$(NAME)	-	Build the $(NAME) with necessary libs"
+	@echo "$(BONUS_NAME)		-	Build the $(BONUS_NAME) with necessary libs"
 	@echo "$(LIBFT_LIB)	-	Build the lib $(LIBFT_LIB)"
+
+$(BONUS_NAME): $(CBONUS_FILES) $(LIBFT_LIB)
+	@echo "$$BONUS_HEADER"
+	@printf "\t🤖 Compiling $(BONUS_NAME) 🌟...\r"
+	@$(CC) $(CFLAGS) $(CBONUS_FILES) $(LIBFT_LIB) -o $(BONUS_NAME)
+	@printf "\33[2K"
+	@echo "\t[INFO] [$(NAME)]\t$(BONUS_NAME) is compiled ✅\n"
+
+bonus: $(BONUS_NAME)
 
 .PHONY = help all clean fclean re header
