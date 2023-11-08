@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:36:24 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/07 22:01:39 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 15:35:57 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ t_stacks	*new_stacks(t_list *a, t_list *b)
 	stacks->size_a = ft_lstsize(a);
 	stacks->size_b = 0;
 	stacks->size = stacks->size_a + stacks->size_b;
+	stacks->last_a = ft_lstlast(a);
+	stacks->last_b = 0;
+	stacks->most_a = ft_lstget(stacks->a, getmostnb(*stacks, 'a'));
+	stacks->least_a = ft_lstget(stacks->a, getleastnb(*stacks, 'a'));
+	stacks->most_b = 0;
+	stacks->least_b = 0;
 	return (stacks);
 }
 

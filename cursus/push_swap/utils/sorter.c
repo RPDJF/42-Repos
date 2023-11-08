@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 13:32:00 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:37:37 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,19 @@ void	get_bestmove(t_stacks *stacks)
 	i = 0;
 	while (i < stacks->size_a)
 	{
-		tmp[0] = getnear(stacks->b, stacks->size_b, *ft_lstget(stacks->a, i));
+		tmp[0] = getnear(*stacks, 'b', *ft_lstget(stacks->a, i));
 		tmp[1] = sim_go_to(stacks, "a", i) + sim_go_to(stacks, "b", tmp[0]);
-		if (*((int *)(ft_lstget(stacks->a, i)->content))
-			< *((int *)ft_lstget(stacks->b, tmp[0])->content))
-			tmp[1]++;
 		if (!i || tmp[1] < current_cost)
 		{
 			current_cost = tmp[1];
 			moveset[0] = i;
 			moveset[1] = tmp[0];
 		}
+		if (current_cost <= 1)
+			break;
 		i++;
 	}
-	go_to(stacks, "a", moveset[0]);
-	go_to(stacks, "b", moveset[1]);
+	go_to(stacks, moveset[0], moveset[1]);
 }
 
 //	Case of n stack <= 10
@@ -84,7 +82,7 @@ int	sort_turc(t_stacks *stacks)
 	}
 	while (stacks->size_b)
 		handler("pa", stacks, 0);
-	go_to(stacks, "a", getleastnb(stacks->a, stacks->size_a));
+	go_to(stacks, getnode(stacks->a, stacks->least_a), 0);
 	return (1);
 }
 

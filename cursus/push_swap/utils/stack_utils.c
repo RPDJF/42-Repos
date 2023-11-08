@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:30:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/07 16:46:38 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:12:56 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,37 @@ void	push_stack(t_list **src, t_list **dst)
 	*src = swap;
 }
 
-void	go_to(t_stacks *stacks, char *src, int idx)
+void	go_to_both(t_stacks *stacks, int *move_a, int *move_b)
 {
-	int	i;
-	int	size;
+	while ((!(*move_a > (stacks->size_a / 2))
+		&& !(*move_b > (stacks->size_b / 2))) && (*move_a && *move_b))
+	{
+		handler("rr", stacks, 0);
+		(*move_a)--;
+		(*move_b)--;
+	}
+	while (*move_a > (stacks->size_a / 2) && *move_b > (stacks->size_b / 2)
+		&& *move_a < stacks->size_a && *move_b < stacks->size_b)
+	{
+		handler("rrr", stacks, 0);
+		(*move_a)++;
+		(*move_b)++;
+	}
+}
 
-	size = stacks->size_a;
-	if (*src == 'b')
-		size = stacks->size_b;
-	i = 0;
-	if (idx > (size / 2))
-		i = size - idx;
-	while (idx > (size / 2) && i-- > 0)
-		handler(ft_strjoin("rr", src), stacks, 1);
-	while (!(idx > (size / 2)) && i++ < idx)
-		handler(ft_strjoin("r", src), stacks, 1);
+void	go_to(t_stacks *stacks, int move_a, int move_b)
+{
+	if ((!(move_a > (stacks->size_a / 2)) && !(move_b > (stacks->size_b / 2)))
+	|| (move_a > (stacks->size_a / 2) && move_b > (stacks->size_b / 2)))
+		go_to_both(stacks, &move_a, &move_b);
+	while (move_a > (stacks->size_a / 2) && move_a++ < stacks->size_a)
+		handler("rra", stacks, 0);
+	while (!(move_a > (stacks->size_a / 2)) && move_a--)
+		handler("ra", stacks, 0);
+	while (move_b > (stacks->size_b / 2) && move_b++ < stacks->size_b)
+		handler("rrb", stacks, 0);
+	while (!(move_b > (stacks->size_b / 2)) && move_b--)
+		handler("rb", stacks, 0);
 }
 
 int	sim_go_to(t_stacks *stacks, char *src, int idx)

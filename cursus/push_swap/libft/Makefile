@@ -63,6 +63,7 @@ FILES = ft_atoi \
 		ft_memncat \
 		ft_memsuperclear \
 		ft_memtostr \
+		ft_nblowest \
 
 CFILES = $(FILES:%=%.c)
 OFILES = $(FILES:%=%.o)

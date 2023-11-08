@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/07 15:25:49 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:44:05 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 //	Free mem references and mem itself
 void	ft_memsuperclear(void **m, size_t size);
+//	Returns lowest int value between nb1 and nb2
+int		ft_nblowest(int nb1, int nb2);
 //	Home made printf
 int		ft_printf(const char *format, ...);
 //	Write char in specific filedescriptor
