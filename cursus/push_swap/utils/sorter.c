@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/07 22:00:30 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:32:00 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	sort_triple(t_stacks *stacks)
 //			Si nombre plus petit que nearest B, ajouter 1 pour le sb
 void	get_bestmove(t_stacks *stacks)
 {
-	int	output[2];
+	int	moveset[2];
 	int	i;
 	int	current_cost;
 	int	tmp[2];
@@ -63,13 +63,13 @@ void	get_bestmove(t_stacks *stacks)
 		if (!i || tmp[1] < current_cost)
 		{
 			current_cost = tmp[1];
-			output[0] = i;
-			output[1] = tmp[0];
+			moveset[0] = i;
+			moveset[1] = tmp[0];
 		}
 		i++;
 	}
-	go_to(stacks, "a", output[0]);
-	go_to(stacks, "b", output[0]);
+	go_to(stacks, "a", moveset[0]);
+	go_to(stacks, "b", moveset[1]);
 }
 
 //	Case of n stack <= 10

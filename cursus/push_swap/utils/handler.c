@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:47:50 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/07 16:47:41 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:28:13 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ int	handler(char *operation, t_stacks *stacks, int isheap)
 		simple_handler(operation, stacks);
 	if (isheap)
 		free (operation);
-	print_stacks(*stacks);
+	//print_stacks(*stacks);
 	return (1);
 }
