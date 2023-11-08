@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_nbabsolute(int nb)
+int	ft_nbabsolute(int nb)
 {
-    if (nb < 0)
-        return (-nb);
-    return (nb);
+	if (nb < 0)
+		return (-nb);
+	return (nb);
 }

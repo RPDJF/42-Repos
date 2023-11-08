@@ -45,6 +45,7 @@ FILES = ft_atoi \
 		ft_lstclear \
 		ft_lstdelone \
 		ft_lstget \
+		ft_lstgetid \
 		ft_lstiter \
 		ft_lstlast \
 		ft_lstmap \
@@ -64,6 +65,7 @@ FILES = ft_atoi \
 		ft_memsuperclear \
 		ft_memtostr \
 		ft_nblowest \
+		ft_nbabsolute \
 
 CFILES = $(FILES:%=%.c)
 OFILES = $(FILES:%=%.o)

@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:36:24 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 15:35:57 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 19:28:49 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,36 @@ static void	secure_exit(t_list **a, t_list **b, char *msg)
 	if (msg && *msg)
 		senderror(msg);
 	exit(0);
+}
+
+//	Converts an array of strings like ft_split into linked chains
+t_list	*arg2stack(char **tab)
+{
+	t_list	*head;
+	int		*content;
+	char	*itoa;
+
+	head = 0;
+	while (tab && *tab)
+	{
+		content = (int *)malloc(2 * sizeof(int));
+		if (!content)
+			return (0);
+		*content = ft_atoi(*tab);
+		itoa = ft_itoa(*content);
+		if (ft_strncmp(*tab, itoa, ft_strlen(*tab)))
+		{
+			free(content);
+			free(itoa);
+			return (0);
+		}
+		free(itoa);
+		head = ft_lstadd(head, content);
+		if (!head)
+			return (0);
+		tab++;
+	}
+	return (head);
 }
 
 static t_list	*parse_args(char **args, size_t size)

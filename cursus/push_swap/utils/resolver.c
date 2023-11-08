@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 14:22:38 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 15:35:45 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 21:15:37 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_list	*getstack(t_stacks stacks, char src)
 	if (src == 'a')
 		return (stacks.a);
 	return (stacks.b);
-
 }
 
 int	getstacklen(t_stacks stacks, char src)
@@ -25,7 +24,6 @@ int	getstacklen(t_stacks stacks, char src)
 	if (src == 'a')
 		return (stacks.size_a);
 	return (stacks.size_b);
-
 }
 
 int	getleastnb(t_stacks stacks, char src)
@@ -95,21 +93,9 @@ int	getnear(t_stacks stacks, char src, t_list node)
 			idx = size;
 		}
 	}
-	if (idx < 0)
-		idx = getmostnb(stacks, src);
+	if (idx < 0 && src == 'a')
+		idx = ft_lstgetid(stacks.a, stacks.most_a);
+	else if (idx < 0 && src == 'b')
+		idx = ft_lstgetid(stacks.b, stacks.most_b);
 	return (idx);
-}
-
-int	getnode(t_list *stack, t_list *node)
-{
-	int	i;
-
-	if (!node || !stack)
-		return (-1);
-	i = -1;
-	while (i++, stack && stack != node)
-		stack = stack->next;
-	if (stack)
-		return (i);
-	return (-1);
 }

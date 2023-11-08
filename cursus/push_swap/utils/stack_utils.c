@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:30:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 18:12:56 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 20:50:11 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,89 +22,86 @@ void	push_stack(t_list **src, t_list **dst)
 	*src = swap;
 }
 
-void	go_to_both(t_stacks *stacks, int *move_a, int *move_b)
-{
-	while ((!(*move_a > (stacks->size_a / 2))
-		&& !(*move_b > (stacks->size_b / 2))) && (*move_a && *move_b))
-	{
-		handler("rr", stacks, 0);
-		(*move_a)--;
-		(*move_b)--;
-	}
-	while (*move_a > (stacks->size_a / 2) && *move_b > (stacks->size_b / 2)
-		&& *move_a < stacks->size_a && *move_b < stacks->size_b)
-	{
-		handler("rrr", stacks, 0);
-		(*move_a)++;
-		(*move_b)++;
-	}
-}
-
 void	go_to(t_stacks *stacks, int move_a, int move_b)
 {
-	if ((!(move_a > (stacks->size_a / 2)) && !(move_b > (stacks->size_b / 2)))
-	|| (move_a > (stacks->size_a / 2) && move_b > (stacks->size_b / 2)))
-		go_to_both(stacks, &move_a, &move_b);
-	while (move_a > (stacks->size_a / 2) && move_a++ < stacks->size_a)
-		handler("rra", stacks, 0);
-	while (!(move_a > (stacks->size_a / 2)) && move_a--)
-		handler("ra", stacks, 0);
-	while (move_b > (stacks->size_b / 2) && move_b++ < stacks->size_b)
-		handler("rrb", stacks, 0);
-	while (!(move_b > (stacks->size_b / 2)) && move_b--)
-		handler("rb", stacks, 0);
-}
-
-int	sim_go_to(t_stacks *stacks, char *src, int idx)
-{
-	int	i;
-	int	cost;
-	int	size;
-
-	size = stacks->size_a;
-	if (*src == 'b')
-		size = stacks->size_b;
-	cost = 0;
-	i = 0;
-	if (idx > (size / 2))
-		i = size - idx;
-	while (idx > (size / 2) && i-- > 0)
-		cost++;
-	while (!(idx > (size / 2)) && i++ < idx)
-		cost++;
-	return (cost);
-}
-
-t_list	*arg2stack(char **tab)
-{
-	t_list	*head;
-	int		*content;
-	char	*itoa;
-
-	head = 0;
-	while (tab && *tab)
+	while (!(move_a > (stacks->size_a / 2))
+		&& !(move_b > (stacks->size_b / 2)) && move_a && move_b)
 	{
-		content = (int *)malloc(2 * sizeof(int));
-		if (!content)
-			return (0);
-		*content = ft_atoi(*tab);
-		itoa = ft_itoa(*content);
-		if (ft_strncmp(*tab, itoa, ft_strlen(*tab)))
-		{
-			free(content);
-			free(itoa);
-			return (0);
-		}
-		free(itoa);
-		head = ft_lstadd(head, content);
-		if (!head)
-			return (0);
-		tab++;
+		handler("rr", stacks);
+		move_a--;
+		move_b--;
 	}
-	return (head);
+	while (move_a > (stacks->size_a / 2) && move_b > (stacks->size_b / 2)
+		&& move_a < stacks->size_a && move_b < stacks->size_b)
+	{
+		handler("rrr", stacks);
+		move_a++;
+		move_b++;
+	}
+	while (move_a > (stacks->size_a / 2) && move_a++ < stacks->size_a)
+		handler("rra", stacks);
+	while (!(move_a > (stacks->size_a / 2)) && move_a--)
+		handler("ra", stacks);
+	while (move_b > (stacks->size_b / 2) && move_b++ < stacks->size_b)
+		handler("rrb", stacks);
+	while (!(move_b > (stacks->size_b / 2)) && move_b--)
+		handler("rb", stacks);
 }
 
-void	print_stacks(t_stacks stacks)
+int	sim_go_to(t_stacks *stacks, int move_a, int move_b)
+{
+	int	count;
+
+	count = -2;
+	while (count++, (!(move_a > (stacks->size_a / 2))
+			&& !(move_b > (stacks->size_b / 2))) && (move_a && move_b))
+	{
+		move_a--;
+		move_b--;
+	}
+	while (count++, move_a > stacks->size_a / 2 && move_b > stacks->size_b / 2
+		&& move_a < stacks->size_a && move_b < stacks->size_b)
+	{
+		move_a++;
+		move_b++;
+	}
+	while (move_a > (stacks->size_a / 2) && move_a++ < stacks->size_a)
+		count++;
+	while (!(move_a > (stacks->size_a / 2)) && move_a--)
+		count++;
+	while (move_b > (stacks->size_b / 2) && move_b++ < stacks->size_b)
+		count++;
+	while (!(move_b > (stacks->size_b / 2)) && move_b--)
+		count++;
+	return (count);
+}
+
+void	turc_move(t_stacks *stacks)
+{
+	int	moveset[2];
+	int	i;
+	int	current_cost;
+	int	tmp[2];
+
+	i = 0;
+	while (i < stacks->size_a)
+	{
+		tmp[0] = getnear(*stacks, 'b', *ft_lstget(stacks->a, i));
+		tmp[1] = sim_go_to(stacks, i, tmp[0]);
+		if (!i || tmp[1] < current_cost)
+		{
+			current_cost = tmp[1];
+			moveset[0] = i;
+			moveset[1] = tmp[0];
+		}
+		if (current_cost <= 1)
+			break ;
+		i++;
+	}
+	go_to(stacks, moveset[0], moveset[1]);
+}
+
+/*void	print_stacks(t_stacks stacks)
 {
 	if (stacks.a)
 		ft_printf("%d", *((int *)stacks.a->content));
@@ -120,3 +117,4 @@ void	print_stacks(t_stacks stacks)
 	if (stacks.a || stacks.b)
 		print_stacks(stacks);
 }
+*/

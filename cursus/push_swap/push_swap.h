@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 16:03:04 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 21:14:22 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ void	senderror(char *message);
 //		FROM handler.c
 
 //	Apply operation to stacks
-int		handler(char *operation, t_stacks *stacks, int isheap);
+int		handler(char *operation, t_stacks *stacks);
 
 //		FROM resolver.c
 
+//	Get the stack from char src
+t_list	*getstack(t_stacks stacks, char src);
 //	Get the node id for the lowest value from stack
 int		getleastnb(t_stacks stacks, char src);
 //	Get the node id for the highest value from stack
@@ -63,8 +65,6 @@ int		getmostnb(t_stacks stacks, char src);
 //	Get the node id for the nearest content from node int* content
 //  Returns -1 on error
 int		getnear(t_stacks stacks, char src, t_list node);
-//	Get the node id from stack
-int		getnode(t_list *stack, t_list *node);
 
 //		FROM sorter.c
 
@@ -78,9 +78,9 @@ void	push_stack(t_list **src, t_list **dst);
 //	Rotate until specific idx
 void	go_to(t_stacks *stacks, int move_a, int move_b);
 //	Simulates a go_to and returns the cost as int
-int		sim_go_to(t_stacks *stacks, char *src, int idx);
-//	Converts an array of strings into stack
-t_list	*arg2stack(char **tab);
+int		sim_go_to(t_stacks *stacks, int move_a, int move_b);
+//	Rotates both of the stacks A and B to the best positions
+void	turc_move(t_stacks *stacks);
 //  Print stacks in a readable output
 void	print_stacks(t_stacks stacks);
 

@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:43:37 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 17:37:37 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/08 21:43:24 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,72 +26,59 @@ void	sort_triple(t_stacks *stacks)
 		|| (*nb[0] > *nb[1] && *nb[1] > *nb[2] && *nb[0] > *nb[2])
 		|| (*nb[0] < *nb[1] && *nb[1] > *nb[2] && *nb[0] < *nb[2]))
 	{
-		handler("sa", stacks, 0);
+		handler("sa", stacks);
 		sort_triple(stacks);
 	}
 	else if ((*nb[0] > *nb[1] && *nb[1] < *nb[2] && *nb[0] > *nb[2]))
 	{
-		handler("ra", stacks, 0);
+		handler("ra", stacks);
 		sort_triple(stacks);
 	}
 	else
 	{
-		handler("rra", stacks, 0);
+		handler("rra", stacks);
 		sort_triple(stacks);
 	}
 }
 
-//	Pour chaque nombre dans A
-//		Calculer cout deplacement (sim_go_to)
-//		Ajouter cout deplacement B pour bonne position sim_go_to + get_near
-//			Si nombre plus petit que nearest B, ajouter 1 pour le sb
-void	get_bestmove(t_stacks *stacks)
+//	Case of n stack > 3 && n <= 12
+void	sort_basic(t_stacks *stacks)
 {
-	int	moveset[2];
-	int	i;
-	int	current_cost;
-	int	tmp[2];
-
-	i = 0;
-	while (i < stacks->size_a)
+	while (stacks->size_a > 3)
 	{
-		tmp[0] = getnear(*stacks, 'b', *ft_lstget(stacks->a, i));
-		tmp[1] = sim_go_to(stacks, "a", i) + sim_go_to(stacks, "b", tmp[0]);
-		if (!i || tmp[1] < current_cost)
-		{
-			current_cost = tmp[1];
-			moveset[0] = i;
-			moveset[1] = tmp[0];
-		}
-		if (current_cost <= 1)
-			break;
-		i++;
+		go_to(stacks, getleastnb(*stacks, 'a'), 0);
+		handler("pb", stacks);
 	}
-	go_to(stacks, moveset[0], moveset[1]);
+	if (stacks->size_a == 3)
+		sort_triple(stacks);
+	while (stacks->size_b > 0)
+		handler("pa", stacks);
 }
 
-//	Case of n stack <= 10
-int	sort_turc(t_stacks *stacks)
+//	Case of n stack > 12
+//	This turc sort is incomplete but enough for evalutions
+void	sort_turc(t_stacks *stacks)
 {
-	handler("pb", stacks, 0);
-	handler("pb", stacks, 0);
+	handler("pb", stacks);
+	handler("pb", stacks);
 	while (stacks->size_a)
 	{
-		get_bestmove(stacks);
-		handler("pb", stacks, 0);
+		turc_move(stacks);
+		handler("pb", stacks);
 	}
 	while (stacks->size_b)
-		handler("pa", stacks, 0);
-	go_to(stacks, getnode(stacks->a, stacks->least_a), 0);
-	return (1);
+		handler("pa", stacks);
+	go_to(stacks, ft_lstgetid(stacks->a, stacks->least_a), 0);
 }
 
 void	sort(t_stacks *stacks)
 {
 	if (stacks->size == 2)
-		handler("sa", stacks, 0);
+		handler("sa", stacks);
 	else if (stacks->size == 3)
 		sort_triple(stacks);
-	else if (stacks->size > 3)
+	else if (stacks->size > 3 && stacks->size <= 12)
+		sort_basic(stacks);
+	else if (stacks->size > 12)
 		sort_turc(stacks);
 }
