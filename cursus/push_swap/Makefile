@@ -101,8 +101,38 @@ BONUS_NAME = checker
 
 all: $(NAME)
 
-header:
+debug: fclean $(CFILES) $(LIBFT_LIB)
+	@echo "$$APP_HEADER"
+	@printf "\t🤖 Compiling $(NAME)...\r"
+	@$(CC) $(CFLAGS) -g -fsanitize=address $(CFILES) $(LIBFT_LIB) -o $(NAME)
+	@printf "\33[2K"
+	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
+	@echo "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n\n"
+	@echo $(shell norminette)
+
+clean:
+	@$(MAKE) -C $(LIBFT_PATH) fclean --no-print-directory
+
+fclean: clean
+	@rm -f $(NAME)
+	@rm -f $(BONUS_NAME)
+	@echo "\t[INFO] [$(NAME)]\t$(NAME) is fully deleted 🗑️"
+	@echo "\t[INFO] [$(NAME)]\t$(BONUS_NAME) is fully deleted 🗑️"
+
+re: fclean all
+
+bonus: $(BONUS_NAME)
+
+help:
 	@echo "$$HEADER"
+	@echo "all		-	Build $(NAME)"
+	@echo "bonus		-	Build $(BONUS_NAME)"
+	@echo "clean		-	Clean temporary files"
+	@echo "fclean		-	Clean the whole build"
+	@echo "debug		-	Runs the program with g3 fsanitize=address"
+	@echo "$(NAME)	-	Build the $(NAME) with necessary libs"
+	@echo "$(BONUS_NAME)		-	Build the $(BONUS_NAME) with necessary libs"
+	@echo "$(LIBFT_LIB)	-	Build the lib $(LIBFT_LIB)"
 
 $(CFILES): header
 
@@ -120,40 +150,9 @@ $(NAME): $(CFILES) $(LIBFT_LIB)
 	@printf "\33[2K"
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅\n"
 
-debug: fclean $(CFILES) $(LIBFT_LIB)
-	@echo "$$APP_HEADER"
-	@printf "\t🤖 Compiling $(NAME)...\r"
-	@$(CC) $(CFLAGS) -g -fsanitize=address $(CFILES) $(LIBFT_LIB) -o $(NAME)
-	@printf "\33[2K"
-	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
-	@echo "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n\n"
-	@echo $(shell norminette)
-
 $(LIBFT_LIB): $(LIBFT_PATH)Makefile
 	@echo "$$LIB_HEADER"
 	@make -C $(LIBFT_PATH) all --no-print-directory
-
-clean:
-	@$(MAKE) -C $(LIBFT_PATH) fclean --no-print-directory
-
-fclean: clean
-	@rm -f $(NAME)
-	@rm -f $(BONUS_NAME)
-	@echo "\t[INFO] [$(NAME)]\t$(NAME) is fully deleted 🗑️"
-	@echo "\t[INFO] [$(NAME)]\t$(BONUS_NAME) is fully deleted 🗑️"
-
-re: fclean all
-
-help:
-	@echo "$$HEADER"
-	@echo "all		-	Build $(NAME)"
-	@echo "bonus		-	Build $(BONUS_NAME)"
-	@echo "clean		-	Clean temporary files"
-	@echo "fclean		-	Clean the whole build"
-	@echo "debug		-	Runs the program with g3 fsanitize=address"
-	@echo "$(NAME)	-	Build the $(NAME) with necessary libs"
-	@echo "$(BONUS_NAME)		-	Build the $(BONUS_NAME) with necessary libs"
-	@echo "$(LIBFT_LIB)	-	Build the lib $(LIBFT_LIB)"
 
 $(BONUS_NAME): $(CBONUS_FILES) $(LIBFT_LIB)
 	@echo "$$BONUS_HEADER"
@@ -162,6 +161,7 @@ $(BONUS_NAME): $(CBONUS_FILES) $(LIBFT_LIB)
 	@printf "\33[2K"
 	@echo "\t[INFO] [$(NAME)]\t$(BONUS_NAME) 🌟 is compiled ✅\n"
 
-bonus: $(BONUS_NAME)
+header:
+	@echo "$$HEADER"
 
-.PHONY = help all clean fclean re header
+.PHONY = all clean fclean re bonus header help
