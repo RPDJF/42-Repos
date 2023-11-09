@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 10:07:41 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/16 17:48:22 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 01:31:00 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,3 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	ft_memcpy(p, s + start, len);
 	return (p);
 }
-
-/*#include <stdio.h>
-
-int    main(void)
-{
-	char	*p;
-
-	p = ft_substr("Bonjour", 3, 7);
-	printf("%s\n", p);
-	free(p);
-}
-*/

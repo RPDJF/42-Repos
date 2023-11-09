@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 09:21:28 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/13 10:48:14 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 01:30:56 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (ft_strdup(""));
 	return (ft_substr(s1, start, end - start + 1));
 }
-
-// Check if same as real strtrim
-/*#include <stdio.h>
-
-int main(void)
-{
-	char s1[] = "d  ff    d";
-	char set[] = "d";
-
-	printf("%s\n", ft_strtrim(s1, set));
-	return (0);
-}
-*/

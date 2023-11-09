@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 08:48:20 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/16 19:56:56 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 01:30:41 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,3 @@ char	*ft_strncat(char *dest, const char *src, size_t nb)
 	dest[i + j] = '\0';
 	return (dest);
 }
-
-/*int	main(void)
-{
-	char	dest[] = "hello";
-	char	src[] = "HELLO";
-	int		nb;
-
-	nb = 3;
-	printf("dest:\t%s\n", dest);
-	printf("src:\t%s\n", src);
-	printf("rslt:\t%s\n", ft_strncat(dest, src, nb));
-}*/

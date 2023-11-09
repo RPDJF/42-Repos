@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 10:04:30 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/12 13:26:18 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 01:30:17 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,3 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	p[i + j] = 0;
 	return (p);
 }
-
-/*#include <stdio.h>
-
-int    main(void)
-{
-	printf("%s\n", ft_strjoin("Hello", " bonjour."));
-}
-*/

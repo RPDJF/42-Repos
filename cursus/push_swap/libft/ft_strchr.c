@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 07:42:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/17 12:23:33 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 01:30:10 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,3 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)s);
 	return (0);
 }
-
-// check if same as strchr
-/*#include <stdio.h>
-#include <string.h>
-
-int	main(void)
-{
-	char	str[] = "123456789";
-
-	printf("FT:\t%s\n", ft_strchr(str, '\0'));
-	printf("Real:\t%s\n", strchr(str, '\0'));
-	return (0);
-}
-*/

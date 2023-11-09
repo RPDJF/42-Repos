@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unif@outlook.fr>        +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:37:35 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/10/13 00:10:50 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 01:30:13 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,3 @@ char	*ft_strdup(const char *src)
 		p_malloc[i - 1] = src[i - 1];
 	return (p_malloc);
 }
-
-// check if same as strdup
-/*#include <stdio.h>
-#include <string.h>
-
-int	main(void)
-{
-	// check visually if same as strdup
-	char	*str;
-	char	*str2;
-
-	str = ft_strdup("123456789");
-	str2 = strdup("123456789");
-	printf("ft: %s\n", str);
-	printf("real: %s\n", str2);
-	
-	return (0);
-}*/
