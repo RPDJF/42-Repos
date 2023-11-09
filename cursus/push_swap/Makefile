@@ -99,7 +99,7 @@ CBONUS_FILES = $(BONUS_SRC:%=%.c)
 NAME = push_swap
 BONUS_NAME = checker
 
-all: $(NAME) $(BONUS_NAME)
+all: $(NAME)
 
 header:
 	@echo "$$HEADER"
