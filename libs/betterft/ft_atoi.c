@@ -6,19 +6,11 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 09:49:04 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 17:55:58 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:02:49 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "betterft.h"
-
-int	ft_isspace(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r')
-		return (1);
-	return (0);
-}
 
 int	ft_atoi(const char *str)
 {

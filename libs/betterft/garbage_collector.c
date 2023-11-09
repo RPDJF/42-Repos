@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:33:13 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 18:25:10 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:32:04 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,30 @@ t_list	**getgarbage(void)
 int	gfree(void *address)
 {
 	t_list	**head;
-	t_list	**read;
+	t_list	*read;
 	t_list	*todel;
 
 	head = getgarbage();
 	if (!head)
 	{
 		free(address);
-		return (0);
+		return (-1);
 	}
-	read = head;
-	todel = (*read)->next;
-	while (todel && *read && todel->content != address)
+	read = *head;
+	todel = read->next;
+	while (todel && read && todel->content != address)
 	{
-		*read = (*read)->next;
+		read = read->next;
 		todel = todel->next;
 	}
-	if (!*read || !todel)
+	if (!read || !todel)
 	{
 		free(address);
-		return (0);
+		return (-1);
 	}
-	(*read)->next = todel->next;
-	free(todel);
-	return (-1);
+	read->next = todel->next;
+	ft_lstdelone(todel, free);
+	return (0);
 }
 
 void	*addgarbage(void *address)
