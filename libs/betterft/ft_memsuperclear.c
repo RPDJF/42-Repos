@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:57:23 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 16:45:42 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:07:38 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void	ft_memsuperclear(void **m, size_t size)
 
 	i = 0;
 	while (i < size)
-		free(m[i++]);
-	free(m);
+		gfree(m[i++]);
+	gfree(m);
 }

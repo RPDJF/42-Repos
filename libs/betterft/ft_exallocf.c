@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 13:17:24 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 16:45:42 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:01:17 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*ft_exallocf(void *ptr, size_t size, size_t newsize)
 	p = galloc(newsize);
 	if (!p)
 	{
-		free(ptr);
+		gfree(ptr);
 		return (0);
 	}
 	p_p = p;
@@ -37,6 +37,6 @@ void	*ft_exallocf(void *ptr, size_t size, size_t newsize)
 	}
 	while ((size_t)p_p - (size_t)p < newsize)
 		*((unsigned char *)(p_p++)) = 0;
-	free(ptr);
+	gfree(ptr);
 	return (p);
 }

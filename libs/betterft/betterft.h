@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 16:51:30 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:17:50 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	ft_putnbr_base(int n, char *base, int fd);
 void	ft_putstr_fd(char *s, int fd);
 //	Split s with specific separator and return them in a NULL Terminated malloc
 char	**ft_split(char const *s, char c);
-void	free2dmalloc(void **m, size_t size);
 size_t	ft_countwords(char const *s, char c);
 //	Search for specific char in string s and returns his address
 char	*ft_strchr(const char *s, int c);

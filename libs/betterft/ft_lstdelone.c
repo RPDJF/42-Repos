@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:34:33 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 16:45:42 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:01:39 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 	if (!lst)
 		return ;
 	del(lst->content);
-	free(lst);
+	gfree(lst);
 }

@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 13:20:51 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 16:45:42 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:01:23 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*ft_get_next_line(int fd)
 	if (!tabsize)
 	{
 		s_fd = 0;
-		free(output);
+		gfree(output);
 		return (0);
 	}
 	output = ft_memtostr(output, tabsize);

@@ -18,7 +18,7 @@ Linked lists aren't part of the Garbage Collector's squad. That's to avoid wild 
 
 ## Version
 
-Current vibe: 1.0 🚦
+Current vibe: 1.1 🚦
 
 ## Warning! 🚨
 

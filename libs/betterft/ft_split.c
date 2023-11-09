@@ -6,21 +6,11 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:10:58 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 16:45:42 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:10:15 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "betterft.h"
-
-void	free2dgalloc(void **m, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < size)
-		free(m[i++]);
-	free(m);
-}
 
 size_t	ft_countwords(char const *s, char c)
 {
@@ -60,7 +50,7 @@ int	pushwords(char **dst, char const *src, char c)
 		dst[i] = (char *)ft_calloc(j + 1, sizeof(char));
 		if (!dst[i])
 		{
-			free2dgalloc((void **)dst, i + 1);
+			ft_memsuperclear((void **)dst, i + 1);
 			return (1);
 		}
 		ft_memmove(dst[i], src - 1 - j, j);
