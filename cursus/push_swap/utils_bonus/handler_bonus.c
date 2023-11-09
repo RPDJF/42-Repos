@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handler.c                                          :+:      :+:    :+:   */
+/*   handler_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:47:50 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 23:49:51 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:02:49 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	pushb_handler(t_stacks *stacks, t_list *src)
 {
+	if (stacks->size_a <= 0)
+		secure_exit(stacks, "KO");
 	stacks->size_a--;
 	stacks->size_b++;
 	if (!stacks->most_a || stacks->most_a == src)
@@ -32,6 +34,8 @@ void	pushb_handler(t_stacks *stacks, t_list *src)
 
 void	pusha_handler(t_stacks *stacks, t_list *src)
 {
+	if (stacks->size_b <= 0)
+		secure_exit(stacks, "KO");
 	stacks->size_a++;
 	stacks->size_b--;
 	if (!stacks->most_b || stacks->most_b == src)
@@ -86,9 +90,8 @@ void	simple_handler(char	*operation, t_stacks *stacks)
 		rotate_handler(operation[1], stacks, src, dst);
 }
 
-int	handler(char *operation, t_stacks *stacks)
+void	handler(char *operation, t_stacks *stacks)
 {
-	ft_putendl_fd(operation, 1);
 	if (ft_strlen(operation) == 3)
 	{
 		if (operation[2] == 'a')
@@ -111,5 +114,4 @@ int	handler(char *operation, t_stacks *stacks)
 	}
 	else
 		simple_handler(operation, stacks);
-	return (1);
 }

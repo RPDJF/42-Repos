@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 01:34:02 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:27:45 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	senderror(char *message);
 //		FROM handler.c
 
 //	Apply operation to stacks
-int		handler(char *operation, t_stacks *stacks);
+void	handler(char *operation, t_stacks *stacks);
 
 //		FROM resolver.c
 

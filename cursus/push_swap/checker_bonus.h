@@ -39,12 +39,15 @@ int		check_duplicates(t_list *head);
 int		check_input(char **args, size_t size);
 //		FROM utils_bonus/error_handler
 
+//	Send message in stderror and exit programm
 void	senderror(char *message);
+//	Clear stacks before exiting programm with error
+void	secure_exit(t_stacks *stacks, char *msg);
 
 //		FROM utils_bonus/handler.c
 
 //	handle operation
-int		handler(char *operation, t_stacks *stacks);
+void	handler(char *operation, t_stacks *stacks);
 
 //		FROM utils_bonus/resolver.c
 

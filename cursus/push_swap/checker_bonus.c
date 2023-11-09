@@ -12,18 +12,6 @@
 
 #include "checker_bonus.h"
 
-static void	secure_exit(t_stacks *stacks, char *msg)
-{
-	if (stacks->a)
-		ft_lstclear(&stacks->a, free);
-	if (stacks->b)
-		ft_lstclear(&stacks->b, free);
-	free(stacks);
-	if (msg && *msg)
-		senderror(msg);
-	exit(0);
-}
-
 //	Converts an array of strings like ft_split into linked chains
 t_list	*arg2stack(char **tab)
 {
@@ -104,11 +92,37 @@ t_stacks	*new_stacks(t_list *a)
 	return (stacks);
 }
 
-// need to check for duplicas
+void	checker(t_stacks *stacks)
+{
+	char		*str;
+	char		op[4];
+	int			size;
+	int			i;
+
+	str = ft_get_next_line(0);
+	while (str)
+	{
+		i = 0;
+		while (str[i++] && str[i - 1] != '\n')
+			op[i - 1] = str[i - 1];
+		op[i - 1] = '\0';
+		free(str);
+		size = ft_strlen(op);
+		if (!(!ft_strncmp(op, "sa", size) || !ft_strncmp(op, "sb", size)
+				|| !ft_strncmp(op, "ss", size) || !ft_strncmp(op, "ra", size)
+				|| !ft_strncmp(op, "rb", size) || !ft_strncmp(op, "rr", size)
+				|| !ft_strncmp(op, "rra", size) || !ft_strncmp(op, "rrb", size)
+				|| !ft_strncmp(op, "rrr", size) || !ft_strncmp(op, "pa", size)
+				|| !ft_strncmp(op, "pb", size)))
+			secure_exit(stacks, "Error");
+		handler(op, stacks);
+		str = ft_get_next_line(0);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_stacks	*stacks;
-	char		*line;
 
 	if (argc < 2)
 		senderror(0);
@@ -119,16 +133,9 @@ int	main(int argc, char **argv)
 		senderror("Error");
 	if (!check_duplicates(stacks->a))
 		secure_exit(stacks, "Error");
-	line = ft_get_next_line(0);
-	while (line)
-	{
-		line[ft_strlen(line) - 1] = 0;
-		handler(line, stacks);
-		free(line);
-		line = ft_get_next_line(0);
-	}
+	checker(stacks);
 	if (!stacks->size_b && !check_stackorder(*stacks, "a"))
-		secure_exit(stacks, "Error");
+		secure_exit(stacks, "KO");
 	ft_putendl_fd("OK", 1);
 	secure_exit(stacks, 0);
 }

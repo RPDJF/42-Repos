@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:47:50 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 19:24:43 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:28:00 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	simple_handler(char	*operation, t_stacks *stacks)
 		rotate_handler(operation[1], stacks, src, dst);
 }
 
-int	handler(char *operation, t_stacks *stacks)
+void	handler(char *operation, t_stacks *stacks)
 {
 	ft_putendl_fd(operation, 1);
 	if (ft_strlen(operation) == 3)
@@ -111,5 +111,4 @@ int	handler(char *operation, t_stacks *stacks)
 	}
 	else
 		simple_handler(operation, stacks);
-	return (1);
 }
