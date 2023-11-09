@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:49:45 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 22:45:20 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 01:34:02 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	go_to(t_stacks *stacks, int move_a, int move_b);
 int		sim_go_to(t_stacks *stacks, int move_a, int move_b);
 //	Rotates both of the stacks A and B to the best positions
 void	turc_move(t_stacks *stacks);
-//  Print stacks in a readable output
-void	print_stacks(t_stacks stacks);
+//  Print stacks in a readable output for debug purpose
+//void	print_stacks(t_stacks stacks);
 
 #endif

@@ -57,5 +57,7 @@ int		getmostnb(t_stacks stacks, char src);
 
 //	push nb from stack src to stack dst
 void	push_stack(t_list **src, t_list **dst);
+//  Print stacks in a readable output for debug purpose
+//void	print_stacks(t_stacks stacks);
 
 #endif
