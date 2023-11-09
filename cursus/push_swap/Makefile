@@ -88,11 +88,11 @@ SRC = 	push_swap \
 CFILES = $(SRC:%=%.c)
 
 BONUS_SRC =	checker_bonus \
-			utils_bonus/checkers \
-			utils_bonus/error_handler \
-			utils_bonus/handler \
-			utils_bonus/resolver \
-			utils_bonus/stack_utils \
+			utils_bonus/checkers_bonus \
+			utils_bonus/error_handler_bonus \
+			utils_bonus/handler_bonus \
+			utils_bonus/resolver_bonus \
+			utils_bonus/stack_utils_bonus \
 
 CBONUS_FILES = $(BONUS_SRC:%=%.c)
 
@@ -160,7 +160,7 @@ $(BONUS_NAME): $(CBONUS_FILES) $(LIBFT_LIB)
 	@printf "\t🤖 Compiling $(BONUS_NAME) 🌟...\r"
 	@$(CC) $(CFLAGS) $(CBONUS_FILES) $(LIBFT_LIB) -o $(BONUS_NAME)
 	@printf "\33[2K"
-	@echo "\t[INFO] [$(NAME)]\t$(BONUS_NAME) is compiled ✅\n"
+	@echo "\t[INFO] [$(NAME)]\t$(BONUS_NAME) 🌟 is compiled ✅\n"
 
 bonus: $(BONUS_NAME)
 

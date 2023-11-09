@@ -6,18 +6,19 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:36:24 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 19:28:49 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/09 01:14:59 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	secure_exit(t_list **a, t_list **b, char *msg)
+static void	secure_exit(t_stacks *stacks, char *msg)
 {
-	if (*a)
-		ft_lstclear(a, free);
-	if (*b)
-		ft_lstclear(b, free);
+	if (stacks->a)
+		ft_lstclear(&stacks->a, free);
+	if (stacks->b)
+		ft_lstclear(&stacks->b, free);
+	free(stacks);
 	if (msg && *msg)
 		senderror(msg);
 	exit(0);
@@ -31,24 +32,24 @@ t_list	*arg2stack(char **tab)
 	char	*itoa;
 
 	head = 0;
-	while (tab && *tab)
+	while (tab++ && *(tab - 1))
 	{
-		content = (int *)malloc(2 * sizeof(int));
+		content = (int *)malloc(sizeof(int));
 		if (!content)
 			return (0);
-		*content = ft_atoi(*tab);
+		*content = ft_atoi(*(tab - 1));
 		itoa = ft_itoa(*content);
-		if (ft_strncmp(*tab, itoa, ft_strlen(*tab)))
+		if (ft_strncmp(*(tab - 1), itoa, ft_strlen(*(tab - 1))))
 		{
 			free(content);
 			free(itoa);
+			ft_lstclear(&head, free);
 			return (0);
 		}
 		free(itoa);
 		head = ft_lstadd(head, content);
 		if (!head)
 			return (0);
-		tab++;
 	}
 	return (head);
 }
@@ -78,15 +79,19 @@ static t_list	*parse_args(char **args, size_t size)
 	return (head);
 }
 
-t_stacks	*new_stacks(t_list *a, t_list *b)
+t_stacks	*new_stacks(t_list *a)
 {
 	t_stacks	*stacks;
 
+	if (!a)
+		return (0);
 	stacks = (t_stacks *)ft_calloc(1, sizeof(t_stacks));
+	if (!stacks)
+		ft_lstclear(&a, free);
 	if (!stacks)
 		return (0);
 	stacks->a = a;
-	stacks->b = b;
+	stacks->b = 0;
 	stacks->size_a = ft_lstsize(a);
 	stacks->size_b = 0;
 	stacks->size = stacks->size_a + stacks->size_b;
@@ -103,24 +108,17 @@ t_stacks	*new_stacks(t_list *a, t_list *b)
 int	main(int argc, char **argv)
 {
 	t_stacks	*stacks;
-	t_list		*a;
-	t_list		*b;
 
-	a = 0;
-	b = 0;
 	if (argc < 2)
 		senderror(0);
 	if (!check_input(argv + 1, argc - 1))
-		secure_exit(&a, &b, "Error");
-	a = parse_args(argv + 1, argc - 1);
-	if (!a || !check_duplicates(a))
-		secure_exit(&a, &b, "Error");
-	b = 0;
-	stacks = new_stacks(a, b);
+		senderror("Error");
+	stacks = new_stacks(parse_args(argv + 1, argc - 1));
 	if (!stacks)
-		secure_exit(&a, &b, "Error");
+		senderror("Error");
+	if (!check_duplicates(stacks->a))
+		secure_exit(stacks, "Error");
 	if (!check_stackorder(*stacks, "a"))
 		sort(stacks);
-	free(stacks);
-	secure_exit(&a, &b, 0);
+	secure_exit(stacks, 0);
 }
