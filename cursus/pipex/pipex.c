@@ -6,24 +6,11 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:56:48 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 13:56:48 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:15:20 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-/*void	printgarbage(void)
-{
-	t_list	*garbage;
-
-	garbage = *getgarbage();
-	ft_putendl_fd("================", 1);
-	while (garbage)
-	{
-		ft_printf("> %p\n", garbage->content);
-		garbage = garbage->next;
-	}
-}*/
 
 char	**fetchcommands(char **args, int size)
 {
@@ -114,7 +101,6 @@ int	main(int argc, char **argv)
 	pipex->intake = loadargs(pipex->in);
 	if (errno)
 		secure_exit(strerror(errno), 1);
-	ft_printf("command:\t%s\n", *(pipex->commands));
 	execv(*(pipex->commands), strtabaddfront(pipex->intake, *(pipex->commands)));
 	secure_exit(0, 0);
 }
