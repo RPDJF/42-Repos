@@ -25,3 +25,9 @@ Current vibe: 1.1 🚦
 Dive into the source file for the full lowdown on how to vibe with Betterft. And don't forget to enjoy the code! 😎✌️
 
 Now go, code a better life with Betterft! 🚀✨
+
+# LIBFT 🧐
+
+## What is LIBFT?
+
+LIBFT is the lib I made during my 42 cursus. I won't longer use it or update it anymore since it's superceded by **Betterft** lib who includes a garbage collector.
