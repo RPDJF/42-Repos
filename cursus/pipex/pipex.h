@@ -33,4 +33,11 @@ void	exitmsg(char *message, int code);
 //		clean program before exiting with int code
 void	secure_exit(char *msg, int code);
 
+//	FROM utils/pipex_utils.c
+
+//		extends char **tab by adding char *str at begin
+char	**strtabaddfront(char **tab, char *str);
+//		get the path of a specific file
+char	*getfilepath(const char *file);
+
 #endif

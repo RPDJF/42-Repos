@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-void	printgarbage(void)
+/*void	printgarbage(void)
 {
 	t_list	*garbage;
 
@@ -23,52 +23,66 @@ void	printgarbage(void)
 		ft_printf("> %p\n", garbage->content);
 		garbage = garbage->next;
 	}
-}
+}*/
 
 char	**fetchcommands(char **args, int size)
 {
 	char	**commands;
+	char	*tmp;
 
 	commands = ft_calloc(size, sizeof(char *));
 	if (!commands)
 		return (0);
 	while (size--)
 	{
-		commands[size] = ft_strdup(args[size]);
+		tmp = ft_strdup(args[size]);
+		if (!tmp)
+			return (0);
+		commands[size] = ft_strjoin("/bin/", tmp);
 		if (!commands[size])
 			return (0);
+		gfree(tmp);
 	}
 	return (commands);
 }
 
 int	check_files(t_pipex pipex)
 {
+	char	*path;
+
+	path = getfilepath(pipex.out);
 	if (access(pipex.in, O_RDONLY) < 0
-		|| access(pipex.out, O_WRONLY) < 0)
+		|| access(path, O_RDWR) < 0)
 		return (-1);
+	gfree(path);
 	return (0);
 }
 
-char	**loadfile(const char *src)
+char	**loadargs(const char *src)
 {
 	char	**heap;
 	int		fd;
 	int		i;
 
-	printgarbage();
 	fd = open(src, O_RDONLY);
 	if (fd < 0)
 		return (0);
-	heap = ft_calloc(1, sizeof(char *));
-	*heap = ft_get_next_line(fd);
 	i = 0;
-	while (heap[i++])
+	heap = 0;
+	while (i == 0 || heap[i - 1])
 	{
 		heap = ft_exallocf(heap, i * sizeof(char *), (i + 1) * sizeof(char *));
+		if (!heap)
+			secure_exit("Fail to allocate memory", 1);
 		heap[i] = ft_get_next_line(fd);
+		if (heap[i])
+			if (heap[i][ft_strlen(heap[i]) - 1] == '\n')
+				heap[i][ft_strlen(heap[i]) - 1] = 0;
+		i++;
 	}
-	if (errno)
-		secure_exit(strerror(errno), 1);
+	heap = ft_exallocf(heap, i * sizeof(char *), (i + 1) * sizeof(char *));
+	if (!heap)
+		secure_exit("Fail to allocate memory", 1);
 	return (heap);
 }
 
@@ -96,11 +110,11 @@ int	main(int argc, char **argv)
 
 	if (argc < 5)
 		secure_exit(0, 0);
-	printgarbage();
 	pipex = new_pipex(argc, argv);
-	printgarbage();
-	pipex->intake = loadfile(pipex->in);
-	gfree(pipex->in);
-	printgarbage();
+	pipex->intake = loadargs(pipex->in);
+	if (errno)
+		secure_exit(strerror(errno), 1);
+	ft_printf("command:\t%s\n", *(pipex->commands));
+	execv(*(pipex->commands), strtabaddfront(pipex->intake, *(pipex->commands)));
 	secure_exit(0, 0);
 }
