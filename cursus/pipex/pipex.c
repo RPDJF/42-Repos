@@ -6,23 +6,11 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:56:48 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/12 06:45:43 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/12 06:49:37 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int	check_files(t_pipex pipex)
-{
-	char	*path;
-
-	path = getfilepath(pipex.out);
-	if (access(pipex.in, R_OK) < 0
-		|| access(path, W_OK) < 0)
-		return (-1);
-	gfree(path);
-	return (0);
-}
 
 char	**loadargs(const char *src)
 {
@@ -46,6 +34,7 @@ char	**loadargs(const char *src)
 				heap[i][ft_strlen(heap[i]) - 1] = 0;
 		i++;
 	}
+	close(fd);
 	heap = ft_exallocf(heap, i * sizeof(char *), (i + 1) * sizeof(char *));
 	if (!heap)
 		secure_exit("Fail to allocate memory", 1);

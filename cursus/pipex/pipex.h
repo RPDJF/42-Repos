@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:00:48 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/12 06:24:34 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/12 06:53:20 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ typedef struct s_pipex
 	char	**intake;
 	char	**commands;
 }				t_pipex;
+
+//	FROM utils/checker.c
+
+//		checkthat the needed files have necessarz permissions
+int		check_files(t_pipex pipex);
 
 //	FROM utils/command_handler.c
 
