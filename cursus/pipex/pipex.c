@@ -3,43 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:56:48 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/10 15:15:20 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/12 06:45:43 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	**fetchcommands(char **args, int size)
-{
-	char	**commands;
-	char	*tmp;
-
-	commands = ft_calloc(size, sizeof(char *));
-	if (!commands)
-		return (0);
-	while (size--)
-	{
-		tmp = ft_strdup(args[size]);
-		if (!tmp)
-			return (0);
-		commands[size] = ft_strjoin("/bin/", tmp);
-		if (!commands[size])
-			return (0);
-		gfree(tmp);
-	}
-	return (commands);
-}
 
 int	check_files(t_pipex pipex)
 {
 	char	*path;
 
 	path = getfilepath(pipex.out);
-	if (access(pipex.in, O_RDONLY) < 0
-		|| access(path, O_RDWR) < 0)
+	if (access(pipex.in, R_OK) < 0
+		|| access(path, W_OK) < 0)
 		return (-1);
 	gfree(path);
 	return (0);
@@ -73,7 +52,7 @@ char	**loadargs(const char *src)
 	return (heap);
 }
 
-t_pipex	*new_pipex(int argc, char **argv)
+t_pipex	*new_pipex(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
 
@@ -83,7 +62,7 @@ t_pipex	*new_pipex(int argc, char **argv)
 	pipex->in = ft_strdup(argv[1]);
 	pipex->out = ft_strdup(argv[argc - 1]);
 	pipex->intake = 0;
-	pipex->commands = fetchcommands(argv + 2, argc - 3);
+	pipex->commands = fetchcommands(argv + 2, argc - 3, envp);
 	if (!pipex->in || !pipex->out || !pipex->commands)
 		secure_exit("Fail to allocate memory", 1);
 	if (check_files(*pipex) < 0)
@@ -91,16 +70,22 @@ t_pipex	*new_pipex(int argc, char **argv)
 	return (pipex);
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
+	char	**args;
 
 	if (argc < 5)
 		secure_exit(0, 0);
-	pipex = new_pipex(argc, argv);
+	pipex = new_pipex(argc, argv, envp);
 	pipex->intake = loadargs(pipex->in);
-	if (errno)
-		secure_exit(strerror(errno), 1);
-	execv(*(pipex->commands), strtabaddfront(pipex->intake, *(pipex->commands)));
+	if (!pipex->intake)
+		secure_exit("Fail to allocate memory", 1);
+	ft_printf("cmd:\t%s\tin:\t%s\tout:\t%s\tintake:\t%s\n",
+		*pipex->commands, pipex->in, pipex->out, *pipex->intake);
+	args = strtabaddfront(pipex->intake, *(pipex->commands));
+	if (!args)
+		secure_exit("Fail to allocate memory", 1);
+	execve(*(pipex->commands), args, envp);
 	secure_exit(0, 0);
 }
