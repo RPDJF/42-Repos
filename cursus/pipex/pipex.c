@@ -5,40 +5,89 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 13:56:48 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/12 06:49:37 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/13 20:16:27 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**loadargs(const char *src)
+void	exitmsg(char *msg)
 {
-	char	**heap;
-	int		fd;
+	if (msg && *msg)
+		ft_putendl_fd(msg, 1);
+	exit(1);
+}
+
+char	**getpath(t_pipex *pipex)
+{
+	static char	**paths;
+	int			i;
+
+	if (!paths)
+	{
+		if (!pipex->envp)
+			exitmsg(ERR_ALLOC);
+		while (*pipex->envp && !ft_strnstr(*pipex->envp, "PATH=", 5))
+			pipex->envp++;
+		if (!*pipex->envp)
+			exitmsg(ERR_ALLOC);
+		paths = ft_split(*pipex->envp + 5, ':');
+		if (!paths)
+			exitmsg(ERR_ALLOC);
+		i = 0;
+		while (paths[i] && *paths[i])
+		{
+			if (paths[i][ft_strlen(paths[i]) - 2] != '/')
+				paths[i] = ft_strjoin(paths[i], "/");
+			if (!paths[i])
+				exitmsg(ERR_ALLOC);
+			i++;
+		}
+	}
+	return (paths);
+}
+
+char	*getcommand(t_pipex *pipex, char *command)
+{
+	char	*commandpath;
 	int		i;
 
-	fd = open(src, O_RDONLY);
-	if (fd < 0)
-		return (0);
+	if (command[0] == '/' || !getpath(pipex))
+		return (command);
 	i = 0;
-	heap = 0;
-	while (i == 0 || heap[i - 1])
+	while (getpath(pipex)[i])
 	{
-		heap = ft_exallocf(heap, i * sizeof(char *), (i + 1) * sizeof(char *));
-		if (!heap)
-			secure_exit("Fail to allocate memory", 1);
-		heap[i] = ft_get_next_line(fd);
-		if (heap[i])
-			if (heap[i][ft_strlen(heap[i]) - 1] == '\n')
-				heap[i][ft_strlen(heap[i]) - 1] = 0;
+		commandpath = ft_strjoin(getpath(pipex)[i], command);
+		if (!commandpath)
+			exitmsg(ERR_ALLOC);
+		if (access(commandpath, R_OK & X_OK) >= 0)
+			return (commandpath);
+		gfree(commandpath);
 		i++;
 	}
-	close(fd);
-	heap = ft_exallocf(heap, i * sizeof(char *), (i + 1) * sizeof(char *));
-	if (!heap)
-		secure_exit("Fail to allocate memory", 1);
-	return (heap);
+	return (command);
+}
+
+char	**fetch_commands(t_pipex *pipex, int argc, char **argv)
+{
+	char	**commands;
+	int		i;
+
+	i = 1;
+	commands = (char **)ft_calloc(i, sizeof(char *));
+	if (!commands)
+		exitmsg(ERR_ALLOC);
+	while (argv[i + 1] && i < argc - 1)
+	{
+		commands = ft_exallocf(commands, i * sizeof(char *),
+				(i + 1) * sizeof(char *));
+		if (!commands)
+			exitmsg(ERR_ALLOC);
+		commands[i - 1] = getcommand(pipex, argv[i + 1]);
+		i++;
+	}
+	return (commands);
 }
 
 t_pipex	*new_pipex(int argc, char **argv, char **envp)
@@ -47,34 +96,24 @@ t_pipex	*new_pipex(int argc, char **argv, char **envp)
 
 	pipex = galloc(sizeof(t_pipex));
 	if (!pipex)
-		secure_exit(0, 0);
-	pipex->in = ft_strdup(argv[1]);
-	pipex->out = ft_strdup(argv[argc - 1]);
-	pipex->intake = 0;
-	pipex->commands = fetchcommands(argv + 2, argc - 3, envp);
-	if (!pipex->in || !pipex->out || !pipex->commands)
-		secure_exit("Fail to allocate memory", 1);
-	if (check_files(*pipex) < 0)
-		secure_exit(strerror(errno), 1);
+		exitmsg(ERR_ALLOC);
+	pipex->in = argv[1];
+	pipex->out = argv[argc - 1];
+	pipex->envp = envp;
+	pipex->commands = fetch_commands(pipex, argc, argv);
+	if (!pipex->commands)
+		exitmsg(ERR_ALLOC);
 	return (pipex);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
-	char	**args;
 
 	if (argc < 5)
-		secure_exit(0, 0);
+		exitmsg(ERR_NOT_ENOUGH_ARGUMENTS);
 	pipex = new_pipex(argc, argv, envp);
-	pipex->intake = loadargs(pipex->in);
-	if (!pipex->intake)
-		secure_exit("Fail to allocate memory", 1);
-	ft_printf("cmd:\t%s\tin:\t%s\tout:\t%s\tintake:\t%s\n",
-		*pipex->commands, pipex->in, pipex->out, *pipex->intake);
-	args = strtabaddfront(pipex->intake, *(pipex->commands));
-	if (!args)
-		secure_exit("Fail to allocate memory", 1);
-	execve(*(pipex->commands), args, envp);
-	secure_exit(0, 0);
+	if (!pipex)
+		exitmsg(ERR_ALLOC);
+	ft_printf("%s\n", *pipex->commands);
 }

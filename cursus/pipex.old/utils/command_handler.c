@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 06:18:44 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/12 06:44:17 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:50:36 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	**getenvpath(char **envp)
 		if (!*path)
 			return (0);
 	}
-	ft_printf("> %s\n", path);
 	return (ft_split(path, ':'));
 }
 
@@ -50,7 +49,7 @@ char	*getcommand(char *command, char **envp)
 		path = ft_strjoin(path, command);
 		if (!path)
 			return (0);
-		if (access(path, R_OK) >= 0)
+		if (access(path, R_OK) >= 0 && access(path, X_OK) >= 0)
 			return (path);
 		i++;
 	}

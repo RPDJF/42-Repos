@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 13:05:54 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/10 14:19:07 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:25:43 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ char	**strtabaddfront(char **tab, char *str)
 
 	size = 0;
 	while (tab[size])
+	{
+		ft_printf(">>> %s\n", tab[size]);
 		size++;
+	}
+	ft_printf("%d\n", size);
 	tab = ft_exallocf(tab, (size + 1) * sizeof(char *),
 			(size + 2) * sizeof(char *));
 	if (!tab)

@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   ft_nblowest.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 06:49:25 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/12 06:50:00 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/08 16:37:59 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/08 16:37:59 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
-
-int	check_files(t_pipex pipex)
+int	ft_nblowest(int nb1, int nb2)
 {
-	char	*path;
-
-	path = getfilepath(pipex.out);
-	if (access(pipex.in, R_OK) < 0
-		|| access(path, W_OK) < 0)
-		return (-1);
-	gfree(path);
-	return (0);
+	if (nb1 < nb2)
+		return (nb1);
+	return (nb2);
 }
