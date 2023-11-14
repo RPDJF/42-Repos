@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/14 12:56:26 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:55:45 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
-# include <wait.h>
+# include <sys/wait.h>
 
 typedef struct s_pipex
 {
@@ -50,4 +50,12 @@ void    check_files(t_pipex pipex);
 char	**fetch_commands(t_pipex *pipex, int argc, char **argv);
 //		print error message in error output and exit 1
 void	exitmsg(char *msg);
+//		print error message in error output and exit 1
+//		also prints program name
+void	exitprogmsg(t_pipex pipex, char *msg);
+//		print error message in error output and exit 1
+//		also prints program name
+//		also prints context error
+void	exitprogcontextmsg(t_pipex pipex, char *context, char *msg);
+
 #endif
