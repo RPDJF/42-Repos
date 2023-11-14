@@ -78,6 +78,10 @@ BETTERFT_LIB = $(BETTERFT_PATH:%=%betterft.a)
 
 
 SRC = 	pipex \
+		utils/argument_parser \
+		utils/checker \
+		utils/command_parser \
+		utils/error_handler \
 
 CFILES = $(SRC:%=%.c)
 
