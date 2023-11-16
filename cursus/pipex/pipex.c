@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/16 17:37:21 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:11:30 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,32 @@ static t_pipex	*new_pipex(int argc, char **argv, char **envp)
 static void	f_pipex(t_pipex *pipex)
 {
 	pid_t	myfork;
-	int		fd;
+	int		outfile;
+	int		pipes[2];
 
+	pipe(pipes);
+	outfile = open(pipex->out, O_WRONLY | O_CREAT | O_TRUNC);
+	if (outfile < 0)
+		exitprogcontextmsg(*pipex, pipex->out, strerror(errno));
+	if (dup2(outfile, STDOUT_FILENO) < 0)
+		exitprogmsg(*pipex, strerror(errno));
+	if (close(outfile) < 0)
+		exitprogcontextmsg(*pipex, pipex->out, strerror(errno));
+	if (pipe(pipes) < 0)
+		exitprogmsg(*pipex, strerror(errno));
 	myfork = fork();
 	if (myfork < 0)
 		exitmsg(ERR_FORK);
-	fd = open(pipex->out, O_RDWR);
-	if (fd < 0)
-		exitprogcontextmsg(*pipex, pipex->out, strerror(errno));
-	if (dup2(fd, STDOUT_FILENO) < 0)
-		exitprogmsg(*pipex, strerror(errno));
-	if (close(fd) < 0)
-		exitprogcontextmsg(*pipex, pipex->out, strerror(errno));
 	if (myfork == 0)
+	{
 		execve(*pipex->commands,
 			fetch_args(*pipex->commands, pipex->in), pipex->envp);
+	}
 	else
-		wait(NULL);
+	{
+		*pipex->commands++;
+		wait(0);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)

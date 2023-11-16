@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/14 16:55:45 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:46:45 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,27 @@ void    check_files(t_pipex pipex);
 //		fetch command list for execv from argc argv
 //		returns null terminated array of command paths
 char	**fetch_commands(t_pipex *pipex, int argc, char **argv);
+
+//	FROM FILE utils/error_handler.c
+
 //		print error message in error output and exit 1
+//		clear the garbage collector before exit
 void	exitmsg(char *msg);
 //		print error message in error output and exit 1
 //		also prints program name
+//		clear the garbage collector before exit
 void	exitprogmsg(t_pipex pipex, char *msg);
 //		print error message in error output and exit 1
 //		also prints program name
 //		also prints context error
+//		clear the garbage collector before exit
 void	exitprogcontextmsg(t_pipex pipex, char *context, char *msg);
+
+//	FROM FILE utils/pathser.c
+
+//		get the path of filename
+//		returns the path
+//		secure exit on error
+char	*getfilepath(char *filename);
 
 #endif

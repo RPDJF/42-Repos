@@ -1,19 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   pathser.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 12:42:30 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/16 18:13:25 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/16 17:45:31 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/16 18:04:51 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	check_files(t_pipex pipex)
+char	*getfilepath(char *fullpath)
 {
-	if (access(pipex.in, R_OK) < 0)
-		exitprogcontextmsg(pipex, pipex.out, strerror(errno));
+	char	*filepath;
+
+	fullpath = ft_strdup(fullpath);
+	if (!fullpath)
+		return (0);
+	filepath = ft_strrchr(fullpath, '/');
+	if (!filepath || !*filepath)
+		filepath = ft_strdup("./");
+	else
+	{
+		filepath++;
+		*filepath = '\0';
+		filepath = ft_strdup(fullpath);
+	}
+	gfree(fullpath);
+	if (!filepath)
+		return (0);
+	return (filepath);
 }

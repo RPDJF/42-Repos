@@ -82,6 +82,7 @@ SRC = 	pipex \
 		utils/checker \
 		utils/command_parser \
 		utils/error_handler \
+		utils/pathser \
 
 CFILES = $(SRC:%=%.c)
 

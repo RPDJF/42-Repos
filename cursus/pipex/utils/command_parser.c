@@ -6,12 +6,15 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 00:34:10 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/14 00:36:59 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:15:08 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
+//	get path from envp stored in pipex struct
+//	return splited paths env
+//	secure exit on error
 static char	**getpath(t_pipex *pipex)
 {
 	static char	**paths;
@@ -41,6 +44,9 @@ static char	**getpath(t_pipex *pipex)
 	return (paths);
 }
 
+//	get command from char *command
+//	returns full path command
+//	secure exit on error
 static char	*getcommand(t_pipex *pipex, char *command)
 {
 	char	*commandpath;
