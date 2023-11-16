@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/14 17:01:56 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:37:21 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,13 @@ static void	f_pipex(t_pipex *pipex)
 	myfork = fork();
 	if (myfork < 0)
 		exitmsg(ERR_FORK);
-	dup2();
+	fd = open(pipex->out, O_RDWR);
+	if (fd < 0)
+		exitprogcontextmsg(*pipex, pipex->out, strerror(errno));
+	if (dup2(fd, STDOUT_FILENO) < 0)
+		exitprogmsg(*pipex, strerror(errno));
+	if (close(fd) < 0)
+		exitprogcontextmsg(*pipex, pipex->out, strerror(errno));
 	if (myfork == 0)
 		execve(*pipex->commands,
 			fetch_args(*pipex->commands, pipex->in), pipex->envp);
