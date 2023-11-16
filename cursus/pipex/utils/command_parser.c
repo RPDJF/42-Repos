@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 00:34:10 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/16 19:15:08 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:20:24 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static char	*getcommand(t_pipex *pipex, char *command)
 	return (command);
 }
 
+// NEED TO PARSE OPTIONS LIKE -l
 char	**fetch_commands(t_pipex *pipex, int argc, char **argv)
 {
 	char	**commands;
