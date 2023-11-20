@@ -6,20 +6,31 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:11 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/14 12:33:50 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:23:17 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-char	**fetch_args(char *command, char *argfile)
+char	***fetch_args(t_pipex *pipex, char **argv)
 {
-	char	**args;
+	char	***args;
+	size_t	size;
+	size_t	i;
 
-	args = (char **)ft_calloc(3, sizeof(char *));
+	size = 0;
+	while (pipex->commands[size])
+		size++;
+	args = (char ***)ft_calloc(size + 1, sizeof(t_pipex));
 	if (!args)
 		exitmsg(ERR_ALLOC);
-	args[1] = argfile;
-	args[0] = command;
+	i = 0;
+	while (i < size)
+	{
+		args[i] = ft_split(argv[i + 2], ' ');
+		if (!args[i])
+			exitmsg(ERR_ALLOC);
+		i++;
+	}
 	return (args);
 }

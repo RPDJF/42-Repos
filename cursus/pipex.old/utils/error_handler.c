@@ -5,24 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 13:06:17 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 15:12:42 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/14 00:37:29 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/16 17:38:49 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	exitmsg(char *message, int code)
+void	exitmsg(char *msg)
 {
-	if (message && *message)
-		ft_putendl_fd(message, 2);
-	exit(code);
+	if (msg && *msg)
+		ft_putendl_fd(msg, STDERR_FILENO);
+	cleargarbage();
+	exit(1);
 }
 
-void	secure_exit(char *msg, int code)
+void	exitprogmsg(t_pipex pipex, char *msg)
 {
+	ft_putstr_fd(pipex.name, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
 	cleargarbage();
-	if (msg && *msg)
-		exitmsg(msg, code);
-	exit(code);
+	exit(1);
+}
+
+void	exitprogcontextmsg(t_pipex pipex, char *context, char *msg)
+{
+	ft_putstr_fd(pipex.name, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(context, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
+	cleargarbage();
+	exit(1);
 }

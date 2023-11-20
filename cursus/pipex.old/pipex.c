@@ -5,90 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 13:56:48 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/13 14:34:13 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/20 16:54:52 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**loadargs(const char *src)
-{
-	char	**heap;
-	int		fd;
-	int		i;
-
-	fd = open(src, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	i = 0;
-	heap = 0;
-	while (i == 0 || heap[i - 1])
-	{
-		heap = ft_exallocf(heap, i * sizeof(char *), (i + 1) * sizeof(char *));
-		if (!heap)
-			secure_exit("Fail to allocate memory", 1);
-		heap[i] = ft_get_next_line(fd);
-		if (heap[i])
-		{
-			if (heap[i][ft_strlen(heap[i]) - 1] == '\n')
-			{
-				heap[i][ft_strlen(heap[i]) - 1] = '"';
-				heap[i] = ft_strjoin("\"", heap[i]);
-			}
-		}
-		i++;
-	}
-	close(fd);
-	heap = ft_exallocf(heap, i * sizeof(char *), (i + 1) * sizeof(char *));
-	if (!heap)
-		secure_exit("Fail to allocate memory", 1);
-	return (heap);
-}
-
-t_pipex	*new_pipex(int argc, char **argv, char **envp)
+static t_pipex	*new_pipex(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
+	char	*name;
 
+	name = ft_strrchr(argv[0], '/') + 1;
+	if (!name || !*name)
+		name = argv[0];
 	pipex = galloc(sizeof(t_pipex));
 	if (!pipex)
-		secure_exit(0, 0);
-	pipex->in = ft_strdup(argv[1]);
-	pipex->out = ft_strdup(argv[argc - 1]);
-	pipex->intake = 0;
-	pipex->commands = fetchcommands(argv + 2, argc - 3, envp);
-	if (!pipex->in || !pipex->out || !pipex->commands)
-		secure_exit("Fail to allocate memory", 1);
-	if (check_files(*pipex) < 0)
-		secure_exit(strerror(errno), 1);
+	{
+		ft_putstr_fd(name, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		exitmsg(ERR_ALLOC);
+	}
+	pipex->name = name;
+	pipex->in = argv[1];
+	pipex->out = argv[argc - 1];
 	pipex->envp = envp;
+	pipex->commands = fetch_commands(pipex, argc, argv);
+	pipex->args = fetch_args(pipex, argv);
 	return (pipex);
 }
 
-void	start_pipex(t_pipex *pipex)
+static void	f_pipex(t_pipex *pipex)
 {
-	char	**args;
+	pid_t	childpid;
+	int		outfile;
+	int		pipes[2];
+	int		infile;
 
-	args = strtabaddfront(pipex->intake, *(pipex->commands));
-	if (!args)
-		secure_exit("Fail to allocate memory", 1);
-	execve(*(pipex->commands), args, pipex->envp);
+	if (pipe(pipes) < 0)
+		exitprogmsg(*pipex, strerror(errno));
+	childpid = fork();
+	if (childpid < 0)
+		exitmsg(ERR_FORK);
+	if (childpid == 0)
+	{
+		infile = open(pipex->in, O_RDONLY);
+		if (infile < 0)
+			exitprogcontextmsg(*pipex, pipex->in, strerror(errno));
+		dup2(infile, STDIN_FILENO);
+		dup2(pipes[0], STDOUT_FILENO);
+		execve(*pipex->commands, *pipex->args, pipex->envp);
+	}
+	else
+	{
+		wait(0);
+		outfile = open(pipex->out, O_WRONLY | O_CREAT | O_TRUNC, 00644);
+		if (outfile < 0)
+			exitprogcontextmsg(*pipex, pipex->out, strerror(errno));
+		dup2(pipes[0], STDIN_FILENO);
+		dup2(outfile, STDOUT_FILENO);
+		execve(pipex->commands[1], pipex->args[1], pipex->envp);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
-	char	**tmparg;
 
 	if (argc < 5)
-		secure_exit(0, 0);
+		exitmsg(ERR_NOT_ENOUGH_ARGUMENTS);
 	pipex = new_pipex(argc, argv, envp);
-	//pipex->intake = loadargs(pipex->in);
-	tmparg = (char **)ft_calloc(2, sizeof(char *));
-	tmparg[0] = pipex->in;
-	pipex->intake = tmparg;
-	if (!pipex->intake)
-		secure_exit("Fail to allocate memory", 1);
-	start_pipex(pipex);
-	secure_exit(0, 0);
+	if (!pipex)
+		exitmsg(ERR_ALLOC);
+	check_files(*pipex);
+	f_pipex(pipex);
+	cleargarbage();
+	exit(0);
 }

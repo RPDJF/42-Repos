@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 14:00:48 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/13 13:37:54 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/20 15:20:55 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,48 +17,59 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
+# include <sys/wait.h>
 
 typedef struct s_pipex
 {
+	char	*name;
 	char	*in;
 	char	*out;
-	char	**intake;
 	char	**commands;
+	char	***args;
 	char	**envp;
 }				t_pipex;
 
-//	FROM utils/checker.c
+# define ERR_NOT_ENOUGH_ARGUMENTS "pipex: not enough arguments"
+# define ERR_ALLOC "pipex: fail to allocate memory"
+# define ERR_COMMAND_NOT_FOUND "pipex: command not found: "
+# define ERR_FORK "pipex: fail on fork"
 
-//		checkthat the needed files have necessarz permissions
-int		check_files(t_pipex pipex);
+// FROM FILE utils/argument_parser.c
 
-//	FROM utils/command_handler.c
+//		fetch argument by adding commandname as index 0
+char	***fetch_args(t_pipex *pipex, char **argv);
 
-//		get PATH env variables splited by ':'
-//		returned as char *[]
-char	**getenvpath(char **envp);
+// FROM FILE utils/checker.c
 
-//		get path to command in PATH env variable
-//		check if read and execute rights are set
-//		returns the path to the command
-//		returns command if not found in PATH
-char	*getcommand(char *command, char **envp);
+//		exit with error message if files permissions mismatch
+void    check_files(t_pipex pipex);
 
-//		returns all of the commands with their absolute path from PATH env var
-char	**fetchcommands(char **args, int size, char **envp);
+//	FROM FILE utils/command_parser.c
 
-//	FROM utils/error_handler.c
+//		fetch command list for execv from argc argv
+//		returns null terminated array of command paths
+char	**fetch_commands(t_pipex *pipex, int argc, char **argv);
 
-//		send message before exiting program with int code
-void	exitmsg(char *message, int code);
-//		clean program before exiting with int code
-void	secure_exit(char *msg, int code);
+//	FROM FILE utils/error_handler.c
 
-//	FROM utils/pipex_utils.c
+//		print error message in error output and exit 1
+//		clear the garbage collector before exit
+void	exitmsg(char *msg);
+//		print error message in error output and exit 1
+//		also prints program name
+//		clear the garbage collector before exit
+void	exitprogmsg(t_pipex pipex, char *msg);
+//		print error message in error output and exit 1
+//		also prints program name
+//		also prints context error
+//		clear the garbage collector before exit
+void	exitprogcontextmsg(t_pipex pipex, char *context, char *msg);
 
-//		extends char **tab by adding char *str at begin
-char	**strtabaddfront(char **tab, char *str);
-//		get the path of a specific file
-char	*getfilepath(const char *file);
+//	FROM FILE utils/pathser.c
+
+//		get the path of filename
+//		returns the path
+//		secure exit on error
+char	*getfilepath(char *filename);
 
 #endif

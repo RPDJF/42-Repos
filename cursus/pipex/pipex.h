@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/16 17:46:45 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/17 14:47:32 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,9 @@ typedef struct s_pipex
 	char	*name;
 	char	*in;
 	char	*out;
-	char	**commands;
+	char	***commands;
 	char	**envp;
 }				t_pipex;
-
-# define ERR_NOT_ENOUGH_ARGUMENTS "pipex: not enough arguments"
-# define ERR_ALLOC "pipex: fail to allocate memory"
-# define ERR_COMMAND_NOT_FOUND "pipex: command not found: "
-# define ERR_FORK "pipex: fail on fork"
 
 // FROM FILE utils/argument_parser.c
 
