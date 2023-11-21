@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/21 16:21:11 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:56:39 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_pipex	*new_pipex(int argc, char **argv, char **envp)
 	pipex->in = argv[1];
 	pipex->fd_in = open(pipex->in, O_RDONLY);
 	if (pipex->fd_in < 0)
-		exitprogcontextmsg(*pipex, pipex->in, strerror(errno));
+		progcontextmsg(*pipex, pipex->in, strerror(errno));
 	pipex->out = argv[argc - 1];
 	pipex->fd_out = open(pipex->out, O_WRONLY | O_CREAT | O_TRUNC, 00644);
 	if (pipex->fd_out < 0)
@@ -39,6 +39,11 @@ static t_pipex	*new_pipex(int argc, char **argv, char **envp)
 static void	child_fork(t_pipex *pipex, int *pipes)
 {
 	close(pipes[0]);
+	if (pipex->fd_in < 0)
+	{
+		close(pipes[1]);
+		exit (1);
+	}
 	dup2(pipex->fd_in, STDIN_FILENO);
 	dup2(pipes[1], STDOUT_FILENO);
 	execve(*pipex->commands, *pipex->args, pipex->envp);
@@ -81,6 +86,6 @@ int	main(int argc, char **argv, char **envp)
 	if (argc < 5)
 		exitmsg(ERR_NOT_ENOUGH_ARGS);
 	pipex = new_pipex(argc, argv, envp);
-	check_files(*pipex);
+	//check_files(*pipex);
 	f_pipex(pipex);
 }
