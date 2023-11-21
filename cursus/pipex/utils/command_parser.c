@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 00:34:10 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/21 14:48:18 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:47:07 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static char	*getcommand(t_pipex *pipex, char *command)
 	char	*commandpath;
 	int		i;
 
+	if (!command || !*command || ft_isspace(*command))
+		progcontextmsg(*pipex, command, ERR_CMD_NOT_FOUND);
 	if (command[0] == '/' || !getpath(pipex))
 		return (command);
 	i = 0;
@@ -68,7 +70,7 @@ static char	*getcommand(t_pipex *pipex, char *command)
 	progcontextmsg(*pipex, command, ERR_CMD_NOT_FOUND);
 	commandpath = ft_calloc(1, sizeof(char));
 	if (!commandpath)
-		exitprogmsg(*pipex, ERR_ALLOC); 
+		exitprogmsg(*pipex, ERR_ALLOC);
 	return (commandpath);
 }
 
@@ -88,10 +90,20 @@ char	**fetch_commands(t_pipex *pipex, int argc, char **argv)
 				(i + 1) * sizeof(char *));
 		if (!commands)
 			exitprogmsg(*pipex, ERR_ALLOC);
-		command = ft_split(argv[i + 1], ' ');
-		if (!command)
-			exitprogmsg(*pipex, ERR_ALLOC);
-		commands[i - 1] = getcommand(pipex, command[0]);
+		if (argv[i + 1][0] && !ft_isspace(argv[i + 1][0]))
+		{
+			command = ft_split(argv[i + 1], ' ');
+			if (!command)
+				exitprogmsg(*pipex, ERR_ALLOC);
+			commands[i - 1] = getcommand(pipex, command[0]);
+		}
+		else
+		{
+			progcontextmsg(*pipex, argv[i + 1], ERR_CMD_NOT_FOUND);
+			commands[i - 1] = ft_strdup("");
+			if (!commands[i - 1])
+				exitprogmsg(*pipex, ERR_ALLOC);
+		}
 		i++;
 	}
 	return (commands);
