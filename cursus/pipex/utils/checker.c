@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nblowest.c                                      :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 16:37:59 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 16:37:59 by rude-jes         ###   ########.fr       */
+/*   Created: 2023/11/14 12:42:30 by rude-jes          #+#    #+#             */
+/*   Updated: 2023/11/21 14:02:05 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_nblowest(int nb1, int nb2)
+#include "../pipex.h"
+
+void	check_files(t_pipex pipex)
 {
-	if (nb1 < nb2)
-		return (nb1);
-	return (nb2);
+	if (access(pipex.in, R_OK) < 0)
+		exitprogcontextmsg(pipex, pipex.out, strerror(errno));
 }

@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/17 14:47:32 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/21 13:36:35 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,22 @@ typedef struct s_pipex
 	char	*name;
 	char	*in;
 	char	*out;
-	char	***commands;
+	int		fd_in;
+	int		fd_out;
+	char	**commands;
+	char	***args;
 	char	**envp;
 }				t_pipex;
+
+# define ERR_CMD_NOT_FOUND "command not found"
+# define ERR_ALLOC "memory allocation failed"
+# define ERR_FORK "an error occured during fork initialization"
+# define ERR_NOT_ENOUGH_ARGS "missing or too much arguments for pipex"
 
 // FROM FILE utils/argument_parser.c
 
 //		fetch argument by adding commandname as index 0
-char	**fetch_args(char *command, char *argfile);
+char	***fetch_args(t_pipex *pipex, char **argv);
 
 // FROM FILE utils/checker.c
 
@@ -53,6 +61,10 @@ void	exitmsg(char *msg);
 //		also prints program name
 //		clear the garbage collector before exit
 void	exitprogmsg(t_pipex pipex, char *msg);
+//		print error message in error output
+//		also prints program name
+//		also prints context error
+void	progcontextmsg(t_pipex pipex, char *context, char *msg);
 //		print error message in error output and exit 1
 //		also prints program name
 //		also prints context error
