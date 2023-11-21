@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 00:34:10 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/21 15:47:07 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:20:00 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,14 @@ static char	**getpath(t_pipex *pipex)
 
 	if (!paths)
 	{
-		if (!pipex->envp)
-			exitprogmsg(*pipex, ERR_ALLOC);
 		while (*pipex->envp && !ft_strnstr(*pipex->envp, "PATH=", 5))
 			pipex->envp++;
-		if (!*pipex->envp)
-			exitprogmsg(*pipex, ERR_ALLOC);
 		paths = ft_split(*pipex->envp + 5, ':');
-		if (!paths)
-			exitprogmsg(*pipex, ERR_ALLOC);
 		i = 0;
 		while (paths[i] && *paths[i])
 		{
 			if (paths[i][ft_strlen(paths[i]) - 2] != '/')
 				paths[i] = ft_strjoin(paths[i], "/");
-			if (!paths[i])
-				exitprogmsg(*pipex, ERR_ALLOC);
 			i++;
 		}
 	}
@@ -52,16 +44,12 @@ static char	*getcommand(t_pipex *pipex, char *command)
 	char	*commandpath;
 	int		i;
 
-	if (!command || !*command || ft_isspace(*command))
-		progcontextmsg(*pipex, command, ERR_CMD_NOT_FOUND);
 	if (command[0] == '/' || !getpath(pipex))
 		return (command);
 	i = 0;
 	while (getpath(pipex)[i])
 	{
 		commandpath = ft_strjoin(getpath(pipex)[i], command);
-		if (!commandpath)
-			exitprogmsg(*pipex, ERR_ALLOC);
 		if (access(commandpath, R_OK & X_OK) >= 0)
 			return (commandpath);
 		gfree(commandpath);
@@ -69,8 +57,6 @@ static char	*getcommand(t_pipex *pipex, char *command)
 	}
 	progcontextmsg(*pipex, command, ERR_CMD_NOT_FOUND);
 	commandpath = ft_calloc(1, sizeof(char));
-	if (!commandpath)
-		exitprogmsg(*pipex, ERR_ALLOC);
 	return (commandpath);
 }
 
@@ -82,27 +68,20 @@ char	**fetch_commands(t_pipex *pipex, int argc, char **argv)
 
 	i = 1;
 	commands = (char **)ft_calloc(i, sizeof(char *));
-	if (!commands)
-		exitprogmsg(*pipex, ERR_ALLOC);
 	while (argv[i + 1] && i < argc - 2)
 	{
 		commands = ft_exallocf(commands, i * sizeof(char *),
 				(i + 1) * sizeof(char *));
-		if (!commands)
-			exitprogmsg(*pipex, ERR_ALLOC);
-		if (argv[i + 1][0] && !ft_isspace(argv[i + 1][0]))
+		if (*argv[i + 1] && !ft_isspace(*argv[i + 1]))
 		{
 			command = ft_split(argv[i + 1], ' ');
-			if (!command)
-				exitprogmsg(*pipex, ERR_ALLOC);
 			commands[i - 1] = getcommand(pipex, command[0]);
 		}
 		else
 		{
 			progcontextmsg(*pipex, argv[i + 1], ERR_CMD_NOT_FOUND);
-			commands[i - 1] = ft_strdup("");
-			if (!commands[i - 1])
-				exitprogmsg(*pipex, ERR_ALLOC);
+			command = ft_calloc(2, sizeof(char *));
+			commands[i - 1] = ft_calloc(1, sizeof(char));
 		}
 		i++;
 	}

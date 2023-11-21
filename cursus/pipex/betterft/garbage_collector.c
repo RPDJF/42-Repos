@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:33:13 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 21:32:04 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:15:52 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "betterft.h"
+#include "../pipex.h"
 
 t_list	**getgarbage(void)
 {
@@ -71,7 +72,15 @@ void	*addgarbage(void *address)
 
 void	*galloc(size_t size)
 {
-	return (addgarbage(malloc(size)));
+	void	*alloc;
+
+	alloc = malloc(size);
+	if (!alloc)
+		exitmsg(ERR_ALLOC);
+	alloc = addgarbage(alloc);
+	if (!alloc)
+		exitmsg(ERR_ALLOC);
+	return (alloc);
 }
 
 void	cleargarbage(void)
