@@ -1,0 +1,3 @@
+[submodule "cursus/pipex/PIPEX_TESTER"]
+	path = cursus/pipex/PIPEX_TESTER
+	url = https://github.com/ael-bekk/PIPEX_TESTER.git
