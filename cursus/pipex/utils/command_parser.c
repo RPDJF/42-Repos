@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 00:34:10 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/21 16:20:00 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/23 14:31:34 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static char	*getcommand(t_pipex *pipex, char *command)
 	char	*commandpath;
 	int		i;
 
+	pipex->nbcommands++;
 	if (command[0] == '/' || !getpath(pipex))
 		return (command);
 	i = 0;
@@ -55,9 +56,7 @@ static char	*getcommand(t_pipex *pipex, char *command)
 		gfree(commandpath);
 		i++;
 	}
-	progcontextmsg(*pipex, command, ERR_CMD_NOT_FOUND);
-	commandpath = ft_calloc(1, sizeof(char));
-	return (commandpath);
+	return (command);
 }
 
 char	**fetch_commands(t_pipex *pipex, int argc, char **argv)
@@ -79,7 +78,6 @@ char	**fetch_commands(t_pipex *pipex, int argc, char **argv)
 		}
 		else
 		{
-			progcontextmsg(*pipex, argv[i + 1], ERR_CMD_NOT_FOUND);
 			command = ft_calloc(2, sizeof(char *));
 			commands[i - 1] = ft_calloc(1, sizeof(char));
 		}

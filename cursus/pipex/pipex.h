@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/21 13:36:35 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/23 14:29:02 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@
 
 typedef struct s_pipex
 {
-	char	*name;
-	char	*in;
-	char	*out;
-	int		fd_in;
-	int		fd_out;
-	char	**commands;
-	char	***args;
-	char	**envp;
+	char		*name;
+	char		*in;
+	char		*out;
+	int			fd_in;
+	int			fd_out;
+	char		**commands;
+	int			nbcommands;
+	char		***args;
+	char		**envp;
 }				t_pipex;
 
 # define ERR_CMD_NOT_FOUND "command not found"
@@ -40,11 +41,6 @@ typedef struct s_pipex
 
 //		fetch argument by adding commandname as index 0
 char	***fetch_args(t_pipex *pipex, char **argv);
-
-// FROM FILE utils/checker.c
-
-//		exit with error message if files permissions mismatch
-void    check_files(t_pipex pipex);
 
 //	FROM FILE utils/command_parser.c
 

@@ -79,7 +79,6 @@ BETTERFT_LIB = $(BETTERFT_PATH:%=%betterft.a)
 
 SRC = 	pipex \
 		utils/argument_parser \
-		utils/checker \
 		utils/command_parser \
 		utils/error_handler \
 		utils/pathser \
@@ -98,7 +97,7 @@ all: $(NAME)
 debug: fclean $(CFILES) $(BETTERFT_LIB)
 	@echo "$$APP_HEADER"
 	@printf "\t🤖 Compiling $(NAME)...\r"
-	@$(CC) $(CFLAGS) -g -fsanitize=address $(CFILES) $(BETTERFT_LIB) -o $(NAME)
+	@$(CC) $(CFLAGS) -g3 -fsanitize=address $(CFILES) $(BETTERFT_LIB) -o $(NAME)
 	@printf "\33[2K"
 	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
 	@echo "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n\n"
