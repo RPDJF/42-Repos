@@ -6,20 +6,49 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:11 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/23 14:31:53 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/23 18:30:49 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-size_t	tablen(void *tab, size_t size)
+static void	*rallocf(void *ptr, size_t size, size_t newsize, size_t bytes)
+{
+	void	*p;
+	void	*p_p;
+
+	p = galloc(newsize * bytes);
+	if (!p)
+	{
+		gfree(ptr);
+		return (0);
+	}
+	p_p = p;
+	if (!ptr)
+	{
+		while ((size_t)p_p++ - (size_t)p < newsize * bytes)
+			*((unsigned char *)(p_p - 1)) = 0;
+		return (p);
+	}
+	while ((size_t)p_p - (size_t)p < size * bytes)
+	{
+		*((unsigned char *)(p_p)) = *((unsigned char *)(ptr + (p_p - p)));
+		p_p++;
+	}
+	while ((size_t)p_p - (size_t)p < newsize * bytes)
+		*((unsigned char *)(p_p++)) = 0;
+	gfree(ptr);
+	return (p);
+}
+
+static size_t	tablen(void **tab)
 {
 	size_t	args_idx;
 
 	if (!tab)
 		return (0);
 	args_idx = 0;
-	while (((unsigned char *)tab)[args_idx * size])
+	while ((tab)[args_idx])
 		args_idx++;
 	return (args_idx);
 }
@@ -29,39 +58,34 @@ static char	**parse_arg(char **words, size_t wordsnb)
 {
 	char	**args;
 	size_t	len;
-	size_t	words_idx;
+	size_t	i;
 
-	wordsnb = tablen(words, sizeof(char *));
 	len = 1;
-	words_idx = 0;
-	args = 0;
-	while (words_idx < wordsnb)
+	i = 0;
+	while (i++ < wordsnb)
 	{
-		if (words_idx == 0)
+		if (i - 1 == 0)
 			args = ft_split(words[0], ' ');
-		else if (words[words_idx][0] == '-')
+		else if (words[i - 1][0] == '-')
 		{
-			args = ft_exallocf(args, len * sizeof(char *),
-					(len + 2) * sizeof(char *));
-			args[len++] = words[words_idx];
+			args = rallocf(args, len, len + 2, sizeof(char *));
+			args[len++] = words[i - 1];
+			args[len] = 0;
 		}
 		else
 		{
-			if (len <= 1)
+			if (args[len - 1][0] == '-')
+				args[len - 1] = ft_strjoin(args[len - 1],
+						ft_strjoin(" ", words[i - 1]));
+			else
 			{
-				args = ft_exallocf(args, len * sizeof(char *),
-						(len + 2) * sizeof(char *));
-				len++;
+				args = rallocf(args, len, len + 2, sizeof(char *));
+				args[len++] = words[i - 1];
+				args[len] = 0;
 			}
-			args[len - 1] = ft_strjoin(args[len - 1],
-					ft_strjoin(" ", words[words_idx]));
 		}
-		words_idx++;
 	}
-	if (args)
-		return (ft_exallocf(args, (len + 1) * sizeof(char *),
-				(len + 2) * sizeof(char *)));
-	return (ft_split(words[0], ' '));
+	return (args);
 }
 
 char	***fetch_args(t_pipex *pipex, char **argv)
@@ -77,7 +101,7 @@ char	***fetch_args(t_pipex *pipex, char **argv)
 	while (args_idx < argsnb)
 	{
 		words = ft_split(argv[args_idx + 2], ' ');
-		args[args_idx] = parse_arg(words, tablen(words, sizeof(char *)));
+		args[args_idx] = parse_arg(words, tablen((void **)words));
 		args_idx++;
 	}
 	return (args);

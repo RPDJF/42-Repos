@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/23 14:29:02 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/23 17:39:59 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ typedef struct s_pipex
 	char		*out;
 	int			fd_in;
 	int			fd_out;
-	char		**commands;
 	int			nbcommands;
+	char		**commands;
 	char		***args;
 	char		**envp;
 }				t_pipex;

@@ -114,7 +114,7 @@ fclean: clean
 
 re: fclean all
 
-bonus: $(BONUS_NAME)
+#bonus: $(BONUS_NAME)
 
 help:
 	@echo "$$HEADER"

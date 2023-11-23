@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 00:34:10 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/23 14:31:34 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/23 18:34:42 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ static char	**getpath(t_pipex *pipex)
 {
 	static char	**paths;
 	int			i;
+	int			j;
 
 	if (!paths)
 	{
-		while (*pipex->envp && !ft_strnstr(*pipex->envp, "PATH=", 5))
-			pipex->envp++;
-		paths = ft_split(*pipex->envp + 5, ':');
+		j = 0;
+		while (pipex->envp[j] && !ft_strnstr(pipex->envp[j], "PATH=", 5))
+			j++;
+		if (!pipex->envp[j])
+			return (ft_split("", ' '));
+		paths = ft_split(pipex->envp[j] + 5, ':');
 		i = 0;
 		while (paths[i] && *paths[i])
 		{

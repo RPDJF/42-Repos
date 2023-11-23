@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/23 14:31:39 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/11/23 18:34:57 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 static t_pipex	*new_pipex(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
-	char	*name;
 
-	name = ft_strrchr(argv[0], '/') + 1;
-	if (!name || !*name)
-		name = argv[0];
 	pipex = galloc(sizeof(t_pipex));
-	pipex->name = name;
+	pipex->name = ft_strrchr(argv[0], '/') + 1;
+	if (!pipex->name || !*pipex->name)
+		pipex->name = argv[0];
 	pipex->in = argv[1];
 	pipex->fd_in = open(pipex->in, O_RDONLY);
 	if (pipex->fd_in < 0)
@@ -43,7 +41,7 @@ static void	child_fork(t_pipex *pipex, int *pipes)
 	if (pipex->fd_in < 0)
 	{
 		close(pipes[1]);
-		exit (1);
+		exit (EXIT_FAILURE);
 	}
 	dup2(pipex->fd_in, STDIN_FILENO);
 	dup2(pipes[1], STDOUT_FILENO);
@@ -60,7 +58,6 @@ static void	parent_fork(t_pipex *pipex, int *pipes)
 	if (access(pipex->commands[1], R_OK & X_OK) < 0)
 		progcontextmsg(*pipex, pipex->commands[1], ERR_CMD_NOT_FOUND);
 	execve(pipex->commands[1], pipex->args[1], pipex->envp);
-	return ;
 }
 
 static void	f_pipex(t_pipex *pipex)
@@ -80,7 +77,7 @@ static void	f_pipex(t_pipex *pipex)
 		wait(0);
 		parent_fork(pipex, pipes);
 		cleargarbage();
-		exit (0);
+		exit (EXIT_FAILURE);
 	}
 }
 
