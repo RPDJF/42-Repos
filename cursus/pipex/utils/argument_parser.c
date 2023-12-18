@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:11 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/23 18:30:49 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:48:38 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,51 +39,55 @@ static void	*rallocf(void *ptr, size_t size, size_t newsize, size_t bytes)
 		*((unsigned char *)(p_p++)) = 0;
 	gfree(ptr);
 	return (p);
-}
+} 
 
-static size_t	tablen(void **tab)
+
+
+
+
+
+
+
+
+static void	print_arg(bool *newword, size_t *i, char *strwords, char ***args)
 {
-	size_t	args_idx;
-
-	if (!tab)
-		return (0);
-	args_idx = 0;
-	while ((tab)[args_idx])
-		args_idx++;
-	return (args_idx);
+	if (*newword)
+	{
+		*args = rallocf(*args, *i, *i + 2, sizeof(char *));
+		(*i)++;
+		*newword = false;
+	}
+	if (!(*args)[*i - 1])
+		(*args)[*i - 1] = ft_calloc(1, sizeof(char));
+	(*args)[*i - 1] = rallocf((*args)[*i - 1], ft_strlen((*args)[*i - 1]),
+			ft_strlen((*args)[*i - 1]) + 1, sizeof(char *));
+	(*args)[*i - 1][ft_strlen((*args)[*i - 1])] = *strwords;
 }
 
-//	parse args individually (for each command)
-static char	**parse_arg(char **words, size_t wordsnb)
+static char	**parse_arg(char *strwords)
 {
 	char	**args;
-	size_t	len;
+	bool	newword;
+	char	quote;
 	size_t	i;
 
-	len = 1;
+	args = 0;
+	newword = true;
+	quote = 0;
 	i = 0;
-	while (i++ < wordsnb)
+	while (*strwords)
 	{
-		if (i - 1 == 0)
-			args = ft_split(words[0], ' ');
-		else if (words[i - 1][0] == '-')
-		{
-			args = rallocf(args, len, len + 2, sizeof(char *));
-			args[len++] = words[i - 1];
-			args[len] = 0;
-		}
+		if (*strwords == ' ' && !quote)
+			newword = true;
+		else if (!quote && (*strwords == '\'' || *strwords == '\"'))
+			quote = *strwords;
+		else if (quote && *strwords == quote)
+			quote = 0;
 		else
 		{
-			if (args[len - 1][0] == '-')
-				args[len - 1] = ft_strjoin(args[len - 1],
-						ft_strjoin(" ", words[i - 1]));
-			else
-			{
-				args = rallocf(args, len, len + 2, sizeof(char *));
-				args[len++] = words[i - 1];
-				args[len] = 0;
-			}
+			print_arg(&newword, &i, strwords, &args);
 		}
+		strwords++;
 	}
 	return (args);
 }
@@ -91,7 +95,6 @@ static char	**parse_arg(char **words, size_t wordsnb)
 char	***fetch_args(t_pipex *pipex, char **argv)
 {
 	char	***args;
-	char	**words;
 	size_t	argsnb;
 	size_t	args_idx;
 
@@ -100,8 +103,7 @@ char	***fetch_args(t_pipex *pipex, char **argv)
 	args_idx = 0;
 	while (args_idx < argsnb)
 	{
-		words = ft_split(argv[args_idx + 2], ' ');
-		args[args_idx] = parse_arg(words, tablen((void **)words));
+		args[args_idx] = parse_arg(argv[args_idx + 2]);
 		args_idx++;
 	}
 	return (args);

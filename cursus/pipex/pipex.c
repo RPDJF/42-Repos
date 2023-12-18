@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/23 18:34:57 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/18 13:02:02 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ static void	parent_fork(t_pipex *pipex, int *pipes)
 	close(pipes[1]);
 	dup2(pipes[0], STDIN_FILENO);
 	dup2(pipex->fd_out, STDOUT_FILENO);
+	// ft_putendl_fd(pipex->args[1][0], STDERR_FILENO);
+	// ft_putendl_fd(pipex->args[1][1], STDERR_FILENO);
+	// ft_putendl_fd(pipex->args[1][2], STDERR_FILENO);
 	if (access(pipex->commands[1], R_OK & X_OK) < 0)
 		progcontextmsg(*pipex, pipex->commands[1], ERR_CMD_NOT_FOUND);
 	execve(pipex->commands[1], pipex->args[1], pipex->envp);

@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/23 17:39:59 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/18 12:17:55 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <errno.h>
 # include <string.h>
 # include <sys/wait.h>
+# include <stdbool.h>
 
 typedef struct s_pipex
 {
