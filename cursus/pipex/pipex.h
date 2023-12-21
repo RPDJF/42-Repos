@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/18 12:17:55 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:07:05 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,12 @@ void	exitprogcontextmsg(t_pipex pipex, char *context, char *msg);
 //		returns the path
 //		secure exit on error
 char	*getfilepath(char *filename);
+
+//	FROM FILE utils/runner.c
+
+//		create first child fork and returns its PID
+pid_t	first_child_init(t_pipex *pipex, int *pipes);
+//		create second child fork and returns its PID
+pid_t	second_child_init(t_pipex *pipex, int *pipes);
 
 #endif

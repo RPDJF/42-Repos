@@ -2,6 +2,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 FILES = ft_atoi \
+		ft_atoi_base \
 		ft_bzero \
 		ft_calloc \
 		ft_isalnum \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   betterft.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 19:43:53 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/20 14:10:39 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	cleargarbage(void);
 //		REVISITED LIBFT
 //	Converts the initial portion of the string str to int representation
 int		ft_atoi(const char *str);
+//	Converts the initial portion of the base string str to int representation
+int		ft_atoi_base(const char *str, const char *base);
 //	Fill memory with NULL value
 void	ft_bzero(void *s, size_t n);
 //	Return a malloc filled with NULL

@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:11 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/18 17:48:38 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/20 11:32:19 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,7 @@ static void	*rallocf(void *ptr, size_t size, size_t newsize, size_t bytes)
 		*((unsigned char *)(p_p++)) = 0;
 	gfree(ptr);
 	return (p);
-} 
-
-
-
-
-
-
-
-
+}
 
 static void	print_arg(bool *newword, size_t *i, char *strwords, char ***args)
 {
