@@ -42,19 +42,18 @@ define LIB_HEADER
  |  __|  _  |        |  _  ||  |  |  ||     |  _  |   |  |  |  _  |   _|  _  |   _||  ||  -__|__ --|
  |____|_____|__|__|__|   __||__|__|__||__|__|___  |   |__|__|_____|__| |___._|__|  |__||_____|_____|
                      |__|                   |_____|                                                 
-                                                                                                    
+
 endef
 export LIB_HEADER
 
 define APP_HEADER
- 
 
-                            __ __ __                                      __                                    
-.----.-----.--------.-----.|__|  |__|.-----.-----.    .-----.--.--.-----.|  |--.    .-----.--.--.--.---.-.-----.
-|  __|  _  |        |  _  ||  |  |  ||     |  _  |    |  _  |  |  |__ --||     |    |__ --|  |  |  |  _  |  _  |
-|____|_____|__|__|__|   __||__|__|__||__|__|___  |    |   __|_____|_____||__|__|____|_____|________|___._|   __|
-                    |__|                   |_____|    |__|                    |______|                   |__|   
-                                                                                                                                                                                                                                                                                           
+                             __ __ __                         __                    
+ .----.-----.--------.-----.|__|  |__|.-----.-----.   .-----.|__|.-----.-----.--.--.
+ |  __|  _  |        |  _  ||  |  |  ||     |  _  |   |  _  ||  ||  _  |  -__|_   _|
+ |____|_____|__|__|__|   __||__|__|__||__|__|___  |   |   __||__||   __|_____|__.__|
+                     |__|                   |_____|   |__|       |__|               
+                                                                                                                                                                                                                                                                                                   
 endef
 export APP_HEADER
 
@@ -87,6 +86,11 @@ SRC = 	pipex \
 CFILES = $(SRC:%=%.c)
 
 BONUS_SRC =	pipex_bonus \
+			utils_bonus/argument_parser_bonus \
+			utils_bonus/command_parser_bonus \
+			utils_bonus/error_handler_bonus \
+			utils_bonus/pathser_bonus \
+			utils_bonus/runner_bonus \
 
 CBONUS_FILES = $(BONUS_SRC:%=%.c)
 
@@ -115,7 +119,7 @@ fclean: clean
 
 re: fclean all
 
-#bonus: $(BONUS_NAME)
+bonus: $(BONUS_NAME)
 
 help:
 	@echo "$$HEADER"
@@ -151,7 +155,7 @@ $(BETTERFT_LIB): $(BETTERFT_PATH)Makefile
 $(BONUS_NAME): $(CBONUS_FILES) $(BETTERFT_LIB)
 	@echo "$$BONUS_HEADER"
 	@printf "\t🤖 Compiling $(BONUS_NAME) 🌟...\r"
-	@$(CC) $(CFLAGS) $(CBONUS_FILES) $(BETTERFT_LIB) -o $(BONUS_NAME)
+	@$(CC) $(CFLAGS) $(CBONUS_FILES) $(BETTERFT_LIB) -o $(NAME)
 	@printf "\33[2K"
 	@echo "\t[INFO] [$(NAME)]\t$(BONUS_NAME) 🌟 is compiled ✅\n"
 

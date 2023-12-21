@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/21 16:11:31 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:49:31 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 #include <stdio.h>
 
 static char	*get_progname(char **argv)
@@ -47,7 +47,7 @@ static t_pipex	*new_pipex(int argc, char **argv, char **envp)
 	return (pipex);
 }
 
-static void	f_pipex(t_pipex *pipex)
+/*static void	f_pipex(t_pipex *pipex)
 {
 	pid_t	first_child;
 	pid_t	second_child;
@@ -73,6 +73,11 @@ static void	f_pipex(t_pipex *pipex)
 		}
 	}
 	cleargarbage();
+}*/
+
+static void	f_pipex(t_pipex *pipex)
+{
+	
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -81,8 +86,6 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 		exitcontextmsg(ERR_NOT_ENOUGH_ARGS, get_progname(argv));
-	if (argc > 5)
-		exitcontextmsg(ERR_TOO_MUCH_ARGS, get_progname(argv));
 	pipex = new_pipex(argc, argv, envp);
 	f_pipex(pipex);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/21 16:09:25 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:14:51 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_pipex
 # define ERR_ALLOC "memory allocation failed"
 # define ERR_FORK "an error occured during fork initialization"
 # define ERR_NOT_ENOUGH_ARGS "missing arguments for pipex"
-# define ERR_TOO_MUCH_ARGS "too much arguments for pipex"
 
 // FROM FILE utils/argument_parser.c
 
