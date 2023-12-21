@@ -83,9 +83,7 @@ char	*getfilepath(char *filename);
 
 //	FROM FILE utils/runner.c
 
-//		create first child fork and returns its PID
-pid_t	first_child_init(t_pipex *pipex, int *pipes);
-//		create second child fork and returns its PID
-pid_t	second_child_init(t_pipex *pipex, int *pipes);
+//		creates a pipex child fork
+pid_t	child_init(t_pipex *pipex, int nth_child);
 
 #endif

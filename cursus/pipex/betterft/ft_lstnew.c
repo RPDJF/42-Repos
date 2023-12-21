@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "betterft.h"
+#include "../pipex.h"
 
 t_list	*ft_lstnew(void *content)
 {
@@ -18,7 +19,7 @@ t_list	*ft_lstnew(void *content)
 
 	p = (t_list *)malloc(sizeof(t_list));
 	if (!p)
-		return (0);
+		exitmsg(ERR_ALLOC);
 	p->content = content;
 	p->next = 0;
 	return (p);
