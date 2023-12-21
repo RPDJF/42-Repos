@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 00:34:10 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/21 15:30:19 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:34:33 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char	**fetch_commands(t_pipex *pipex, int argc, char **argv)
 				(i + 1) * sizeof(char *));
 		if (*argv[i + 1] && !ft_isspace(*argv[i + 1]))
 		{
-			//command = ft_split(argv[i + 1], ' ');
 			command = parse_arg(argv[i + 1]);
 			commands[i - 1] = getcommand(pipex, command[0]);
 		}
