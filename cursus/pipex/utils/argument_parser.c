@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:11 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/20 11:32:19 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:30:44 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	print_arg(bool *newword, size_t *i, char *strwords, char ***args)
 	(*args)[*i - 1][ft_strlen((*args)[*i - 1])] = *strwords;
 }
 
-static char	**parse_arg(char *strwords)
+char	**parse_arg(char *strwords)
 {
 	char	**args;
 	bool	newword;

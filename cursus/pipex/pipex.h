@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/21 15:07:05 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:29:28 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_pipex
 
 //		fetch argument by adding commandname as index 0
 char	***fetch_args(t_pipex *pipex, char **argv);
+//		split string of arguments into array
+char	**parse_arg(char *strwords);
 
 //	FROM FILE utils/command_parser.c
 
