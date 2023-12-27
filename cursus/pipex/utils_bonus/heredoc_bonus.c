@@ -12,6 +12,12 @@
 
 #include "../pipex_bonus.h"
 
+static char	*get_input(void)
+{
+	write(STDOUT_FILENO, "> ", 2);
+	return (ft_get_next_line(STDIN_FILENO));
+}
+
 char	*init_heredoc(char *limiter, t_pipex *pipex)
 {
 	int		fd;
@@ -20,7 +26,7 @@ char	*init_heredoc(char *limiter, t_pipex *pipex)
 	fd = open(HEREDOC_FILENAME, O_WRONLY | O_CREAT | O_TRUNC, 00644);
 	if (fd < 0)
 		progcontextmsg(*pipex, HEREDOC_FILENAME, strerror(errno));
-	line = ft_get_next_line(STDIN_FILENO);
+	line = get_input();
 	while (line)
 	{
 		if (ft_strlen(limiter) == ft_strlen(line) - 1
@@ -28,7 +34,8 @@ char	*init_heredoc(char *limiter, t_pipex *pipex)
 			break ;
 		if (write(fd, line, ft_strlen(line) - 1) < 0 || write(fd, "\n", 1) < 0)
 			exitprogmsg(*pipex, strerror(errno));
-		line = ft_get_next_line(STDIN_FILENO);
+		gfree(line);
+		line = get_input();
 	}
 	if (close(fd) < 0)
 		exitprogmsg(*pipex, strerror(errno));

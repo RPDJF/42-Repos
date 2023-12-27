@@ -99,7 +99,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
 
-	if (argc < 5)
+	if (argc < 5 || (argc < 6 && !ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1]))))
 		exitcontextmsg(ERR_NOT_ENOUGH_ARGS, get_progname(argv));
 	pipex = new_pipex(argc, argv, envp);
 	f_pipex(pipex);

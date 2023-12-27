@@ -18,15 +18,15 @@ static void	fd_toggler(t_pipex *pipex, int nth_child)
 	if (nth_child <= 0)
 	{
 		if (close(STDIN_FILENO) < 0
-			|| dup2(pipex->fd_in, STDIN_FILENO) < 0
-			|| close(pipex->fd_in) < 0)
+			|| (dup2(pipex->fd_in, STDIN_FILENO) < 0 && pipex->fd_in >= 0)
+			|| (pipex->fd_in >= 0 && close(pipex->fd_in) < 0))
 			exitprogmsg(*pipex, strerror(errno));
 	}
 	else if (nth_child >= pipex->nbcommands - 1)
 	{
 		if (close(STDOUT_FILENO) < 0
-			|| dup2(pipex->fd_out, STDOUT_FILENO) < 0
-			|| close(pipex->fd_out) < 0)
+			|| (dup2(pipex->fd_out, STDOUT_FILENO) < 0 && pipex->fd_out >= 0)
+			|| (pipex->fd_out >= 0 && close(pipex->fd_out) < 0))
 			exitprogmsg(*pipex, strerror(errno));
 	}
 	if (nth_child == 1)
