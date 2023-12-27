@@ -6,65 +6,47 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:05:14 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/21 15:07:31 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/27 17:47:51 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
+#include <stdio.h>
 
-static void	first_command(t_pipex *pipex, int *pipes)
+static void	fd_toggler(t_pipex *pipex, int nth_child)
 {
-	close(pipex->fd_out);
-	close(pipes[0]);
-	if (pipex->fd_in < 0)
+	if (nth_child <= 0)
 	{
-		close(pipes[1]);
-		exit (EXIT_FAILURE);
+		if (close(STDIN_FILENO) < 0
+			|| dup2(pipex->fd_in, STDIN_FILENO) < 0
+			|| close(pipex->fd_in) < 0)
+			exitprogmsg(*pipex, strerror(errno));
 	}
-	dup2(pipex->fd_in, STDIN_FILENO);
-	close(pipex->fd_in);
-	dup2(pipes[1], STDOUT_FILENO);
-	close(pipes[1]);
-	if (access(*pipex->commands, R_OK & X_OK) < 0)
-		progcontextmsg(*pipex, *pipex->commands, ERR_CMD_NOT_FOUND);
-	execve(*pipex->commands, *pipex->args, pipex->envp);
-	exit (127);
+	else if (nth_child >= pipex->nbcommands - 1)
+	{
+		if (close(STDOUT_FILENO) < 0
+			|| dup2(pipex->fd_out, STDOUT_FILENO) < 0
+			|| close(pipex->fd_out) < 0)
+			exitprogmsg(*pipex, strerror(errno));
+	}
 }
 
-static void	second_command(t_pipex *pipex, int *pipes)
+pid_t	child_init(t_pipex *pipex, int nth_child, int **comm)
 {
-	close(pipex->fd_in);
-	close(pipes[1]);
-	dup2(pipes[0], STDIN_FILENO);
-	close(pipes[0]);
-	dup2(pipex->fd_out, STDOUT_FILENO);
-	close(pipex->fd_out);
-	if (access(pipex->commands[1], R_OK & X_OK) < 0)
-		progcontextmsg(*pipex, pipex->commands[1], ERR_CMD_NOT_FOUND);
-	execve(pipex->commands[1], pipex->args[1], pipex->envp);
-	exit (127);
-}
+	pid_t	child;
 
-pid_t	first_child_init(t_pipex *pipex, int *pipes)
-{
-	pid_t	first_child;
-
-	first_child = fork();
-	if (first_child < 0)
-		exitprogmsg(*pipex, ERR_FORK);
-	if (first_child == 0)
-		first_command(pipex, pipes);
-	return (first_child);
-}
-
-pid_t	second_child_init(t_pipex *pipex, int *pipes)
-{
-	pid_t	second_child;
-
-	second_child = fork();
-	if (second_child < 0)
-		exitprogmsg(*pipex, ERR_FORK);
-	else if (second_child == 0)
-		second_command(pipex, pipes);
-	return (second_child);
+	child = fork();
+	if (child < 0)
+		exitprogmsg(*pipex, strerror(errno));
+	if (child == 0)
+	{
+		comm_toggler(comm, nth_child, pipex);
+		fd_toggler(pipex, nth_child);
+		if (access(pipex->commands[nth_child], R_OK & X_OK) < 0)
+			progcontextmsg(*pipex,
+				pipex->commands[nth_child], ERR_CMD_NOT_FOUND);
+		execve(pipex->commands[nth_child], pipex->args[nth_child], pipex->envp);
+		exit(127);
+	}
+	return (child);
 }

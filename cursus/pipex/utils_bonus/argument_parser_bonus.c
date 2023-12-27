@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:11 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/21 15:50:36 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/27 17:44:10 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,7 @@ char	**parse_arg(char *strwords)
 		else if (quote && *strwords == quote)
 			quote = 0;
 		else
-		{
 			print_arg(&newword, &i, strwords, &args);
-		}
 		strwords++;
 	}
 	return (args);

@@ -75,9 +75,13 @@ CFLAGS = -Wall -Wextra -Werror
 BETTERFT_PATH = ./betterft/
 BETTERFT_LIB = $(BETTERFT_PATH:%=%betterft.a)
 
+BONUS_BETTERFT_PATH = ./betterft_bonus/
+BONUS_BETTERFT_LIB = $(BONUS_BETTERFT_PATH:%=%betterft_bonus.a)
+
 
 SRC = 	pipex \
 		utils/argument_parser \
+		utils/comm_pipes \
 		utils/command_parser \
 		utils/error_handler \
 		utils/pathser \
@@ -87,12 +91,14 @@ CFILES = $(SRC:%=%.c)
 
 BONUS_SRC =	pipex_bonus \
 			utils_bonus/argument_parser_bonus \
+			utils_bonus/comm_pipes_bonus \
 			utils_bonus/command_parser_bonus \
 			utils_bonus/error_handler_bonus \
+			utils_bonus/heredoc_bonus \
 			utils_bonus/pathser_bonus \
 			utils_bonus/runner_bonus \
 
-CBONUS_FILES = $(BONUS_SRC:%=%.c)
+BONUS_CFILES = $(BONUS_SRC:%=%.c)
 
 NAME = pipex
 BONUS_NAME = pipex_bonus
@@ -110,6 +116,7 @@ debug: fclean $(CFILES) $(BETTERFT_LIB)
 
 clean:
 	@$(MAKE) -C $(BETTERFT_PATH) fclean --no-print-directory
+	@$(MAKE) -C $(BONUS_BETTERFT_PATH) fclean --no-print-directory
 
 fclean: clean
 	@rm -f $(NAME)
@@ -134,7 +141,7 @@ help:
 
 $(CFILES): header
 
-$(CBONUS_FILES): header
+$(BONUS_CFILES): header
 
 %.o: %.c
 	@printf "\t🤖 Compiling $<...\r"
@@ -152,12 +159,16 @@ $(BETTERFT_LIB): $(BETTERFT_PATH)Makefile
 	@echo "$$LIB_HEADER"
 	@make -C $(BETTERFT_PATH) all --no-print-directory
 
-$(BONUS_NAME): $(CBONUS_FILES) $(BETTERFT_LIB)
+$(BONUS_BETTERFT_LIB): $(BONUS_BETTERFT_PATH)Makefile
+	@echo "$$LIB_HEADER"
+	@make -C $(BONUS_BETTERFT_PATH) all --no-print-directory
+
+$(BONUS_NAME): $(BONUS_CFILES) $(BONUS_BETTERFT_LIB)
 	@echo "$$BONUS_HEADER"
 	@printf "\t🤖 Compiling $(BONUS_NAME) 🌟...\r"
-	@$(CC) $(CFLAGS) $(CBONUS_FILES) $(BETTERFT_LIB) -o $(NAME)
+	@$(CC) $(CFLAGS) $(BONUS_CFILES) $(BONUS_BETTERFT_LIB) -o $(NAME)
 	@printf "\33[2K"
-	@echo "\t[INFO] [$(NAME)]\t$(BONUS_NAME) 🌟 is compiled ✅\n"
+	@echo "\t[INFO]\t[$(BONUS_NAME)]\t$(NAME) ($(BONUS_NAME)) 🌟 is compiled ✅\n"
 
 header:
 	@echo "$$HEADER"

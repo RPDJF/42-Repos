@@ -84,14 +84,15 @@ $(NAME): $(CFILES) $(OFILES)
 	@printf "\t🤖 Compiling $(NAME)...\r"
 	@ar -rc $(NAME) $(OFILES)
 	@printf "\33[2K"
-	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
+	@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅"
+	@echo "\t\033[0;33m[WARN]\t[$(NAME)]\tThis version of BETTERFT has been modified to help with specific tasks for pipex.\033[0m"
 
 clean:
 	@rm -f $(OFILES)
-	@echo "\t[INFO] [$(NAME)]\t$(words $(OFILES)) object files deleted 🗑️"
+	@echo "\t[INFO]\t[$(NAME)]\t$(words $(OFILES)) object files deleted 🗑️"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "\t[INFO] [$(NAME)]\t$(NAME) is fully deleted 🗑️"
+	@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is fully deleted 🗑️"
 
 re: fclean all

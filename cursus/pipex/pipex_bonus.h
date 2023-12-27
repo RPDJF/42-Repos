@@ -6,12 +6,12 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/21 16:14:51 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/27 17:39:52 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include "betterft/betterft.h"
 # include <fcntl.h>
@@ -31,27 +31,42 @@ typedef struct s_pipex
 	char		**commands;
 	char		***args;
 	char		**envp;
+	bool		heredoc;
 }				t_pipex;
+
+# define HEREDOC_FILENAME ".heredoc.tmp"
 
 # define ERR_CMD_NOT_FOUND "command not found"
 # define ERR_ALLOC "memory allocation failed"
 # define ERR_FORK "an error occured during fork initialization"
 # define ERR_NOT_ENOUGH_ARGS "missing arguments for pipex"
 
-// FROM FILE utils/argument_parser.c
+# define EVEN_COMM 0
+# define ODD_COMM 1
+
+//	FROM FILE utils_bonus/argument_parser_bonus.c
 
 //		fetch argument by adding commandname as index 0
 char	***fetch_args(t_pipex *pipex, char **argv);
 //		split string of arguments into array
 char	**parse_arg(char *strwords);
 
-//	FROM FILE utils/command_parser.c
+//	FROM FILE utils_bonus/comm_pipes_bonus.c
+
+//		create a new bidirectional communication pipes
+int		**new_bidirectional_comm(t_pipex *pipex);
+//		close and free bidirectional communication pipes
+void	free_bidirectional_comm(int **comm, t_pipex *pipex);
+//		toggle the bidirectional communication for next child
+void	comm_toggler(int **comm, int nth_child, t_pipex *pipex);
+
+//	FROM FILE utils_bonus/command_parser_bonus.c
 
 //		fetch command list for execv from argc argv
 //		returns null terminated array of command paths
 char	**fetch_commands(t_pipex *pipex, int argc, char **argv);
 
-//	FROM FILE utils/error_handler.c
+//	FROM FILE utils_bonus/error_handler_bonus.c
 
 //		print error message in error output and exit 1
 //		clear the garbage collector before exit
@@ -74,16 +89,22 @@ void	progcontextmsg(t_pipex pipex, char *context, char *msg);
 //		clear the garbage collector before exit
 void	exitprogcontextmsg(t_pipex pipex, char *context, char *msg);
 
-//	FROM FILE utils/pathser.c
+//	FROM FILE utils_bonus/heredoc_bonus.c
+
+//		initialize heredoc
+//		creates a temporary file
+char	*init_heredoc(char *limiter, t_pipex *pipex);
+
+//	FROM FILE utils_bonus/pathser_bonus.c
 
 //		get the path of filename
 //		returns the path
 //		secure exit on error
 char	*getfilepath(char *filename);
 
-//	FROM FILE utils/runner.c
+//	FROM FILE utils_bonus/runner_bonus.c
 
 //		creates a pipex child fork
-pid_t	child_init(t_pipex *pipex, int nth_child);
+pid_t	child_init(t_pipex *pipex, int nth_child, int **comm);
 
 #endif

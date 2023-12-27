@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/21 16:11:31 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/27 17:43:04 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,42 +47,55 @@ static t_pipex	*new_pipex(int argc, char **argv, char **envp)
 	return (pipex);
 }
 
+static int	wait_childs(t_list *childs)
+{
+	int	status;
+
+	while (childs)
+	{
+		waitpid(*((int *)childs->content), &status, 0);
+		childs = childs->next;
+	}
+	return (status);
+}
+
 static void	f_pipex(t_pipex *pipex)
 {
-	pid_t	first_child;
-	pid_t	second_child;
-	int		pipes[2];
+	int		**comm;
+	int		nth_child;
+	int		last_child;
 	int		status;
+	t_list	*childs;
 
-	if (pipe(pipes) < 0)
-		exitprogmsg(*pipex, strerror(errno));
-	first_child = first_child_init(pipex, pipes);
-	second_child = second_child_init(pipex, pipes);
-	if (second_child > 0)
+	nth_child = 0;
+	childs = 0;
+	comm = new_bidirectional_comm(pipex);
+	while (pipex->commands[nth_child])
 	{
-		close(pipes[0]);
-		close(pipes[1]);
-		if (first_child > 0)
-			waitpid(first_child, 0, 0);
-		waitpid(second_child, &status, 0);
-		cleargarbage();
-		if (WIFEXITED(status))
-		{
-			status = WEXITSTATUS(status);
-			exit (status);
-		}
+		last_child = child_init(pipex, nth_child, comm);
+		childs = ft_lstadd(childs, galloc(sizeof(int)));
+		*((int *)ft_lstlast(childs)->content) = last_child;
+		addgarbage(childs);
+		nth_child++;
 	}
-	cleargarbage();
+	free_bidirectional_comm(comm, pipex);
+	status = wait_childs(childs);
+	if (WIFEXITED(status))
+	{
+		status = WEXITSTATUS(status);
+		exit (status);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
 
-	if (argc < 5)
-		exitcontextmsg(ERR_NOT_ENOUGH_ARGS, get_progname(argv));
 	if (argc > 5)
 		exitcontextmsg(ERR_TOO_MUCH_ARGS, get_progname(argv));
+	else if (argc < 5)
+		exitcontextmsg(ERR_NOT_ENOUGH_ARGS, get_progname(argv));
 	pipex = new_pipex(argc, argv, envp);
 	f_pipex(pipex);
+	exit (0);
 }

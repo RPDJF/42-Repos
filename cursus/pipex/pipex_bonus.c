@@ -6,14 +6,12 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/21 16:49:31 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/27 17:36:32 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 #include <stdio.h>
-
-// DO NOT FORGET TO MAKE A BONUS LIB, OR PROECT ALLOCS
 
 static char	*get_progname(char **argv)
 {
@@ -35,6 +33,14 @@ static t_pipex	*new_pipex(int argc, char **argv, char **envp)
 	pipex = galloc(sizeof(t_pipex));
 	pipex->name = get_progname(argv);
 	pipex->in = argv[1];
+	if (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])))
+	{
+		pipex->in = init_heredoc(argv[2], pipex);
+		argv[1] = argv[0];
+		argv[2] = HEREDOC_FILENAME;
+		argv++;
+		argc--;
+	}
 	pipex->fd_in = open(pipex->in, O_RDONLY);
 	if (pipex->fd_in < 0)
 		progcontextmsg(*pipex, pipex->in, strerror(errno));
@@ -49,44 +55,21 @@ static t_pipex	*new_pipex(int argc, char **argv, char **envp)
 	return (pipex);
 }
 
-static void pipe_toggler(int *even_pipe, int *odd_pipe, int nth_child)
+static int	wait_childs(t_list *childs)
 {
-	if (nth_child % 2)
-	{
-		pipe(odd_pipe);
-		dup2(even_pipe[0], STDIN_FILENO);
-		close(even_pipe[0]);
-		dup2(odd_pipe[1], STDOUT_FILENO);
-		close(odd_pipe[1]);
-	}
-	else
-	{
-		pipe(even_pipe);
-		dup2(odd_pipe[0], STDIN_FILENO);
-		close(odd_pipe[0]);
-		dup2(even_pipe[1], STDOUT_FILENO);
-		close(even_pipe[1]);
-	}
-}
+	int	status;
 
-static void fd_toggler(t_pipex *pipex, int nth_child)
-{
-	if (nth_child <= 0)
+	while (childs)
 	{
-		dup2(pipex->fd_in, STDIN_FILENO);
-		close(pipex->fd_in);
+		waitpid(*((int *)childs->content), &status, 0);
+		childs = childs->next;
 	}
-	else if (nth_child >= pipex->nbcommands - 1)
-	{
-		dup2(pipex->fd_out, STDOUT_FILENO);
-		close(pipex->fd_out);
-	}
+	return (status);
 }
 
 static void	f_pipex(t_pipex *pipex)
 {
-	int		even_pipe[2];
-	int		odd_pipe[2];
+	int		**comm;
 	int		nth_child;
 	int		last_child;
 	int		status;
@@ -94,27 +77,22 @@ static void	f_pipex(t_pipex *pipex)
 
 	nth_child = 0;
 	childs = 0;
-	while(pipex->commands[nth_child])
+	comm = new_bidirectional_comm(pipex);
+	while (pipex->commands[nth_child])
 	{
-		pipe_toggler(even_pipe, odd_pipe, nth_child);
-		fd_toggler(pipex, nth_child);
-		last_child = child_init(pipex, nth_child);
+		last_child = child_init(pipex, nth_child, comm);
 		childs = ft_lstadd(childs, galloc(sizeof(int)));
 		*((int *)ft_lstlast(childs)->content) = last_child;
 		addgarbage(childs);
 		nth_child++;
 	}
-	while(childs)
-	{
-		waitpid(*((int *)childs->content), &status, 0);
-		childs = childs->next;
-	}
+	free_bidirectional_comm(comm, pipex);
+	status = wait_childs(childs);
 	if (WIFEXITED(status))
 	{
 		status = WEXITSTATUS(status);
 		exit (status);
 	}
-	cleargarbage();
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -125,4 +103,5 @@ int	main(int argc, char **argv, char **envp)
 		exitcontextmsg(ERR_NOT_ENOUGH_ARGS, get_progname(argv));
 	pipex = new_pipex(argc, argv, envp);
 	f_pipex(pipex);
+	exit (0);
 }
