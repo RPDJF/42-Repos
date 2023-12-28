@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   betterft.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:19:26 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/20 14:10:39 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/28 14:52:31 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strnstr(const char	*haystack, const char *needle, size_t len);
 //	Returns a pointer to the first occurence of c in s, otherwise returns NULL
 char	*ft_strrchr(const char *s, int c);
+//	Replace a portion of a string with a new one
+char	*ft_strreplace(char *src, char *old, char *new);
 //	Returns the string without set characters from the start and the end
 char	*ft_strtrim(const char *s1, const char *set);
 //	Returns a malloc to the string from start to start + len
