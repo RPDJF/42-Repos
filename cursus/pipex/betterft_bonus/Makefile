@@ -35,6 +35,7 @@ FILES = ft_atoi \
 		ft_strncmp \
 		ft_strnstr \
 		ft_strrchr \
+		ft_strreplace \
 		ft_strtrim \
 		ft_substr \
 		ft_tolower \

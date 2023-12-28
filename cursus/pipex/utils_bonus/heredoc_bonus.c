@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:36:49 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/27 17:37:08 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/28 17:10:26 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex_bonus.h"
+
+static void	close_heredoc(int fd, t_pipex *pipex)
+{
+	if (close(fd) < 0)
+	{
+		ft_putendl_fd("ERROR", 2);
+		unlink(HEREDOC_FILENAME);
+		exitprogmsg(*pipex, strerror(errno));
+	}
+	pipex->heredoc = true;
+}
 
 static char	*get_input(void)
 {
@@ -18,14 +29,12 @@ static char	*get_input(void)
 	return (ft_get_next_line(STDIN_FILENO));
 }
 
-char	*init_heredoc(char *limiter, t_pipex *pipex)
+static int	write_temp(char *limiter, t_pipex *pipex, int fd)
 {
-	int		fd;
 	char	*line;
+	int		i;
 
-	fd = open(HEREDOC_FILENAME, O_WRONLY | O_CREAT | O_TRUNC, 00644);
-	if (fd < 0)
-		progcontextmsg(*pipex, HEREDOC_FILENAME, strerror(errno));
+	i = 1;
 	line = get_input();
 	while (line)
 	{
@@ -36,9 +45,25 @@ char	*init_heredoc(char *limiter, t_pipex *pipex)
 			exitprogmsg(*pipex, strerror(errno));
 		gfree(line);
 		line = get_input();
+		i++;
 	}
-	if (close(fd) < 0)
-		exitprogmsg(*pipex, strerror(errno));
-	pipex->heredoc = true;
+	close_heredoc(fd, pipex);
+	if (!line)
+		ft_putchar_fd('\n', STDOUT_FILENO);
+	if (!line)
+		progcontextmsg(*pipex, "warning",
+			ft_strreplace(ft_strreplace(ERR_WRONG_LIMITER,
+					VAR_LIMITER, limiter), "$line", ft_itoa(i)));
+	return (i);
+}
+
+char	*init_heredoc(char *limiter, t_pipex *pipex)
+{
+	int	fd;
+
+	fd = open(HEREDOC_FILENAME, O_WRONLY | O_CREAT | O_TRUNC, 00644);
+	if (fd < 0)
+		progcontextmsg(*pipex, HEREDOC_FILENAME, strerror(errno));
+	write_temp(limiter, pipex, fd);
 	return (HEREDOC_FILENAME);
 }

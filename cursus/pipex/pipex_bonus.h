@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/27 17:39:52 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/28 17:05:34 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ typedef struct s_pipex
 # define ERR_ALLOC "memory allocation failed"
 # define ERR_FORK "an error occured during fork initialization"
 # define ERR_NOT_ENOUGH_ARGS "missing arguments for pipex"
+# define ERR_WRONG_LIMITER "here-document at line $line demilited by end-of-file \
+(wanted `$limiter')"
+
+# define VAR_LIMITER "$limiter"
 
 # define EVEN_COMM 0
 # define ODD_COMM 1
