@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:33:13 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 21:32:04 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/28 16:48:05 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ int	gfree(void *address)
 
 	head = getgarbage();
 	if (!head)
-	{
-		free(address);
 		return (-1);
-	}
 	read = *head;
 	todel = read->next;
 	while (todel && read && todel->content != address)
@@ -44,10 +41,7 @@ int	gfree(void *address)
 		todel = todel->next;
 	}
 	if (!read || !todel)
-	{
-		free(address);
 		return (-1);
-	}
 	read->next = todel->next;
 	ft_lstdelone(todel, free);
 	return (0);

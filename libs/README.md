@@ -16,9 +16,14 @@ If you're doing memory business without betterft (no hard feelings, seriously), 
 
 Linked lists aren't part of the Garbage Collector's squad. That's to avoid wild loops. Maybe in the future, I'll set up a special lounge for lists if they start causing a ruckus.
 
+### Known Issues 🚨
+Here's the scoop: The gfree function won't actually free the first node of the garbage. The use of `cleargarbage` is necessary in order to free all of the garbage collector.
+
+I'm working on it ! 👌
+
 ## Version
 
-Current vibe: 1.1 🚦
+Current vibe: 1.2 🚦
 
 ## Warning! 🚨
 
