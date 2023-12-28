@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:19:49 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/28 14:51:02 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/28 16:49:27 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,14 @@ static size_t	count_replaces(char *src, char *old)
 	return (count);
 }
 
-char	*ft_strreplace(char *src, char *old, char *new)
+static void	fill_str(char *src, char *old, char *new, char *output)
 {
-	char	*output;
-	int		count;
 	char	*tmp;
+	int		count;
 	size_t	size;
 
-	count = count_replaces(src, old);
-	if (!count)
-		return (ft_strdup(src));
-	size = ((ft_strlen(src) + (ft_strlen(new) - ft_strlen(old)) * count) + 1);
-	output = galloc(size);
-	if (!output)
-		return (0);
 	size = 0;
+	count = count_replaces(src, old);
 	tmp = ft_strnstr(src, old, ft_strlen(src));
 	while (count--, count >= 0)
 	{
@@ -50,5 +43,22 @@ char	*ft_strreplace(char *src, char *old, char *new)
 		src += ft_strlen(old);
 		tmp = ft_strnstr(tmp + 1, old, ft_strlen(tmp + 1));
 	}
+	ft_strlcpy(output + size, src, tmp - src + 1);
+}
+
+char	*ft_strreplace(char *src, char *old, char *new)
+{
+	char	*output;
+	int		count;
+	size_t	size;
+
+	count = count_replaces(src, old);
+	if (!count)
+		return (ft_strdup(src));
+	size = ((ft_strlen(src) + (ft_strlen(new) - ft_strlen(old)) * count) + 1);
+	output = galloc(size);
+	if (!output)
+		return (0);
+	fill_str(src, old, new, output);
 	return (output);
 }
