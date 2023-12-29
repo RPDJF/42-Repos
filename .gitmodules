@@ -1,3 +1,6 @@
 [submodule "cursus/pipex/PIPEX_TESTER"]
 	path = cursus/pipex/PIPEX_TESTER
 	url = https://github.com/ael-bekk/PIPEX_TESTER.git
+[submodule "cursus/pipex"]
+	path = cursus/pipex
+	url = git@github.com:RPDJF/42-pipex.git
