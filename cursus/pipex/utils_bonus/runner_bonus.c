@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:05:14 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/29 14:15:21 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/29 15:26:32 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ pid_t	child_init(t_pipex *pipex, int nth_child, int *pipes, int *old_pipes)
 	if (child == 0)
 	{
 		sw_comm(pipex, nth_child, pipes, old_pipes);
+		if (nth_child <= 0 && pipex->fd_in < 0)
+			exit(1);
+		if (nth_child >= pipex->nbcommands - 1 && pipex->fd_out < 0)
+			exit(1);
 		if (access(pipex->commands[nth_child], R_OK & X_OK) < 0)
 			progcontextmsg(*pipex,
 				pipex->commands[nth_child], ERR_CMD_NOT_FOUND);
