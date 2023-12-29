@@ -16,3 +16,6 @@
 [submodule "cursus/ft_printf"]
 	path = cursus/ft_printf
 	url = git@github.com:RPDJF/42-ft_printf.git
+[submodule "libs/betterft"]
+	path = libs/betterft
+	url = git@github.com:RPDJF/betterft.git
