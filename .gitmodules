@@ -13,3 +13,6 @@
 [submodule "cursus/get_next_line"]
 	path = cursus/get_next_line
 	url = git@github.com:RPDJF/42-get_next_line.git
+[submodule "cursus/ft_printf"]
+	path = cursus/ft_printf
+	url = git@github.com:RPDJF/42-ft_printf.git
