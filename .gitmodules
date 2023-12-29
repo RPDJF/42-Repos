@@ -10,3 +10,6 @@
 [submodule "cursus/libft"]
 	path = cursus/libft
 	url = git@github.com:RPDJF/42-libft.git
+[submodule "cursus/get_next_line"]
+	path = cursus/get_next_line
+	url = git@github.com:RPDJF/42-get_next_line.git
