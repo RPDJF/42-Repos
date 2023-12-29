@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
+/*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:36:49 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/28 17:10:26 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:38:03 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int	write_temp(char *limiter, t_pipex *pipex, int fd)
 			break ;
 		if (write(fd, line, ft_strlen(line) - 1) < 0 || write(fd, "\n", 1) < 0)
 			exitprogmsg(*pipex, strerror(errno));
-		gfree(line);
 		line = get_input();
 		i++;
 	}

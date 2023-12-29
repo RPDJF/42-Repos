@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:38:21 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/27 17:43:04 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:57:56 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,35 +56,40 @@ static int	wait_childs(t_list *childs)
 		waitpid(*((int *)childs->content), &status, 0);
 		childs = childs->next;
 	}
+	if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	else
+		status = 0;
 	return (status);
 }
 
 static void	f_pipex(t_pipex *pipex)
 {
-	int		**comm;
+	int		*pipes[2];
 	int		nth_child;
-	int		last_child;
-	int		status;
 	t_list	*childs;
+	int		status;
 
 	nth_child = 0;
 	childs = 0;
-	comm = new_bidirectional_comm(pipex);
+	pipes[1] = 0;
 	while (pipex->commands[nth_child])
 	{
-		last_child = child_init(pipex, nth_child, comm);
-		childs = ft_lstadd(childs, galloc(sizeof(int)));
-		*((int *)ft_lstlast(childs)->content) = last_child;
-		addgarbage(childs);
+		pipes[0] = galloc(sizeof(int) * 2);
+		pipe(pipes[0]);
+		childs = ft_lstadd(childs, galloc(sizeof(pid_t)));
+		*((pid_t *)ft_lstlast(childs)->content)
+			= child_init(pipex, nth_child, pipes[0], pipes[1]);
+		close(pipes[0][1]);
+		if (pipes[1])
+			close(pipes[1][0]);
+		pipes[1] = pipes[0];
 		nth_child++;
 	}
-	free_bidirectional_comm(comm, pipex);
 	status = wait_childs(childs);
-	if (WIFEXITED(status))
-	{
-		status = WEXITSTATUS(status);
-		exit (status);
-	}
+	close(pipes[0][0]);
+	cleargarbage();
+	exit (status);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -97,5 +102,4 @@ int	main(int argc, char **argv, char **envp)
 		exitcontextmsg(ERR_NOT_ENOUGH_ARGS, get_progname(argv));
 	pipex = new_pipex(argc, argv, envp);
 	f_pipex(pipex);
-	exit (0);
 }

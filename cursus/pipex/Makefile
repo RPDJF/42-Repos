@@ -81,7 +81,6 @@ BONUS_BETTERFT_LIB = $(BONUS_BETTERFT_PATH:%=%betterft_bonus.a)
 
 SRC = 	pipex \
 		utils/argument_parser \
-		utils/comm_pipes \
 		utils/command_parser \
 		utils/error_handler \
 		utils/pathser \
@@ -91,7 +90,6 @@ CFILES = $(SRC:%=%.c)
 
 BONUS_SRC =	pipex_bonus \
 			utils_bonus/argument_parser_bonus \
-			utils_bonus/comm_pipes_bonus \
 			utils_bonus/command_parser_bonus \
 			utils_bonus/error_handler_bonus \
 			utils_bonus/heredoc_bonus \
@@ -110,7 +108,7 @@ debug: fclean $(CFILES) $(BETTERFT_LIB)
 	@printf "\t🤖 Compiling $(NAME)...\r"
 	@$(CC) $(CFLAGS) -g3 -fsanitize=address $(CFILES) $(BETTERFT_LIB) -o $(NAME)
 	@printf "\33[2K"
-	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅"
+	@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅"
 	@echo "\nThe programm was compiled with debug sanitizer set to address\nDo not forget to use \"leak -atExit -- $(NAME)\" in order to check for potential leaks.\nNote that it won't work with the debug version.\n\nFor better debug, you can use \"lldb $(name) <args>\" after using debug rule.\n\n"
 	@echo $(shell norminette)
 
@@ -121,8 +119,8 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(BONUS_NAME)
-	@echo "\t[INFO] [$(NAME)]\t$(NAME) is fully deleted 🗑️"
-	@echo "\t[INFO] [$(NAME)]\t$(BONUS_NAME) is fully deleted 🗑️"
+	@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is fully deleted 🗑️"
+	@echo "\t[INFO]\t[$(NAME)]\t$(BONUS_NAME) is fully deleted 🗑️"
 
 re: fclean all
 
@@ -153,7 +151,7 @@ $(NAME): $(CFILES) $(BETTERFT_LIB)
 	@printf "\t🤖 Compiling $(NAME)...\r"
 	@$(CC) $(CFLAGS) $(CFILES) $(BETTERFT_LIB) -o $(NAME)
 	@printf "\33[2K"
-	@echo "\t[INFO] [$(NAME)]\t$(NAME) is compiled ✅\n"
+	@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is compiled ✅\n"
 
 $(BETTERFT_LIB): $(BETTERFT_PATH)Makefile
 	@echo "$$LIB_HEADER"

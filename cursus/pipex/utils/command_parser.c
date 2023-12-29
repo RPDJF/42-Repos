@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 00:34:10 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/27 16:30:13 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:37:49 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static char	*getcommand(t_pipex *pipex, char *command)
 		commandpath = ft_strjoin(getpath(pipex)[i], command);
 		if (access(commandpath, R_OK & X_OK) >= 0)
 			return (commandpath);
-		gfree(commandpath);
 		i++;
 	}
 	return (command);

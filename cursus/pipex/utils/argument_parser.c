@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:24:11 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/27 17:44:17 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:37:55 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ static void	*rallocf(void *ptr, size_t size, size_t newsize, size_t bytes)
 	void	*p_p;
 
 	p = galloc(newsize * bytes);
-	if (!p)
-	{
-		gfree(ptr);
-		return (0);
-	}
 	p_p = p;
 	if (!ptr)
 	{
@@ -37,7 +32,6 @@ static void	*rallocf(void *ptr, size_t size, size_t newsize, size_t bytes)
 	}
 	while ((size_t)p_p - (size_t)p < newsize * bytes)
 		*((unsigned char *)(p_p++)) = 0;
-	gfree(ptr);
 	return (p);
 }
 

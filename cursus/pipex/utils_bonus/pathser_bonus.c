@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:45:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/21 15:50:47 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:37:37 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*getfilepath(char *fullpath)
 		*filepath = '\0';
 		filepath = ft_strdup(fullpath);
 	}
-	gfree(fullpath);
 	if (!filepath)
 		return (0);
 	return (filepath);

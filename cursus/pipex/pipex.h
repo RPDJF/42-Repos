@@ -6,7 +6,7 @@
 /*   By: rude-jes <rude-jes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:37:31 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/12/27 17:49:17 by rude-jes         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:17:00 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,6 @@ char	***fetch_args(t_pipex *pipex, char **argv);
 //		split string of arguments into array
 char	**parse_arg(char *strwords);
 
-//	FROM FILE utils/comm_pipes.c
-
-//		create a new bidirectional communication pipes
-int		**new_bidirectional_comm(t_pipex *pipex);
-//		close and free bidirectional communication pipes
-void	free_bidirectional_comm(int **comm, t_pipex *pipex);
-//		toggle the bidirectional communication for next child
-void	comm_toggler(int **comm, int nth_child, t_pipex *pipex);
-
 //	FROM FILE utils/command_parser.c
 
 //		fetch command list for execv from argc argv
@@ -97,6 +88,6 @@ char	*getfilepath(char *filename);
 //	FROM FILE utils/runner.c
 
 //		creates a pipex child fork
-pid_t	child_init(t_pipex *pipex, int nth_child, int **comm);
+pid_t	child_init(t_pipex *pipex, int nth_child, int *pipes, int *old_pipes);
 
 #endif
