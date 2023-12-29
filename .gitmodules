@@ -4,3 +4,6 @@
 [submodule "cursus/pipex"]
 	path = cursus/pipex
 	url = git@github.com:RPDJF/42-pipex.git
+[submodule "cursus/push_swap"]
+	path = cursus/push_swap
+	url = git@github.com:RPDJF/42-pushswap.git
