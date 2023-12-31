@@ -23,6 +23,12 @@ git clone --recurse-submodule git@github.com:RPDJF/42-Repos.git
 ```
 This command brings in all the sub-projects. Git sub-modules are like the Avengers of version control - check 'em out! 🧑‍💻 (refer to how Git sub-modules work; it might be helpful!)
 
+## Updating the Repository
+Since there is sub-modules, you will have to add a parameter in order to update them (once again, please refer to how Git sub-modules work; i swear they are helpful!)
+```bash
+git pull --recurse-submodule
+```
+
 ## Quick Heads Up!
 This repo is my coding HQ, but I'm sharing it with the community to help out aspiring devs. Dive into the code, and may the coding mojo be with you! 🚀👨‍💻
 
