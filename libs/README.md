@@ -12,18 +12,9 @@ So, the Garbage Collector is like the guardian of our memory party. Need to clea
 
 If you're doing memory business without betterft (no hard feelings, seriously), there's `addgarbage` to manually add stuff to the Garbage Collector's list. But honestly, all betterft allocations are already on the VIP list.
 
-### Just a Heads Up 🚫
-
-Linked lists aren't part of the Garbage Collector's squad. That's to avoid wild loops. Maybe in the future, I'll set up a special lounge for lists if they start causing a ruckus.
-
-### Known Issues 🚨
-Here's the scoop: The gfree function won't actually free the first node of the garbage. The use of `cleargarbage` is necessary in order to free all of the garbage collector.
-
-I'm working on it ! 👌
-
 ## Version
 
-Current vibe: 1.2 🚦
+Current vibe: 1.4 🚦
 
 ## Warning! 🚨
 
