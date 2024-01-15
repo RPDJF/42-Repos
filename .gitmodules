@@ -19,3 +19,6 @@
 [submodule "libs/betterft"]
 	path = libs/betterft
 	url = git@github.com:RPDJF/betterft.git
+[submodule "cursus/so_long"]
+	path = cursus/so_long
+	url = git@github.com:rpdjf/42-so_long.git
