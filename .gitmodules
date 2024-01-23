@@ -22,3 +22,6 @@
 [submodule "cursus/so_long"]
 	path = cursus/so_long
 	url = git@github.com:rpdjf/42-so_long.git
+[submodule "cursus/philosophers"]
+	path = cursus/philosophers
+	url = git@github.com:RPDJF/42-philosophers.git
