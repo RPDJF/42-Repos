@@ -25,3 +25,6 @@
 [submodule "cursus/philosophers"]
 	path = cursus/philosophers
 	url = git@github.com:RPDJF/42-philosophers.git
+[submodule "cursus/minishell"]
+	path = cursus/minishell
+	url = git@github.com:rpdjf/42-minishell
