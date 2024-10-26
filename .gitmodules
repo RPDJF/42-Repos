@@ -28,3 +28,6 @@
 [submodule "cursus/minishell"]
 	path = cursus/minishell
 	url = git@github.com:rpdjf/42-minishell
+[submodule "cursus/minirt"]
+	path = cursus/minirt
+	url = git@github.com:rpdjf/42-minirt
