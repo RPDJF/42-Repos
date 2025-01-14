@@ -31,3 +31,6 @@
 [submodule "cursus/minirt"]
 	path = cursus/minirt
 	url = git@github.com:rpdjf/42-minirt
+[submodule "cursus/cpp-modules"]
+	path = cursus/cpp-modules
+	url = git@github.com:rpdjf/42-cpp-modules
