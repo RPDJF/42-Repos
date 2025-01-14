@@ -1,5 +1,4 @@
-<img src="https://camo.githubusercontent.com/bceb89d6fd60ec75292970cfd163a9913a93d58152bc08817214fd925d3236e4/68747470733a2f2f34326c617573616e6e652e63682f77702d636f6e74656e742f75706c6f6164732f323032312f30312f34325f6c6f676f2e737667" style="width:300px; display: block; margin:0 auto;"></img>
-<br>
+![](./cursus/42lausanne-logo.png)
 
 ![](https://img.shields.io/github/languages/code-size/rpdjf/42-Repos?color=5BCFFF)
 
