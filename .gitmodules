@@ -34,3 +34,6 @@
 [submodule "cursus/cpp-modules"]
 	path = cursus/cpp-modules
 	url = git@github.com:rpdjf/42-cpp-modules
+[submodule "cursus/webserv"]
+	path = cursus/webserv
+	url = https://github.com/RPDJF/42-webserv
